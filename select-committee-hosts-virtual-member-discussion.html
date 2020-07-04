@@ -65,12 +65,18 @@
 
 
     <div class="row-wrap">
-      <div class="col-20 light">
-        <div class="side-bar column-wrap">
-          <p>RELATED STORIES</p>
-          <a class="related-items" v-for="member in blogData[0].related_posts"
-            :href="'http://www.thegovlab.org/' + member.incoming_blog_id.slug"
-            target="_blank">{{member.incoming_blog_id.title}}.</a>
+      <div class="col-20">
+        <div class="sidebar column-wrap">
+          <p>RELATED PUBLICATIONS</p>
+          <div class="sidebar-wrap" v-for="member in blogData[0].related_publications">
+            <div class="related-projects"
+              :style="{ backgroundImage: 'url(' + member.pub_id.picture.data.thumbnails[3].url+ ')' }">
+            </div>
+            <div class="related-project-text">
+            <a :href="member.pub_id.url" target="_blank">{{member.pub_id.title}}</a>
+            </div>
+          </div>
+
         </div>
 
       </div>
@@ -86,9 +92,15 @@
           </div>
         </div>
         <div class="blog-text" v-html="blogData[0].content">
-</div>
+        </div>
       </div>
 
+    </div>
+    <div class="related-stories column-wrap">
+      <p>RELATED STORIES</p>
+      <a class="related-items" v-for="member in blogData[0].related_posts"
+        :href="'http://www.thegovlab.org/' + member.incoming_blog_id.slug"
+        target="_blank"><span id="underline">{{member.incoming_blog_id.title}}.</span></a>
     </div>
 
   </div>
