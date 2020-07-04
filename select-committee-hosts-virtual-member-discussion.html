@@ -9,7 +9,7 @@
   <title>The Governance Lab</title>
 
   <link href="/images/favicon.ico" rel="shortcut icon">
-  <link rel="stylesheet" href="css/styles-old.css">
+  <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="https://use.typekit.net/kad3hcl.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -20,7 +20,7 @@
 
 </head>
 
-<body class="homepage"  onwheel="scroll_dismiss()">
+<body class="homepage" onwheel="scroll_dismiss()">
 
   <!-- Load an icon library to show a hamburger menu (bars) on small screens -->
 
@@ -34,7 +34,8 @@
         </a>
       </div>
     </div>
-    <a class="top_logo" href="index.html"><img src="images/govlab-logo-white.png" alt="Smarter Crowdsourcing | Zika"></a>
+    <a class="top_logo" href="index.html"><img src="images/govlab-logo-white.png"
+        alt="Smarter Crowdsourcing | Zika"></a>
     <!-- Navigation links (hidden by default) -->
     <div class='lang-select'>
 
@@ -55,49 +56,52 @@
     </div>
   </div>
   <div id="blogpage">
-  <div class="row top-section topic" :style="{ backgroundImage: 'url(' + blogData[0].image.data.full_url+ ')' }">
+    <div class="row top-section" :style="{ backgroundImage: 'url(' + blogData[0].image.data.full_url+ ')' }">
 
-    <h1>{{blogData[0].title}}</h1>
-  </div>
-  <div class="row align-center">
-
-
-  </div>
-<div style="display:flex;flex-direction: row; justify-content: center;align-items: center;">
-
-      <div style="display:flex;flex-direction: row; justify-content: center;align-items: center; margin-right:20px; margin-top: 20px"class="authors" v-for="member in blogData[0].authors"> 
-        <div style="width:30px;height:30px; background-size: contain; border-radius:20px;"class="e-person-pic" :style="{ backgroundImage: 'url(' + member.team_id.picture.data.thumbnails[3].url+ ')' }"></div>
-        <a style="padding:10px; text-decoration: none; color:#3d3d3d; font-weight: 500; font-size: 10pt; text-transform: uppercase;" :href="'http://www.thegovlab.org/team.html#' + member.team_id.slug" target="_blank">{{member.team_id.name}}<br><span style="color: #3d3d3d6e">{{member.team_id.title}}</span></a></div>
-     </div>
-     <div  style="display:flex;flex-direction: column;">
-       <div style="display:flex; flex-direction: column; width: 30%">
-        <div style="display:flex; flex-direction: column; width: 100%">RELATED STORIES
-          <a  v-for="member in blogData[0].related_posts" :href="'http://www.thegovlab.org/' + member.incoming_blog_id.slug" target="_blank" >{{member.incoming_blog_id.title}}</a>
-        </div>
-        
-       </div>
-      
-    <section style=" display:flex; flex-direction: column; width: 70%" class="light-section topic_desc" v-html="blogData[0].content">
-    </section>
-
-  </div>
-    <div class="main-buttons accent-color topic-page-button">
-      <a href="http://RD4c.org" target="blank" class="button">LEARN MORE</a>
+      <h1>{{blogData[0].title}}</h1>
+      <!-- <p>Published on: {{blogData[0].original_date}}</p> -->
+      <p>MAY 7, 2020</p>
     </div>
+
+
+    <div class="row-wrap">
+      <div class="col-20 light">
+        <div class="side-bar column-wrap">
+          <p>RELATED STORIES</p>
+          <a class="related-items" v-for="member in blogData[0].related_posts"
+            :href="'http://www.thegovlab.org/' + member.incoming_blog_id.slug"
+            target="_blank">{{member.incoming_blog_id.title}}.</a>
+        </div>
+
+      </div>
+
+      <div class="col-80">
+        <div class="row-wrap left-pad">
+
+          <div class="row-wrap center authors" v-for="member in blogData[0].authors">
+            <div class="author-thumb"
+              :style="{ backgroundImage: 'url(' + member.team_id.picture.data.thumbnails[3].url+ ')' }"></div>
+            <a class="author-name" :href="'http://www.thegovlab.org/team.html#' + member.team_id.slug"
+              target="_blank">{{member.team_id.name}}<br><span class="author-title">{{member.team_id.title}}</span></a>
+          </div>
+        </div>
+        <div class="blog-text" v-html="blogData[0].content">
+</div>
+      </div>
+
+    </div>
+
   </div>
   <footer class='footer-alt'>
     <div class="row align-center">
       <div class="medium-6 medium-centered columns">
-        <!-- <h4>In collaboration with</h4> -->
-        <!-- <h4>EN COLABORACIÓN CON</h4> -->
-     
       </div>
 
     </div>
     <div class="row">
 
-          <a class="footer_partner-logo" href="http://www.thegovlab.org" target="_blank"><img
-              src="images/govlab-logo-white.png" alt="The GovLab"></a>
+      <a class="footer_partner-logo" href="http://www.thegovlab.org" target="_blank"><img
+          src="images/govlab-logo-white.png" alt="The GovLab"></a>
 
     </div>
   </footer>
@@ -105,10 +109,11 @@
     <div class="row">
       <div class="column">
         <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
-          <img class="copyright_cc-badge"
-            alt="Creative Commons License" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a>
+          <img class="copyright_cc-badge" alt="Creative Commons License"
+            src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a>
         <p>&nbspThis work is licensed under a</p>&nbsp<a rel="license"
-          href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License.</a>.
+          href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0
+          International License.</a>.
       </div>
     </div>
   </div>
@@ -128,11 +133,11 @@
   /* Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
   function scroll_dismiss() {
     if (document.body.scrollTop > 10 || document.documentElement.scrollTop > 10) {
-    var x = document.getElementById("myLinks");
-    if (x.style.display === "block") {
-      x.style.display = "none";
-    } 
-  }
+      var x = document.getElementById("myLinks");
+      if (x.style.display === "block") {
+        x.style.display = "none";
+      }
+    }
   }
 </script>
 <script src='https://unpkg.com/vue@2.0.3/dist/vue.js'></script>

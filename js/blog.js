@@ -57,7 +57,7 @@ new Vue({
     filter: {
       slug: self.blogslug
     },
-    fields: ['*.*']
+    fields: ['*.*','authors.team_id.*','authors.team_id.picture.*','related_posts.incoming_blog_id.*']
   }
   ).then(data => {
     console.log(data);
