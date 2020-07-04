@@ -88,7 +88,7 @@ justify-content: center;
 @media screen and (min-width: 320px) and (max-width: 768px){
   .top_logo {
     padding: 0 !important;
-    width:80%;
+    width:30%;
     }
     .top_logo img{
       width:80%;
@@ -187,8 +187,11 @@ padding: 0 10rem;
 
 
  @media screen and (min-width: 320px) and (max-width: 768px){
-  .row.top-section.topic{
+  .row.top-section{
   padding: 0 1rem;
+  }
+  .row.top-section h1{
+font-size: 2rem;
   }
  }
 
@@ -197,11 +200,9 @@ padding: 0 10rem;
   margin-top: 70px;
   }
 @media screen and (min-width: 320px) and (max-width: 768px){
-  .imagine-banner h2 {
-height: 20vh;
-  }
+
   .site-logo{
-    max-width: 320px;
+    max-width: 120px;
   }
  }
 .top-section{
@@ -338,6 +339,29 @@ a.related-items{
   text-decoration: none;
   color: #523080;
 }
+@media screen and (min-width: 320px) and (max-width: 768px){
+  .row-wrap{
+    display:flex;
+    flex-direction: column-reverse; 
+  }
+  .row-wrap.authors{
+    display:flex;
+    flex-direction: row; 
+  }
+  .row-wrap.left-pad{
+    padding-left:1rem;
+  }
+  .col-20, .col-80{
+    width:100%;
+  }
+  .blog-text{
+    padding:0 2rem;
+  }
+  .side-bar{
+    padding-top: 1rem;
+    padding-left: 2rem;
+  }
+}
 footer{
   background-color: var(--grey8);
 }
@@ -387,6 +411,7 @@ footer .row{
 }
 
 @media screen and (min-width: 320px) and (max-width: 768px){
+
   footer .row{
     display:flex;
     flex-direction: column;
