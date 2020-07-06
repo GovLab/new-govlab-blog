@@ -89,7 +89,7 @@
           <p>RELATED STORIES</p>
           <a class="related-items" v-for="member in blogData[0].related_posts"
             :href="'http://www.thegovlab.org/' + member.incoming_blog_id.slug"
-            target="_blank"><span id="underline">{{member.incoming_blog_id.title}}.</span></a>
+            target="_blank"><span id="underline" v-html="member.incoming_blog_id.title">.</span></a>
         </div>
       </div>
 
