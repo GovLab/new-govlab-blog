@@ -62,8 +62,33 @@
       <!-- <p>Published on: {{blogData[0].original_date}}</p> -->
       <p>MAY 7, 2020</p>
     </div>
+<div   v-if="(blogData[0].related_publications == '') && (blogData[0].related_projects == '')">
+    <div class="col-wrap">
+      <div class="col-100">
+        <div class="row-wrap center left-pad">
+
+          <div class="row-wrap center authors" v-for="member in blogData[0].authors">
+            <div class="author-thumb"
+              :style="{ backgroundImage: 'url(' + member.team_id.picture.data.thumbnails[3].url+ ')' }"></div>
+            <a class="author-name" :href="'http://www.thegovlab.org/team.html#' + member.team_id.slug"
+              target="_blank">{{member.team_id.name}}<br><span class="author-title">{{member.team_id.title}}</span></a>
+          </div>
+        </div>
+        <div class="blog-text" v-html="blogData[0].content">
+        </div>
+        <div class="related-stories column-wrap">
+          <p>RELATED STORIES</p>
+          <a class="related-items" v-for="member in blogData[0].related_posts"
+            :href="'http://www.thegovlab.org/' + member.incoming_blog_id.slug"
+            target="_blank"><span id="underline" v-html="member.incoming_blog_id.title">.</span></a>
+        </div>
+      </div>
 
 
+
+    </div>
+  </div>
+  <div v-if="(blogData[0].related_publications != '') && (blogData[0].related_projects != '')">
     <div class="row-wrap">
       <div class="col-20">
         <div class="sidebar column-wrap">
@@ -113,7 +138,7 @@
         :href="'http://www.thegovlab.org/' + member.incoming_blog_id.slug"
         target="_blank"><span id="underline">{{member.incoming_blog_id.title}}.</span></a>
     </div>
-
+</div>
   </div>
   <footer class='footer-alt'>
     <div class="row align-center">

@@ -30,6 +30,7 @@ new Vue({
 	data: {
 
       blogData: [],
+      single_col: false,
       apiURL: 'https://directusdev.thegovlab.com/thegovlab'
   },
 
@@ -38,6 +39,7 @@ new Vue({
     this.blogslug = this.blogslug[this.blogslug.length - 1].split('.')[0];
 
     this.fetchBlog();
+    
   },
   methods: {
 
