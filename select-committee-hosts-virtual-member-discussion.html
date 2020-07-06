@@ -67,6 +67,17 @@
     <div class="row-wrap">
       <div class="col-20">
         <div class="sidebar column-wrap">
+          <p>RELATED PROJECTS</p>
+          <div class="sidebar-wrap" v-for="project in blogData[0].related_projects">
+            <div class="related-projects"
+              :style="{ backgroundImage: 'url(' + project.projects_id.main_picture.data.thumbnails[3].url+ ')' }">
+            </div>
+            <div class="related-project-text">
+              
+            <a :href="'http://www.thegovlab.org/' + project.projects_id.slug" target="_blank">{{project.projects_id.name}}</a>
+            </div>
+          </div>
+          <br>
           <p>RELATED PUBLICATIONS</p>
           <div class="sidebar-wrap" v-for="member in blogData[0].related_publications">
             <div class="related-projects"
