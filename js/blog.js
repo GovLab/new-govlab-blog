@@ -30,7 +30,6 @@ new Vue({
 	data: {
 
       blogData: [],
-      single_col: false,
       apiURL: 'https://directusdev.thegovlab.com/thegovlab'
   },
 
@@ -67,7 +66,10 @@ new Vue({
 
 }).catch(error => console.error(error));
     }
+  ,
+  formatDate(date) {
+  return moment(date).format('DD MMMM YYYY');
   }
-
+  }
 });
 
