@@ -63,6 +63,11 @@
       <h1>{{blogData[0].title}}</h1>
       <!-- <p>Published on: {{blogData[0].original_date}}</p> -->
       <p>{{formatDate(blogData[0].original_date)}}</p>
+       <div class="tags">
+         <div class="tag-text data-tag"><p>DATA COLLABORATIVES</p></div>
+         <div class="tag-text ci-tag"><p>COLLECTIVE INTELLIGENCE</p></div>
+         <div class="tag-text gen-tag"><p>PRESS RELEASE</p></div>
+       </div>
     </div>
 <div   v-if="(blogData[0].related_publications == '') && (blogData[0].related_projects == '')">
     <div class="col-wrap">
