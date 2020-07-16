@@ -49,17 +49,7 @@ new Vue({
       currentDate: '',
       slug:'',
       more_body: false,
-      meta_title: 'The GovLab | Blog',
-      meta_content: 'Deepening our understanding of how to govern more effectively and legitimately through technology.'
-    }
-  },
-  metaInfo () {
-        return {
-          title: this.meta_title,
-          meta: [
-            {title: this.meta_title, property:'og:title'},
-      {  name: 'description', content: this.meta_content, property:'og:description'}
-    ]
+    
     }
   },
   created: function created() {
