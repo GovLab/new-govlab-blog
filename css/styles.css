@@ -12,7 +12,10 @@
   --grey9: rgba(0, 0, 0, 0.9);
   --grey2: rgba(0, 0, 0, 0.2);
   --grey05: rgba(0, 0, 0, 0.05);
+  --white2: rgba(255,255,255,0.2);
   --white5: rgba(255,255,255,0.5);
+  --white8: rgba(255,255,255,0.8);
+  --white9: rgba(255,255,255,0.9);
   font-size: 16px;
 }
 body {
@@ -539,4 +542,231 @@ text-align: center;
   .copyright p{
     margin-bottom:0;
   }
+}
+.hero{
+  display:flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 25vh;
+}
+.hero img{
+  height: 50px;
+}
+.hero h2{
+  font-size: 24pt;
+  margin:0 1rem;
+  font-weight: 400;
+  color: var(--main-color);
+}
+.search-section{
+  background-color: var(--grey8);
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 15vh;
+  padding: 4rem 25rem;
+  text-align: center;
+}
+.search-section h3{
+  color: var(--white8);
+  font-weight: 200;
+  text-transform: uppercase;
+}
+.search-bar{
+  padding: 0.5rem 12rem;
+  background-color: var(--white2);
+  color: var(--white5);
+}
+p.search-bar{
+  font-weight: 200;
+}
+p.search-desc{
+  color: var(--white8);
+  font-weight: 300;
+}
+h2.section-title{
+  text-transform: uppercase;
+  color: var(--main-color);
+  font-weight: 400;
+  margin:0;
+  padding: 3rem 8rem 0rem 8rem;
+}
+.digest-section{
+  background-color: var(--main-color);
+  height: 15vh;
+  padding: 2rem 8rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.digest-section h3{
+  color: var(--white8);
+  font-weight:300;
+  text-transform: uppercase;
+  margin:0;
+}
+.digest-section p{
+  margin: 1rem 0;
+  color: var(--white9);
+}
+.digest-section a{
+  margin: 1rem 0;
+  color: var(--white9);
+}
+.blog-item{
+  height: 320px;
+  display:flex;
+  flex-direction: row;
+  padding:2rem 8rem;
+}
+.blog-col{
+  padding:2rem 4rem;
+
+  display: flex;
+  flex-direction: row ;
+  max-width: none;
+margin-left: auto;
+margin-right: auto;
+display: -webkit-flex;
+display: -ms-flexbox;
+display: flex;
+-webkit-flex-flow: row wrap;
+-ms-flex-flow: row wrap;
+flex-flow: row wrap;
+}
+.blog-col-item{
+  -webkit-flex: 0 0 50%;
+  -ms-flex: 0 0 50%;
+  flex: 0 0 50%;
+  max-width: 50%;
+  color: white;
+  position: relative;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0rem;
+}
+.blog-col-item .text-col{
+  width:100%;
+  padding:0;
+  height: 400px;
+}
+.blog-col-item .img-col{
+  width: 100%;
+  height: 200px;
+
+}
+.img-col{
+  width: 30%;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.text-col{
+  display:flex;
+  flex-direction: column;
+  width:70%;
+  padding: 2rem 4rem;
+  background-color: var(--grey05);
+  justify-content: space-around;
+}
+.text-col.full-width{
+  width:100%;
+  padding: 1rem 4rem;
+}
+
+a.post-title{
+text-decoration: none;
+color: var(--grey8);
+text-transform: uppercase;
+margin:0;
+}
+.blog-col-item a.post-title{
+  text-decoration: none;
+  color: var(--grey8);
+  text-transform: uppercase;
+  margin:2rem 2rem 1rem 2rem;
+  }
+.blog-col-item .post-date{
+  margin: 0 2rem;
+} 
+.blog-col-item .post-content{
+  margin: 0 2rem;
+}
+.blog-col-item .more-button {
+  margin: 0 2rem 2rem 2rem;
+}
+a.post-title h3{
+  margin:0;
+}
+.post-date{
+  display:flex;
+  flex-direction: row;
+}
+.post-date h4{
+  text-decoration: none;
+color: var(--grey5);
+font-weight:400;
+margin:0;
+}
+p.material-icons{
+  margin:0;
+}
+.post-content{
+  line-height: 1.6;
+  color: var(--grey8);
+}
+.more-button{
+  width:200px;
+  background-color: var(--grey2);
+}
+.more-button.main-color{
+  width:200px;
+  background-color: var(--main-color);
+}
+a.button-color{
+  text-decoration: none;
+  margin:0;
+  background-color: var(--grey9);
+  color: #ffffff;
+  padding: 10px 30px;
+}
+.b-button {
+  padding: 10px 10px;
+  display: inline-block;
+  text-transform: uppercase;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  transition: all .4s ease;
+  color: white;
+  cursor: pointer; 
+ 
+}
+a.b-button{
+  font-size: 14px;
+  margin:0;
+  text-decoration: none;
+}
+.b-button .material-icons {
+  font-size: 12px;
+  font-weight: 600; 
+}
+
+.source-tag{
+  width: 12%;
+  background-color: var(--main-color);
+  text-align: center;
+  margin: 0.5rem 0;
+}
+.source-tag p{
+  margin:5px 0;
+  color: #ffffff;
+  text-transform: uppercase;
+  font-size: 8pt;
+  font-weight: 600;
+
 }
