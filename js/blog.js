@@ -15,11 +15,6 @@ function isReloadedPage() {
 ////////////////////////////////////////////////////////////
 
 
-const client=  new DirectusSDK({
-  url: "https://directus.thegovlab.com/",
-  project: "thegovlab",
-  storage: window.localStorage
-})
 
 
 Vue.use(VueMeta);
@@ -38,11 +33,11 @@ new Vue({
     this.blogslug = this.blogslug[this.blogslug.length - 1].split('.')[0];
 
     this.fetchBlog();
-    
+
   },
   methods: {
 
-   
+
     fetchBlog() {
       self = this;
       const client = new DirectusSDK({
@@ -69,7 +64,7 @@ new Vue({
   ,
   formatDate(date) {
   return moment(date).format('DD MMMM YYYY');
-  }
+}
   }
 });
 
