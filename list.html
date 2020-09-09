@@ -72,21 +72,16 @@
     <div id="blog">
     <div class="hero-blog">
         <h4 >RESULTS FROM THE GOVLAB BLOG</h4>
-        <div class="hero-results"><h4>{{totalResults}} Results found for "{{searchTerm}}"</h4></div>
+        <div v-if="searchTerm" class="hero-results"><h4>{{totalResults}} Results found for "{{searchTerm}}"</h4></div>
     </div>
 
+          <div style="padding-top:0;" class="blog-col">
 
-    <div class="b-events">
-      <div class="page-wrapper">
-
-          <div class="e-wrap">
-    <!-- <div v-if="listHP.length>0" v-for="(result,index) in listHP"> -->
-      <div v-if="posts.length>0 && post.status == 'published' &&  post.scheduled <= currentDateTime()" class="blog-item" v-for="(post,index) in posts">
-        <div class="text-col full-width">
+      <div v-if="posts.length>0 && post.status == 'published' &&  post.scheduled <= currentDateTime()" class="blog-col-item" v-for="(post,index) in posts">
+        <div class="text-col">
         <a class="post-title" :href="'https://dev.thegovlab.com/blog/post/'+post.slug" target='_blank'>
           <h3 v-html="post.title"></h3></a>
           <div class="post-date">
-            <!-- <p class="material-icons">insert_invitation</p> -->
             <i>
               <h4 v-if="post.original_date" v-html="dateShow(post.original_date)"></h4>
               <h4 v-if="!post.original_date"v-html="dateShow(post.created_on)"></h4>
@@ -99,11 +94,12 @@
             <a class="b-button" :href="'https://dev.thegovlab.com/blog/post/'+post.slug" target="_blank"> Continue Reading <i
                 class="material-icons">keyboard_arrow_down</i></a>
           </div>
-
           </div>
+          </div>
+
       </div>
-    </div>
-  </div>
+   
+
   <!-- SEE MORE FROM THE NETWORKS -->
 
   <div v-if="searchTerm && posts.length <=0 ">
