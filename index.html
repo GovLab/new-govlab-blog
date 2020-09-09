@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>The Governance Lab</title>
+
+  <link href="/img/favicon.ico" rel="shortcut icon">
+
+  <link rel="stylesheet" href="https://use.typekit.net/kad3hcl.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-40012093-25"></script>
+
+
+<link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css" />
+    <link rel="stylesheet" href="https://dev.thegovlab.com/blog/_archive/post/css/styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.js"></script>
+    <script src="https://momentjs.com/downloads/moment.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.19/lodash.min.js"></script>
+    <script src="https://unpkg.com/@directus/sdk-js@5.3.4/dist/directus-sdk.umd.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-40012093-25');
+    </script>
+
+
+  </head>
+<body class="homepage" onwheel="scroll_dismiss()">
+  <!-- Top Navigation Menu -->
+  <div class="topnav">
+    <div class="menu-bars">
+      <div class="bar-wrap">
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+          <i class="fa fa-bars"></i>
+        </a>
+      </div>
+    </div>
+    <a class="top_logo" href="index.html"><img src="img/govlab-logo-white.png"
+        alt="The GovLab Blog"></a>
+    <!-- Navigation links (hidden by default) -->
+    <div class='lang-select'>
+
+    </div>
+  </div>
+  <div id="myLinks">
+    <div class="menu-items">
+      <div class="menu-sub"><a href="index.html">Home</a></div>
+      <div class="menu-sub"><a href="about.html">About</a></div>
+      <div class="menu-sub"> <a href="index.html#topics">Topic</a></div>
+      <div class="menu-sub"><a href="team.html">Team</a></div>
+      <div class="menu-sub"><a href=""></a></div>
+      <div class="menu-sub"><a href=""></a></div>
+      <div class="menu-sub"><a href=""></a></div>
+    </div>
+  </div>
+
+
+
+
+
+    <div id="app" v-cloak>
+    <div class="hero">
+      <img style="padding-top: 20px;" v-if="!searchactive"  src="img/govlab-logo-wp.png">
+      <div v-if="searchactive" class="pulsating-circle"></div>
+      <h2>THE GOVLAB BLOG</h2>
+
+    </div>
+
+    <div class="search-section">
+      <h3>Explore our knowledge base</h3>
+
+      <input class="search-bar" v-model="searchTerm" v-on:input="searchAll" id="credit-limit-input" type="text" placeholder="SEARCH HERE">
+      <div style="width:200px; position:absolute; margin-left:40%; margin-bottom:5%">
+
+      </div>
+
+
+      <p class="search-desc">The GovLab’s resources includes results from this blog, The Living Library and the Open
+        Governance Research Exchange</p>
+
+
+
+    </div>
+    <div v-if="listHP.length > 0" class="" style="    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;width:100%; height: 6vh;">
+      <!-- <b >Total Results:</b><br> -->
+      <div class="source-tag" style="width:34%; padding-top: 15px; height: 6vh;"><p><a :href="'https://dev.thegovlab.com/blog/list.html?q='+searchTerm" target="_blank" style="color:#fff; text-decoration:none; font-size: 1.5em;">The Govlab Blog:  <span v-if="listBlog.meta" > {{listBlog.meta.filter_count}}</span></a> <br></p></div>
+      <div class="source-tag-ttl" style="width:34%; padding-top: 15px; height: 6vh;"><p><a :href="'https://thelivinglib.org/search_studio/?wpsolr_q='+searchTerm" target="_blank" style="color:#fff; text-decoration:none; font-size: 1.5em;x"> The Living Library: <span v-if="listWP.headers">  {{listWPresults}}</span></a> <br></p></div>
+      <div class="source-tag-ogrx" style="width:34%; padding-top: 15px; height: 6vh;"><p><a :href="'https://ogrx.org/search.html?q='+searchTerm" target="_blank" style="color:#fff; text-decoration:none; font-size: 1.5em; "> OGRX: <span v-if="listOGRX.data">  {{listOGRX.data.total}}</span></a> <br></p></div>
+
+    </div>
+    <div class="b-events">
+      <div class="page-wrapper">
+
+          <div class="e-wrap">
+    <!-- <div v-if="listHP.length>0" v-for="(result,index) in listHP"> -->
+      <div v-if="listHP.length>0 && result.api=='blog'" class="blog-item" v-for="(result,index) in listHP">
+        <div class="text-col full-width">
+          <div class="source-tag">
+            <p>The GovLab Blog</p>
+          </div>
+        <a class="post-title" :href="'https://dev.thegovlab.com/blog/post/'+result.slug" target='_blank'>
+          <h3 v-html="result.title"></h3></a>
+          <div class="post-date">
+            <!-- <p class="material-icons">insert_invitation</p> -->
+            <i>
+              <h4 v-if="result.original_date" v-html="dateShow(result.original_date)"></h4>
+              <h4 v-if="!result.original_date"v-html="dateShow(result.created_on)"></h4>
+
+            </i>
+          </div>
+
+          <div class="post-content" v-html="result.excerpt"></div>
+          <div class="more-button main-color">
+            <a class="b-button" :href="'https://dev.thegovlab.com/blog/post/'+result.slug" target="_blank"> Continue Reading <i
+                class="material-icons">keyboard_arrow_down</i></a>
+          </div>
+
+          </div>
+      </div>
+      <div v-if="listHP.length>0 && result.api=='ogrx' || result.api=='ttl'" class="blog-item" v-for="(result,index) in listHP">
+        <div class="text-col full-width">
+            <div :class="[result.api=='ttl' ? 'source-tag-ttl' : 'source-tag-ogrx']">
+            <p v-if="result.api=='ogrx'">OGRX</p>
+            <p v-if="result.api=='ttl'">The Living Library</p>
+          </div>
+
+        <a v-if="result.api=='ttl'" class="post-title" :href="'https://thelivinglib.org/'+result.slug" target='_blank'>
+          <h3 v-if="result.api=='ttl'" v-html="result.title"></h3></a>
+
+          <a v-if="result.api=='ogrx'" class="post-title" :href="'https://ogrx.org/paper.html?n='+result.fields.publicationName" target='_blank'>
+            <h3 v-if="result.api=='ogrx'" v-html="result.fields.publicationName"></h3></a>
+
+          <div class="post-date">
+            <!-- <p class="material-icons">insert_invitation</p> -->
+            <i><h4 v-if="result.api=='ogrx'" v-html="dateShow(result.fields.publicationDate)"></h4></i>
+            <i><h4 v-if="result.api=='ttl'" v-html="dateShow(result.date)"></h4></i>
+          </div>
+
+          <div v-if="result.api=='ogrx'" class="post-content" v-html="cutExcerpt(result.fields.abstract)"></div>
+          <div v-if="result.api=='ttl'" class="post-content" v-html="cutExcerpt(result.excerpt.rendered)"></div>
+          <div class="more-button main-color">
+            <a  v-if="result.api=='ogrx'" class="b-button" :href="'https://ogrx.org/paper.html?n='+result.fields.publicationName" target="_blank"> Continue Reading <i class="material-icons">keyboard_arrow_down</i></a>
+            <a  v-if="result.api=='ttl'" class="b-button" :href="'https://thelivinglib.org/'+result.slug"  target="_blank"> Continue Reading <i class="material-icons">keyboard_arrow_down</i></a>
+          </div>
+
+          </div>
+      </div>
+    </div>
+  </div>
+  <!-- SEE MORE FROM THE NETWORKS -->
+  <div v-if="!featuredPost && listHP.length >0 ">
+  <div class="section-title"><h3>SEE MORE RESULTS FROM</h3></div>
+  <div class="more-results"><div class="more-button main-color"><a :href="'https://dev.thegovlab.com/blog/list.html?q='+searchTerm" target="_blank" class="b-button">THE GOVLAB BLOG</a></div>
+  <div class="more-button ttl-color"><a :href="'https://thelivinglib.org/search_studio/?wpsolr_q='+searchTerm" target="_blank" class="b-button">THE
+    LIVING LIBRARY</a></div>
+    <div class="more-button ogrx-color"><a :href="'https://ogrx.org/search.html?q='+searchTerm" target="_blank" class="b-button">OGRX</a></div></div>
+  </div>
+
+  <div v-if="!searchactive && searchTerm && listHP.length <=0 ">
+  <div class="section-title"><h3>NO RESULTS FOUND</h3></div>
+  </div>
+
+</div>
+
+    <h2 v-if="featuredPost" class="section-title">FEATURED POSTS</h2>
+    <!-- <div class="b-events" id="blog" v-cloak> -->
+    <div  v-if="featuredPost" class="b-events">
+      <div class="page-wrapper">
+        <div class="blog-col">
+          <div v-for="(post,index) in posts" v-if="posts && post.featured == true" class="blog-col-item">
+            <div>
+              <div class="img-col" v-if="post.image" :style="{ backgroundImage: 'url(' + post.image.data.full_url+ ')' }"></div>
+              <!-- <div v-if="post.image == null" class="img-col" :style="{ backgroundImage: src(images/govlab-logo-wp.png)}"></div> -->
+              <div class="text-col">
+
+                <a class="post-title" :href="'./post/'+post.slug">
+                  <h3 v-html="post.title"></h3>
+                </a>
+                <div class="post-date">
+                  <!-- <p class="material-icons">insert_invitation</p> -->
+                  <h4>
+                    <i v-if="post.original_date" v-html="dateShow(post.original_date)"></i>
+                    <i v-if="!post.original_date"v-html="dateShow(post.created_on)"></i>
+                  </h4>
+                </div>
+                <div class="post-content" v-html="post.excerpt"></div>
+                <div class="more-button main-color">
+                  <a class="b-button" :href="'./post/'+post.slug" target="_blank"> Continue Reading<i
+                      class="material-icons">keyboard_arrow_down</i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="digest-section">
+          <div>
+            <h3><span><b>SUBSCRIBE</b></span> To the digest</h3>
+            <p>A weekly curation of new finding and developments on innovation in governance</p>
+            <a>Go to the living library</a>
+          </div>
+          <div>
+
+          </div>
+
+        </div>
+        <h2 class="section-title">LATEST POSTS FROM THE GOVLAB</h2>
+<!--        
+        <div v-for="(post, index) in posts" v-if="index <=10" class="">
+          <div v-if="post.featured == false" class="blog-item">
+
+            <div class="text-col full-width">
+              <div class="source-tag">
+                <p>The GovLab Blog</p>
+              </div>
+              <a class="post-title" :href="'./post/'+post.slug">
+                <h3 v-html="post.title"></h3>
+              </a>
+              <div class="post-date">
+                <h4>
+                  <i v-if="post.original_date" v-html="dateShow(post.original_date)"></i>
+                  <i v-if="!post.original_date"v-html="dateShow(post.created_on)"></i>
+                </h4>
+              </div>
+
+              <div class="post-content" v-html="post.excerpt"></div>
+              <div class="more-button main-color">
+                <a class="b-button" :href="'./post/'+post.slug" target="_blank"> Continue Reading <i
+                    class="material-icons">keyboard_arrow_down</i></a>
+              </div>
+            </div>
+          </div>
+        </div> -->
+        <div class="blog-col">
+          <div v-for="(post, index) in posts" class="blog-col-item">
+            <div v-if="post.featured == false">
+    
+              <div class="text-col">
+
+                <a class="post-title" :href="'./post/'+post.slug">
+                  <h3 v-html="post.title"></h3>
+                </a>
+                <div class="post-author">
+                  
+                <p>By &nbsp<span v-for="(author,index) in post.authors"><span v-if="index != post.authors.length-1">{{author.team_id.name}},&nbsp</span><span v-if="index == post.authors.length-1">{{author.team_id.name}}</span></span</p></p>
+                </div>
+                <div class="post-date">
+                  <!-- <p class="material-icons">insert_invitation</p> -->
+                  <h4>
+                    <i v-if="post.original_date" v-html="dateShow(post.original_date)"></i>
+                    <i v-if="!post.original_date"v-html="dateShow(post.created_on)"></i>
+                  </h4>
+                </div>
+                <div class="post-content" v-html="post.excerpt"></div>
+                <div class="more-button main-color">
+                  <a class="b-button" :href="'./post/'+post.slug" target="_blank"> Continue Reading<i
+                      class="material-icons">keyboard_arrow_down</i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+    </div>
+    <footer class='footer-alt'>
+      <div class="row align-center">
+        <div class="medium-6 medium-centered columns">
+        </div>
+
+      </div>
+      <div class="row">
+
+        <a class="footer_partner-logo" href="http://www.thegovlab.org" target="_blank"><img
+            src="img/govlab-logo-white.png" alt="The GovLab"></a>
+
+      </div>
+    </footer>
+    <div class="copyright">
+      <div class="row">
+        <div class="column">
+          <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+            <img class="copyright_cc-badge" alt="Creative Commons License"
+              src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a>
+          <p>&nbspThis work is licensed under a</p>&nbsp<a rel="license"
+            href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0
+            International License.</a>.
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    /* Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
+    function myFunction() {
+      var x = document.getElementById("myLinks");
+      if (x.style.display === "block") {
+        x.style.display = "none";
+      } else {
+        x.style.display = "block";
+      }
+    }
+  </script>
+  <script>
+    /* Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
+    function scroll_dismiss() {
+      if (document.body.scrollTop > 10 || document.documentElement.scrollTop > 10) {
+        var x = document.getElementById("myLinks");
+        if (x.style.display === "block") {
+          x.style.display = "none";
+        }
+      }
+    }
+  </script>
+
+
+
+<script src='https://unpkg.com/vue@2.0.3/dist/vue.js'></script>
+<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+<script src="https://unpkg.com/vue-meta/dist/vue-meta.min.js"></script>
+<script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-gtag@1.8.0/dist/vue-gtag.umd.min.js"></script>
+
+<script src="js/search.js"></script>
+</body>
+</html>
