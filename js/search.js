@@ -160,8 +160,12 @@ new Vue({
         'blog',
         {
           sort:"-created_on",
+<<<<<<< HEAD
           
           fields: ['*.*','authors.team_id.*','authors.team_id.picture.*','related_posts.incoming_blog_id.*','related_publications.pub_id.*','related_publications.pub_id.picture.*','related_projects.projects_id.*','related_projects.projects_id.main_picture.*']})
+=======
+          fields: ['*.*']})
+>>>>>>> f80dcfa731fc7a2cf5bf7443b44853e5d9379746
         .then(data => {
           self.posts = data.data;
       }).catch(err => {

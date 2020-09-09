@@ -15,6 +15,11 @@ function isReloadedPage() {
 ////////////////////////////////////////////////////////////
 
 
+const client=  new DirectusSDK({
+  url: "https://directus.thegovlab.com/",
+  project: "thegovlab",
+  storage: window.localStorage
+})
 
 
 Vue.use(VueMeta);
@@ -25,12 +30,22 @@ new Vue({
 	data: {
 
       blogData: [],
-      apiURL: 'https://directusdev.thegovlab.com/thegovlab'
+      apiURLDirectus: 'https://directusdev.thegovlab.com/',
+      apiURLWP: 'https://dev.thegovlab.com/',
+      customWPID: null,
+      customDirectusID: null
   },
 
   created: function created() {
-    this.blogslug=window.location.pathname.split('/');
-    this.blogslug = this.blogslug[this.blogslug.length - 1].split('.')[0];
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    this.customWPID = urlParams.get('wp_preview_id');
+    this.customDirectusID = urlParams.get('directus_preview_id');
+
+    // this.blogslug=window.location.pathname.split('/');
+
+    // this.blogslug = this.blogslug[this.blogslug.length - 1];
+    // this.blogslug = this.blogslug[this.blogslug.length - 1].split('.')[0];
 
     this.fetchBlog();
 
@@ -40,13 +55,16 @@ new Vue({
 
     fetchBlog() {
       self = this;
+
+
       const client = new DirectusSDK({
         url: "https://directusdev.thegovlab.com/",
         project: "thegovlab",
         storage: window.localStorage
       });
 
-
+      if(self.customDirectusID != null)
+      {
       client.getItems(
   'blog',
   {
@@ -57,20 +75,29 @@ new Vue({
   }
   ).then(data => {
     console.log(data);
+    data.data['api'] = 'directus';
     self.blogData = data.data;
 
 }).catch(error => console.error(error));
+}
+
+if(self.customWPID != null)
+{
+
+  axios.get("https://dev.thegovlab.com/wp-json/wp/v2/posts?id="+self.customWPID+"&_embed").then(data => {
+    console.log(data);
+    data.data['api'] = 'wp';
+    self.blogData = data.data;
+    console.log(self.blogData);
+      window.scrollTo(0,0);
+  });
+}
     }
+
   ,
   formatDate(date) {
   return moment(date).format('DD MMMM YYYY');
-<<<<<<< HEAD
-},
-currentDateTime() {
-return jun.tz('America/New_York').format('hDD MMMM YYYY  h:mm:ss'); ;
-=======
->>>>>>> f80dcfa731fc7a2cf5bf7443b44853e5d9379746
-}
+  }
   }
 });
 

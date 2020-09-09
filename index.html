@@ -21,6 +21,10 @@
 <link rel="stylesheet" href="css/styles.css">
     <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.js"></script>
     <script src="https://momentjs.com/downloads/moment.js"></script>
+<<<<<<< HEAD
+=======
+    <script src="https://momentjs.com/downloads/moment-timezone-with-data.js"></script>
+>>>>>>> f80dcfa731fc7a2cf5bf7443b44853e5d9379746
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.19/lodash.min.js"></script>
     <script src="https://unpkg.com/@directus/sdk-js@5.3.4/dist/directus-sdk.umd.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -69,7 +73,11 @@
 
     <div id="app" v-cloak>
     <div class="hero">
+<<<<<<< HEAD
       <img style="padding-top: 20px;" v-if="!searchactive"  src="img/govlab-logo-wp.png">
+=======
+      <img v-if="!searchactive"  src="img/govlab-logo-wp.png">
+>>>>>>> f80dcfa731fc7a2cf5bf7443b44853e5d9379746
       <div v-if="searchactive" class="pulsating-circle"></div>
       <h2>THE GOVLAB BLOG</h2>
 
@@ -178,9 +186,45 @@
     <!-- <div class="b-events" id="blog" v-cloak> -->
     <div  v-if="featuredPost" class="b-events">
       <div class="page-wrapper">
+<<<<<<< HEAD
         <div class="blog-col">
           <div v-for="(post,index) in posts" v-if="posts && post.featured == true" class="blog-col-item">
             <div>
+=======
+        <div class="">
+
+          <div class="e-wrap">
+            <div v-if="posts && posts[0].featured == true" class="blog-item">
+
+              <div class="img-col" :style="{ backgroundImage: 'url(' + posts[0].image.data.full_url+ ')' }"></div>
+              <div class="text-col">
+
+                <a class="post-title" :href="'./post/'+posts[0].slug">
+                  <h3 v-html="posts[0].title"></h3>
+                </a>
+                <div class="post-date">
+                  <!-- <p class="material-icons">insert_invitation</p> -->
+                  <h4>
+                    <i v-if="posts[0].original_date" v-html="dateShow(posts[0].original_date)"></i>
+                    <i v-if="!posts[0].original_date"v-html="dateShow(posts[0].created_on)"></i>
+
+                  </h4>
+                </div>
+
+                <div class="post-content" v-html="posts[0].excerpt"></div>
+                <div class="more-button main-color">
+                  <a class="b-button" :href="'./post/'+posts[0].slug" target="_blank"> Continue Reading<i
+                      class="material-icons">keyboard_arrow_down</i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="blog-col">
+          <div v-for="(post,index) in posts" v-if="posts && post.featured == true && index !=0" class="blog-col-item">
+            <div style="padding: 0 4rem">
+>>>>>>> f80dcfa731fc7a2cf5bf7443b44853e5d9379746
               <div class="img-col" v-if="post.image" :style="{ backgroundImage: 'url(' + post.image.data.full_url+ ')' }"></div>
               <!-- <div v-if="post.image == null" class="img-col" :style="{ backgroundImage: src(images/govlab-logo-wp.png)}"></div> -->
               <div class="text-col">
@@ -218,7 +262,10 @@
 
         </div>
         <h2 class="section-title">LATEST POSTS FROM THE GOVLAB</h2>
+<<<<<<< HEAD
 <!--        
+=======
+>>>>>>> f80dcfa731fc7a2cf5bf7443b44853e5d9379746
         <div v-for="(post, index) in posts" v-if="index <=10" class="">
           <div v-if="post.featured == false" class="blog-item">
 
@@ -230,6 +277,10 @@
                 <h3 v-html="post.title"></h3>
               </a>
               <div class="post-date">
+<<<<<<< HEAD
+=======
+                <!-- <p class="material-icons">insert_invitation</p> -->
+>>>>>>> f80dcfa731fc7a2cf5bf7443b44853e5d9379746
                 <h4>
                   <i v-if="post.original_date" v-html="dateShow(post.original_date)"></i>
                   <i v-if="!post.original_date"v-html="dateShow(post.created_on)"></i>
@@ -243,6 +294,7 @@
               </div>
             </div>
           </div>
+<<<<<<< HEAD
         </div> -->
         <div class="blog-col">
           <div v-for="(post, index) in posts" class="blog-col-item">
@@ -275,6 +327,9 @@
 
         </div>
 
+=======
+        </div>
+>>>>>>> f80dcfa731fc7a2cf5bf7443b44853e5d9379746
       </div>
     </div>
   </div>

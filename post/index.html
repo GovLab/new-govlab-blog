@@ -10,10 +10,16 @@
 
   <link href="/images/favicon.ico" rel="shortcut icon">
   <link rel="stylesheet" href="css/styles.css">
+<<<<<<< HEAD
   <link rel="stylesheet" href="css/wp-styles.css">
 
   <link rel="stylesheet" href="https://use.typekit.net/kad3hcl.css">
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+=======
+  <link rel="stylesheet" href="https://dev.thegovlab.com/wp-content/themes/twentytwenty/style.css">
+
+  <link rel="stylesheet" href="https://use.typekit.net/kad3hcl.css">
+>>>>>>> f80dcfa731fc7a2cf5bf7443b44853e5d9379746
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -70,17 +76,27 @@
   </div>
   <div id="blogpage">
 
+<<<<<<< HEAD
     <div class="row top-section" v-if="blogData[0].image" :style="{ backgroundImage: 'url(' + blogData[0].image.data.full_url+ ')' }">
       
     </div>
     <div class="row top-section default-image" v-if="!blogData[0].image">
+=======
+    <!-- <div class="row top-section" v-if="blogData[0]" :style="{ backgroundImage: 'url(' + blogData[0].image.data.full_url+ ')' }"> -->
+<div class="row top-section" v-if="blogData[0]">
+>>>>>>> f80dcfa731fc7a2cf5bf7443b44853e5d9379746
       <h1 v-html="blogData[0].title"></h1>
       <!-- <p>Published on: {{blogData[0].original_date}}</p> -->
       <p v-if="blogData[0].original_date">{{formatDate(blogData[0].original_date)}}</p>
       <p v-if="!blogData[0].original_date">{{formatDate(blogData[0].created_on)}}</p>
 
+<<<<<<< HEAD
 
   </div>
+=======
+    </div>
+    <div class="row top-section" v-if="blogData[0].image" :style="{ backgroundImage: 'url(' + blogData[0].image.data.full_url+ ')' }"></div>
+>>>>>>> f80dcfa731fc7a2cf5bf7443b44853e5d9379746
 
 <div   v-if="(blogData[0].related_publications == '') && (blogData[0].related_projects == '')">
     <div class="col-wrap">
@@ -118,7 +134,13 @@
         <div class="sidebar column-wrap">
           <p>RELATED PROJECTS</p>
           <div class="sidebar-wrap"  v-for="project in blogData[0].related_projects">
+<<<<<<< HEAD
 
+=======
+            <div class="related-projects"
+              :style="{ backgroundImage: 'url(' + project.projects_id.main_picture.data.thumbnails[3].url+ ')' }">
+            </div>
+>>>>>>> f80dcfa731fc7a2cf5bf7443b44853e5d9379746
             <div class="related-project-text">
 
             <a :href="'http://www.thegovlab.org/' + project.projects_id.slug" target="_blank">{{project.projects_id.name}}</a>
@@ -127,7 +149,13 @@
           <br>
           <p>RELATED PUBLICATIONS</p>
           <div class="sidebar-wrap" v-for="member in blogData[0].related_publications">
+<<<<<<< HEAD
 
+=======
+            <div class="related-projects"
+              :style="{ backgroundImage: 'url(' + member.pub_id.picture.data.thumbnails[3].url+ ')' }">
+            </div>
+>>>>>>> f80dcfa731fc7a2cf5bf7443b44853e5d9379746
             <div class="related-project-text">
             <a :href="member.pub_id.url" target="_blank">{{member.pub_id.title}}</a>
             </div>

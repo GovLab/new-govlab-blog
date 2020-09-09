@@ -47,7 +47,10 @@ new Vue({
     this.blogslug=window.location.href.split('/');
     // this.blogslug=window.location.pathname.split('/');
     this.blogslug = this.blogslug[this.blogslug.length - 1];
+<<<<<<< HEAD
     
+=======
+>>>>>>> f80dcfa731fc7a2cf5bf7443b44853e5d9379746
     // this.blogslug = this.blogslug[this.blogslug.length - 1].split('.')[0];
 
     this.fetchBlog();
