@@ -15,6 +15,11 @@ function isReloadedPage() {
 ////////////////////////////////////////////////////////////
 
 
+const client=  new DirectusSDK({
+  url: "https://directus.thegovlab.com/",
+  project: "thegovlab",
+  storage: window.localStorage
+})
 
 
 Vue.use(VueMeta);
@@ -23,14 +28,27 @@ new Vue({
   el: '#blogpage',
 
 	data: {
-
+      meta_title: '',
+      meta_content: '',
       blogData: [],
       apiURL: 'https://directusdev.thegovlab.com/thegovlab'
   },
+  metaInfo () {
+        return {
+          title: this.meta_title,
+          meta: [
+            {title: this.meta_title, property:'og:title'},
+      {  name: 'description', content: this.meta_content, property:'og:description'}
+    ]
+    }
+  },
 
   created: function created() {
-    this.blogslug=window.location.pathname.split('/');
-    this.blogslug = this.blogslug[this.blogslug.length - 1].split('.')[0];
+    this.blogslug=window.location.href.split('/');
+    // this.blogslug=window.location.pathname.split('/');
+    this.blogslug = this.blogslug[this.blogslug.length - 1];
+    
+    // this.blogslug = this.blogslug[this.blogslug.length - 1].split('.')[0];
 
     this.fetchBlog();
 
@@ -57,7 +75,13 @@ new Vue({
   }
   ).then(data => {
     console.log(data);
-    self.blogData = data.data;
+
+    self.meta_title = data.data[0].title;
+    self.meta_content = data.data[0].excerpt;
+
+    if(data.data[0].status == 'published' &&  data.data[0].scheduled <= self.currentDateTime())self.blogData = data.data;
+
+    console.log(self.meta_title, self.meta_content);
 
 }).catch(error => console.error(error));
     }
@@ -66,8 +90,9 @@ new Vue({
   return moment(date).format('DD MMMM YYYY');
 },
 currentDateTime() {
-return jun.tz('America/New_York').format('hDD MMMM YYYY  h:mm:ss'); ;
-}
+var currentTime = moment();
+return currentTime.tz('America/New_York').format('YYYY-MM-DD h:mm:ss');
+},
   }
 });
 

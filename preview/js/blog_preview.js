@@ -15,6 +15,11 @@ function isReloadedPage() {
 ////////////////////////////////////////////////////////////
 
 
+const client=  new DirectusSDK({
+  url: "https://directus.thegovlab.com/",
+  project: "thegovlab",
+  storage: window.localStorage
+})
 
 
 Vue.use(VueMeta);
@@ -29,8 +34,10 @@ new Vue({
   },
 
   created: function created() {
-    this.blogslug=window.location.pathname.split('/');
-    this.blogslug = this.blogslug[this.blogslug.length - 1].split('.')[0];
+    this.blogslug=window.location.href.split('?');
+    // this.blogslug=window.location.pathname.split('/');
+    this.blogslug = this.blogslug[this.blogslug.length - 1];
+    // this.blogslug = this.blogslug[this.blogslug.length - 1].split('.')[0];
 
     this.fetchBlog();
 
@@ -64,10 +71,7 @@ new Vue({
   ,
   formatDate(date) {
   return moment(date).format('DD MMMM YYYY');
-},
-currentDateTime() {
-return jun.tz('America/New_York').format('hDD MMMM YYYY  h:mm:ss'); ;
-}
+  }
   }
 });
 

@@ -21,27 +21,18 @@ main();
 ////////////////////////////////////////////////////////////
 
 
-// Vue.use(BootstrapVue);
+Vue.use(BootstrapVue);
 Vue.use(VueMeta);
-
-
-
 
 new Vue({
 
   el: '#blog',
   data () {
     return {
-      baseUrl: 'https://dev.thegovlab.com/wp-json/wp/v2/posts?cat=2&_embed',
-      perPage: '?per_page=10',
-      wpFetchHeaders: {
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Expose-Headers': 'x-wp-total'
-        }
-      },
+      searchTerm:'',
+      totalResults:0,
       totalPages: 100,
-      perPage: 1,
+      perPage: 10,
       client_blog:'',
       currentPage: 1,
       postdata: [],
@@ -49,13 +40,26 @@ new Vue({
       currentDate: '',
       slug:'',
       more_body: false,
-    
+      meta_title: 'The GovLab | Blog',
+      meta_content: 'Deepening our understanding of how to govern more effectively and legitimately through technology.'
+    }
+  },
+  metaInfo () {
+        return {
+          title: this.meta_title,
+          meta: [
+            {title: this.meta_title, property:'og:title'},
+      {  name: 'description', content: this.meta_content, property:'og:description'}
+    ]
     }
   },
   created: function created() {
     this.slug=window.location.href.split('/');
-
     this.slug = this.slug[this.slug.length - 1];
+
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    this.searchTerm = urlParams.get('q');
 
     this.client_blog = new DirectusSDK({
       url:"https://directusdev.thegovlab.com/",
@@ -63,8 +67,10 @@ new Vue({
       storage: window.localStorage
     });
 
-    this.fetchPosts();
+
+    this.fetchPosts(this.currentPage);
   },
+
   methods: {
 //     fetchHeader() {
 //
@@ -76,23 +82,24 @@ new Vue({
 //       })
 //
 // },
-  fetchPosts()
+  fetchPosts(p)
   {
-
-
+    self.currentPage = p;
     self = this;
 
-
-
     self.client_blog.getItems(
-      'blog',
-      {
-        fields: ['*.*']})
+      'blog', {
+        sort:"-created_on",
+        meta:"*",
+        page:self.currentPage,
+        limit:10,
+        q: self.searchTerm
+      })
       .then(data => {
-      
-        self.posts = data.data;
-        console.log(self.posts);
-        // Promise.all(data.data.map (function(a,b){ self.list.push(a)}))
+        self.totalResults = data.meta.filter_count;
+        self.totalPages = data.meta.page_count;
+        console.log(self.totalPages);
+        Promise.all(data.data.map (function(a,b){ self.posts.push(a)}))
     }).catch(err => {
     console.log(err);
   })
@@ -112,6 +119,10 @@ new Vue({
     dateShow(date) {
       return moment(date).format("LL");
     },
+    currentDateTime() {
+    var currentTime = moment();
+    return currentTime.tz('America/New_York').format('YYYY-MM-DD h:mm:ss'); 
+  },
     eventMore(link) {
       window.open(link, '_blank');
 
