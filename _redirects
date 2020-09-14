@@ -1,1 +1,3 @@
 /post/*  /post/index.html
+/post/*  /post/index.html
+/post/*  /post/:splat   200
