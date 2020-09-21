@@ -28,16 +28,16 @@ new Vue({
   el: '#blogpage',
 
 	data: {
-
+      blogPostID:'',
       blogData: [],
       apiURL: 'https://directusdev.thegovlab.com/thegovlab'
   },
 
   created: function created() {
-    this.blogslug=window.location.href.split('?');
-    // this.blogslug=window.location.pathname.split('/');
-    this.blogslug = this.blogslug[this.blogslug.length - 1];
-    // this.blogslug = this.blogslug[this.blogslug.length - 1].split('.')[0];
+
+    let urlParams = new URLSearchParams(window.location.search);
+    console.log( urlParams.get('preview_id'));
+    this.blogPostID=urlParams.get('preview_id');
 
     this.fetchBlog();
 
