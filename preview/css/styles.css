@@ -18,6 +18,7 @@
 body {
   margin: 0;
   font-family: 'proxima-nova', sans-serif;
+  font-family: 'Merriweather', serif;
 }
 /* Style the navigation menu */
 .topnav {
@@ -167,12 +168,20 @@ color: #ffffff;
 .row.top-section{
   background-blend-mode: multiply;
 background-color: var(--main-overlay-color);
+background-size: contain;
+background-position: center top;
+height: 50vh;
+padding: 0 10rem;
+}
+.row.top-section.default-image{
+  background-blend-mode: multiply;
+  background-image: url("../images/default.jpg");
+background-color: var(--main-overlay-color);
 background-size: cover;
 background-position: center top;
 height: 50vh;
 padding: 0 10rem;
 }
-
 .row.top-section h1{
  color: #ffffff;
  font-size: 3rem;
@@ -319,15 +328,17 @@ align-items: flex-start;
   font-size: 0.8rem;
 }
 .blog-text{
+  font-family: 'Merriweather', serif;
   color: var(--grey8);
-  line-height: 1.8;
-  font-size:1.1rem;
+  line-height: 2.5;
+  font-size:1rem;
   font-weight: 300;
-  padding: 0 15rem 0 15rem;
-  text-align: justify;
+  padding: 0 20rem 0 20rem;
+  text-align: left;
 }
+
 .blog-text img{
-  width: 400px;
+  width: 600px;
 }
 .related-stories{
   padding: 2rem 15rem 2rem 15rem;
@@ -336,16 +347,21 @@ align-items: flex-start;
 }
 .related-stories p{
   font-weight: 600;
+  margin-bottom: 1rem;
 }
+
 .related-stories a{
   width:100%;
   text-decoration: none;
   color: #3d3d3d;
-  margin-bottom: 5px;
+  margin-bottom: 1rem;
 }
 .related-stories a:hover{
   transition: all .6s ease;
   color: #000000;
+}
+.related-stories a #underline{
+  border-bottom-width: 1px;
 }
 .related-stories a:hover #underline{
   transition: all .6s ease;
@@ -355,7 +371,7 @@ align-items: flex-start;
   border-bottom: 2px solid var(--accent-color);
 }
 .col-80 .blog-text{
-  padding: 0 5rem 0 5rem;
+  padding: 0 15rem 0 5rem;
 }
 
 .sidebar{
@@ -376,7 +392,6 @@ align-items: flex-start;
   align-content: center;
   text-align: center;
   margin-top: 20px;
-  padding:20px 0;
 }
 .sidebar-wrap a{
   margin-top: 10px;
@@ -388,9 +403,18 @@ align-items: flex-start;
   font-weight: 500;
 }
 .related-project-text{
-  background-color: #d6d6d6;
-  padding: 15px 0;
+  background-color: var(--grey05);
+  padding: 10px 0;
+  border-radius: 10px;
+}
+.related-project-text:hover{
+  cursor: pointer;
+  background-color: var(--accent-color);
+  transition: all .6s ease;
 
+}
+.related-project-text a{
+  font-size: 10pt;
 }
 .related-projects{
   height: 20vh; 
