@@ -53,7 +53,7 @@ new Vue({
 
     searchTerm:'',
     searchBlob:[],
-    currentPage: 1,
+    currentPage: 0,
     searchactive: false,
     postAmount:3,
 
@@ -157,7 +157,7 @@ new Vue({
      fetchPosts(p)
    {
      self = this;
-     self.currentPage = p;
+     self.currentPage++;
      console.log(self.currentPage)
      self.client_blog.getItems(
        'blog', {
