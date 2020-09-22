@@ -444,6 +444,7 @@ align-items: flex-start;
   width:30px;
   height:30px; 
   background-size: contain; 
+  background-repeat: no-repeat;
   border-radius:20px;
 }
 .row-wrap.left-pad{
