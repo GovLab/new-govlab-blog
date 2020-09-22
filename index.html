@@ -246,7 +246,7 @@
         </div> -->
         <div class="blog-col">
           <div v-for="(post, index) in posts" class="blog-col-item">
-            <div v-if="post.featured == false">
+            <div v-if="post.featured == false && post.scheduled <= currentDateTime()">
     
               <div class="text-col">
 
