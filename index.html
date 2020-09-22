@@ -16,7 +16,6 @@
 
 
 <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css" />
-    <link rel="stylesheet" href="https://dev.thegovlab.com/blog/_archive/post/css/styles.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="css/styles.css">
     <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.js"></script>
@@ -96,7 +95,7 @@
     justify-content: center;
     align-items: center;width:100%; height: 6vh;">
       <!-- <b >Total Results:</b><br> -->
-      <div class="source-tag" style="width:34%; padding-top: 15px; height: 6vh;"><p><a :href="'https://dev.thegovlab.com/blog/list.html?q='+searchTerm" target="_blank" style="color:#fff; text-decoration:none; font-size: 1.5em;">The Govlab Blog:  <span v-if="listBlog.meta" > {{listBlog.meta.filter_count}}</span></a> <br></p></div>
+      <div class="source-tag" style="width:34%; padding-top: 15px; height: 6vh;"><p><a :href="'list.html?q='+searchTerm" target="_blank" style="color:#fff; text-decoration:none; font-size: 1.5em;">The Govlab Blog:  <span v-if="listBlog.meta" > {{listBlog.meta.filter_count}}</span></a> <br></p></div>
       <div class="source-tag-ttl" style="width:34%; padding-top: 15px; height: 6vh;"><p><a :href="'https://thelivinglib.org/search_studio/?wpsolr_q='+searchTerm" target="_blank" style="color:#fff; text-decoration:none; font-size: 1.5em;x"> The Living Library: <span v-if="listWP.headers">  {{listWPresults}}</span></a> <br></p></div>
       <div class="source-tag-ogrx" style="width:34%; padding-top: 15px; height: 6vh;"><p><a :href="'https://ogrx.org/search.html?q='+searchTerm" target="_blank" style="color:#fff; text-decoration:none; font-size: 1.5em; "> OGRX: <span v-if="listOGRX.data">  {{listOGRX.data.total}}</span></a> <br></p></div>
 
@@ -111,7 +110,7 @@
           <div class="source-tag">
             <p>The GovLab Blog</p>
           </div>
-        <a class="post-title" :href="'https://dev.thegovlab.com/blog/post/'+result.slug" target='_blank'>
+        <a class="post-title" :href="'post/'+result.slug" target='_blank'>
           <h3 v-html="result.title"></h3></a>
           <div class="post-date">
             <!-- <p class="material-icons">insert_invitation</p> -->
@@ -124,7 +123,7 @@
 
           <div class="post-content" v-html="result.excerpt"></div>
           <div class="more-button main-color">
-            <a class="b-button" :href="'https://dev.thegovlab.com/blog/post/'+result.slug" target="_blank"> Continue Reading <i
+            <a class="b-button" :href="'post/'+result.slug" target="_blank"> Continue Reading <i
                 class="material-icons">keyboard_arrow_down</i></a>
           </div>
 
@@ -163,7 +162,7 @@
   <!-- SEE MORE FROM THE NETWORKS -->
   <div v-if="!featuredPost && listHP.length >0 ">
   <div class="section-title"><h3>SEE MORE RESULTS FROM</h3></div>
-  <div class="more-results"><div class="more-button main-color"><a :href="'https://dev.thegovlab.com/blog/list.html?q='+searchTerm" target="_blank" class="b-button">THE GOVLAB BLOG</a></div>
+  <div class="more-results"><div class="more-button main-color"><a :href="'list.html?q='+searchTerm" target="_blank" class="b-button">THE GOVLAB BLOG</a></div>
   <div class="more-button ttl-color"><a :href="'https://thelivinglib.org/search_studio/?wpsolr_q='+searchTerm" target="_blank" class="b-button">THE
     LIVING LIBRARY</a></div>
     <div class="more-button ogrx-color"><a :href="'https://ogrx.org/search.html?q='+searchTerm" target="_blank" class="b-button">OGRX</a></div></div>
