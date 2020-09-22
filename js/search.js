@@ -341,9 +341,10 @@ new Vue({
     dateShow(date) {
       return moment(date).format("LL");
     },
-      dateShow(date) {
-        return moment(date).format("LL");
-      },
+currentDateTime() {
+var currentTime = moment();
+return currentTime.tz('America/New_York').format('YYYY-MM-DD h:mm:ss');
+},
       openURL(link) {
         window.open(link, '_blank');
 
