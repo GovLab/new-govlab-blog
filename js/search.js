@@ -160,7 +160,7 @@ new Vue({
         'blog',
         {
           sort:"-created_on",
-          
+
           fields: ['*.*','authors.team_id.*','authors.team_id.picture.*','related_posts.incoming_blog_id.*','related_publications.pub_id.*','related_publications.pub_id.picture.*','related_projects.projects_id.*','related_projects.projects_id.main_picture.*']})
         .then(data => {
           self.posts = data.data;
@@ -343,7 +343,7 @@ new Vue({
     },
 currentDateTime() {
 var currentTime = moment();
-return currentTime.tz('America/New_York').format('YYYY-MM-DD h:mm:ss');
+return currentTime.tz('America/New_York').format('YYYY-MM-DD HH:mm:ss');
 },
       openURL(link) {
         window.open(link, '_blank');
