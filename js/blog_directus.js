@@ -121,7 +121,7 @@ new Vue({
     },
     currentDateTime() {
     var currentTime = moment();
-    return currentTime.tz('America/New_York').format('YYYY-MM-DD h:mm:ss'); 
+    return currentTime.tz('America/New_York').format('YYYY-MM-DD HH:mm:ss'); 
   },
     eventMore(link) {
       window.open(link, '_blank');
