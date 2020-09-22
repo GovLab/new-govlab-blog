@@ -168,7 +168,6 @@ new Vue({
       console.log(err);
     })
     },
-
     /// Make Search Reqeusts
     searchAll (){
       this.debounceSearch();
