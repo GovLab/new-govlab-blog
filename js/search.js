@@ -156,7 +156,9 @@ new Vue({
       
      fetchPosts(p)
    {
+     self = this;
      self.currentPage = p;
+     console.log(self.currentPage)
      self.client_blog.getItems(
        'blog', {
          sort:"-created_on",
