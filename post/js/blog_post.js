@@ -42,7 +42,7 @@ new Vue({
           title: this.meta_title,
           meta: [
 		  
-		  {name: 'twitter:card', content: 'summary_large_image'},
+         {name: 'twitter:card', content: 'summary_large_image'},
           {name: 'twitter:title', content: this.meta_title},
           {name: 'twitter:description', content: this.meta_content},
           // image must be an absolute path
@@ -52,25 +52,11 @@ new Vue({
           {property: 'og:site_name', content: 'The Govlab Blog'},
           {property: 'og:type', content: 'website'},
           {property: 'og:image', content:  this.meta_image},
-          {property: 'og:description', content:  this.meta_content}
-//             { property:'og:title', content: this.meta_title},
-//             { property:'og:image', content: this.meta_image},
-//             { property:'og:description', content: this.meta_content},
-//             { property:'og:url', content: this.meta_url},
-//             { name:"twitter:title", content: this.meta_title },
-//             { name:"twitter:image", content: this.meta_image},
-//             { name:"twitter:description", content: this.meta_content},
-//             { name:"twitter:site", content: '@thegovlab'}
-		  
-// 	      {content: 'Title', property:'og:title'},
-//             { content: 'http://www.thegovlab.org/static/img/govlab-og.png', property:'og:image'},
-//             { content: 'test content', property:'og:description'},
-//             { name:"url", content: 'http://www.thegovlab.org/', property:'og:url'},
-//             { name:"twitter:title", content: 'Tiwtter Title', property:'twitter:title'},
-//             { name:"twitter:image", content:'http://www.thegovlab.org/static/img/govlab-og.png', property:'twitter:image'},
-//             { name:"twitter:description", content: 'Twitter desc', property:'twitter:description'},
-//             { name:"twitter:site", content: '@thegovlab', property:'twitter:site'}
-    ]
+          {property: 'og:description', content:  this.meta_content},
+          { itemprop:'name', content: this.meta_title},
+          { itemprop:'image', content: this.meta_image},
+          { itemprop:'description', content: this.meta_content}
+	  ]
     }
   },
 
