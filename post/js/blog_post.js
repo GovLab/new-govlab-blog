@@ -42,7 +42,7 @@ new Vue({
           title: this.meta_title,
           meta: [
 		  
-		  {name: 'twitter:card', content: 'summary'},
+		  {name: 'twitter:card', content: 'summary_large_image'},
           {name: 'twitter:title', content: 'Vue Social Cards Example'},
           {name: 'twitter:description', content: 'Vue sample site showing off Twitter and Facebook Cards.'},
           // image must be an absolute path
