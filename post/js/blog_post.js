@@ -31,7 +31,7 @@ new Vue({
       meta_title: '',
       meta_content: '',
       meta_image: '',
-      meta_url,	
+      meta_url: '',	
       blogData: [],
       apiURL: 'https://directusdev.thegovlab.com/thegovlab'
   },
