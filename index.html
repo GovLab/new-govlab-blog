@@ -187,7 +187,7 @@
     <div  v-if="featuredPost" class="b-events">
       <div class="page-wrapper">
         <div class="blog-col">
-          <div v-for="(post,index) in posts" v-if="posts && post.featured == true" class="blog-col-item">
+          <div v-for="(post,index) in posts" v-if="posts && post.featured == true && post.status == 'published' && post.scheduled <= currentDateTime()" class="blog-col-item">
             <div>
               <div class="img-col" v-if="post.image" :style="{ backgroundImage: 'url(' + post.image.data.full_url+ ')' }"></div>
               <!-- <div v-if="post.image == null" class="img-col" :style="{ backgroundImage: src(images/govlab-logo-wp.png)}"></div> -->
@@ -253,7 +253,7 @@
           </div>
         </div> -->
         <div class="blog-col">
-          <div v-for="(post, index) in posts" class="blog-col-item" v-if="post.featured == false && post.scheduled <= currentDateTime()">
+          <div v-for="(post, index) in posts" class="blog-col-item" v-if="posts && post.status == 'published' && post.featured == false && post.scheduled <= currentDateTime()">
             <div>
     
               <div class="text-col">
