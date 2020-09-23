@@ -47,7 +47,7 @@ new Vue({
             { name:"description", content: this.meta_content, property:'og:description'},
             { name:"url", content: this.meta_url, property:'og:url'},
 //             { name:"twitter:title", content: this.twitter_title, property:'twitter:title'},
-		              { name:"twitter:title", content: '		  Starting with NYC, new initiative weighs pros and cons of data re-use for COVID-19 and future threats', property:'twitter:title'},
+		              { name:"twitter:title", content: 'Starting with NYC, new initiative weighs pros and cons of data re-use for COVID-19 and future threats', property:'twitter:title'},
 
             { name:"twitter:image", content: this.twitter_image, property:'twitter:image'},
             { name:"twitter:description", content: this.twitter_desc, property:'twitter:description'},
