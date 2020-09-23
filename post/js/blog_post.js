@@ -30,6 +30,8 @@ new Vue({
 	data: {
       meta_title: '',
       meta_content: '',
+      meta_image: '',
+      meta_url,	
       blogData: [],
       apiURL: 'https://directusdev.thegovlab.com/thegovlab'
   },
@@ -37,8 +39,11 @@ new Vue({
         return {
           title: this.meta_title,
           meta: [
-            {title: this.meta_title, property:'og:title'},
-      {  name: 'description', content: this.meta_content, property:'og:description'}
+            {content: this.meta_title, property:'og:title'},
+            {content: this.meta_image, property:'og:image'},
+            { content: this.meta_content, property:'og:description'},
+            { content: this.meta_url, property:'og:url'}
+
     ]
     }
   },
