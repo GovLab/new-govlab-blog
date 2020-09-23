@@ -28,10 +28,12 @@ new Vue({
   el: '#blogpage',
 
 	data: {
-      meta_title: '',
+     meta_title: '',
       meta_content: '',
       meta_image: '',
-      meta_url: '',	
+      twitter_title:'',
+      twitter_image:'',
+      twitter_desc:'',	
       blogData: [],
       apiURL: 'https://directusdev.thegovlab.com/thegovlab'
   },
