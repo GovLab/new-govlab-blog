@@ -30,7 +30,7 @@ new Vue({
 	data: {
      meta_title: '',
       meta_content: '',
-      meta_image: 'http://www.thegovlab.org/static/img/govlab-og.png',
+      meta_image: '',
       twitter_title:'',
       twitter_image:'',
       twitter_desc:'',	
@@ -43,16 +43,16 @@ new Vue({
           meta: [
 		  
 		  {name: 'twitter:card', content: 'summary_large_image'},
-          {name: 'twitter:title', content: 'Vue Social Cards Example'},
-          {name: 'twitter:description', content: 'Vue sample site showing off Twitter and Facebook Cards.'},
+          {name: 'twitter:title', content: this.meta_title},
+          {name: 'twitter:description', content: this.meta_content},
           // image must be an absolute path
           {name: 'twitter:image', content: this.meta_image},
           // Facebook OpenGraph
-          {property: 'og:title', content: 'Vue Social Cards Example'},
-          {property: 'og:site_name', content: 'Vue Example'},
+          {property: 'og:title', content: this.meta_title},
+          {property: 'og:site_name', content: 'The Govlab Blog'},
           {property: 'og:type', content: 'website'},
           {property: 'og:image', content:  this.meta_image},
-          {property: 'og:description', content: 'Vue sample site showing off Twitter and Facebook Cards.'}
+          {property: 'og:description', content:  this.meta_content}
 //             { property:'og:title', content: this.meta_title},
 //             { property:'og:image', content: this.meta_image},
 //             { property:'og:description', content: this.meta_content},
@@ -106,11 +106,11 @@ new Vue({
   }
   ).then(data => {
 
-//     self.meta_title = data.data[0].title; self.twitter_title = data.data[0].title;
-//     self.meta_content = data.data[0].excerpt; self.twitter_desc = data.data[0].excerpt;
-//     self.meta_url = "https://blog.thegovlab.com/post/"+data.data[0].slug;
-//     if(data.data[0].image){ self.meta_image = data.data[0].image.data.full_url; self.twitter_image = data.data[0].image.data.full_url;}
-//     else { self.twitter_image = "http://www.thegovlab.org/static/img/govlab-og.png"; self.meta_image = "http://www.thegovlab.org/static/img/govlab-og.png";}
+    self.meta_title = data.data[0].title; 
+    self.meta_content = data.data[0].excerpt; 
+    self.meta_url = "https://blog.thegovlab.com/post/"+data.data[0].slug;
+    if(data.data[0].image){ self.meta_image = data.data[0].image.data.full_url;}
+    else { self.meta_image = "http://www.thegovlab.org/static/img/govlab-og.png";}
 
     if(data.data[0].status == 'published' &&  data.data[0].scheduled <= self.currentDateTime())self.blogData = data.data;
 
