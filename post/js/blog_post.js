@@ -41,11 +41,14 @@ new Vue({
         return {
           title: this.meta_title,
           meta: [
-            { name:"title", content: this.meta_title, property:'og:title'},
+//             { name:"title", content: this.meta_title, property:'og:title'},
+		              { name:"title", content:"Starting with NYC, new initiative weighs pros and cons of data re-use for COVID-19 and future threats", property:'og:title'},
             { name:"image", content: this.meta_image, property:'og:image'},
             { name:"description", content: this.meta_content, property:'og:description'},
             { name:"url", content: this.meta_url, property:'og:url'},
-            { name:"twitter:title", content: this.twitter_title, property:'twitter:title'},
+//             { name:"twitter:title", content: this.twitter_title, property:'twitter:title'},
+		              { name:"twitter:title", content: '		  Starting with NYC, new initiative weighs pros and cons of data re-use for COVID-19 and future threats', property:'twitter:title'},
+
             { name:"twitter:image", content: this.twitter_image, property:'twitter:image'},
             { name:"twitter:description", content: this.twitter_desc, property:'twitter:description'},
             { name:"twitter:site", content: '@thegovlab', property:'twitter:site'}
