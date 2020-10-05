@@ -75,7 +75,7 @@
       <div class="menu-sub"><a href="https://medium.com/smarter-crowdsourcing">Blog</a></div> -->
     </div>
   </div>
-  <div id="blogpage">
+  <div id="blogpage" v-cloak>
 
     <div class="row top-section" v-if="blogData[0].image" :style="{ backgroundImage: 'url(' + blogData[0].image.data.full_url+ ')' }">
       <h1 v-html="blogData[0].title"></h1>
