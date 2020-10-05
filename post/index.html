@@ -16,7 +16,7 @@
 <!--   <meta http-equiv="refresh" content="0; URL=https://govlab.github.io/new-govlab-blog/post/index.html"> -->
 <!--   <link rel="canonical" href="https://govlab.github.io/new-govlab-blog/post/index.html"> -->
 
-  <title>The Governance Lab</title>   
+  <title>The Governance Lab</title>
     <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image">
 
@@ -93,7 +93,8 @@
 
   </div>
 
-<!-- <div   v-if="(blogData[0].related_publications == '') && (blogData[0].related_projects == '')">
+<div  v-if="blogData[0].related_publications.length ==0 && blogData[0].related_projects == 0">
+
     <div class="col-wrap">
       <div class="col-100">
         <div class="row-wrap center left-pad">
@@ -111,8 +112,8 @@
         </div>
         <div class="blog-text" v-html="blogData[0].content">
         </div>
-        <div class="related-stories column-wrap">
-          <p>RELATED STORIES</p>
+        <div class="related-stories column-wrap" >
+          <p  v-if="blogData[0].related_posts.length > 0 ">RELATED STORIES</p>
           <a class="related-items" v-for="member in blogData[0].related_posts"
             :href="'http://www.thegovlab.org/' + member.incoming_blog_id.slug"
             target="_blank"><span id="underline" v-html="member.incoming_blog_id.title">.</span></a>
@@ -122,12 +123,12 @@
 
 
     </div>
-  </div> -->
-  <div>
+  </div>
+  <div v-if="blogData[0].related_publications.length >0 || blogData[0].related_projects.length >0">
     <div class="row-wrap">
       <div class="col-20">
         <div class="sidebar column-wrap">
-          <div v-if="blogData[0].related_projects">
+          <div v-if="blogData[0].related_projects.length >0">
           <p>RELATED PROJECTS</p>
           <div class="sidebar-wrap"  v-for="project in blogData[0].related_projects">
 
@@ -138,7 +139,7 @@
           </div>
           </div>
           <br>
-          <div v-if="blogData[0].related_publications">
+          <div v-if="blogData[0].related_publications.length >0 ">
           <p>RELATED PUBLICATIONS</p>
           <div class="sidebar-wrap" v-for="member in blogData[0].related_publications">
 
@@ -171,7 +172,7 @@
 
     </div>
     <div class="related-stories column-wrap">
-      <p>RELATED STORIES</p>
+      <p  v-if="blogData[0].related_posts.length > 0 ">RELATED STORIES</p>
       <a class="related-items" v-for="member in blogData[0].related_posts"
         :href="'http://www.thegovlab.org/' + member.incoming_blog_id.slug"
         target="_blank"><span id="underline">{{member.incoming_blog_id.title}}.</span></a>
