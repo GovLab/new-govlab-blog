@@ -113,7 +113,7 @@ new Vue({
 
     // Init Blog API SDK
     this.client_blog = new DirectusSDK({
-      url:"https://directusdev.thegovlab.com/",
+      url:"https://directus.thegovlab.com/",
       project:"thegovlab",
       storage: window.localStorage
     });
