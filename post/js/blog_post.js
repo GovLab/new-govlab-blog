@@ -15,12 +15,6 @@ function isReloadedPage() {
 ////////////////////////////////////////////////////////////
 
 
-const client=  new DirectusSDK({
-  url: "https://directus.thegovlab.com/",
-  project: "thegovlab",
-  storage: window.localStorage
-})
-
 
 Vue.use(VueMeta);
 new Vue({
@@ -34,8 +28,7 @@ new Vue({
       twitter_title:'',
       twitter_image:'',
       twitter_desc:'',	
-      blogData: [],
-      apiURL: 'https://directus.thegovlab.com/thegovlab'
+      blogData: []
   },
   metaInfo () {
         return {
