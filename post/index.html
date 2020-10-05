@@ -123,7 +123,7 @@
 
     </div>
   </div>
-  <div v-if="(blogData[0].related_publications != '') && (blogData[0].related_projects != '')">
+  <div v-if="blogData[0].related_publications || blogData[0].related_projects">
     <div class="row-wrap">
       <div class="col-20">
         <div class="sidebar column-wrap">
