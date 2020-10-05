@@ -93,7 +93,7 @@
 
   </div>
 
-<div   v-if="(blogData[0].related_publications == '') && (blogData[0].related_projects == '')">
+<!-- <div   v-if="(blogData[0].related_publications == '') && (blogData[0].related_projects == '')">
     <div class="col-wrap">
       <div class="col-100">
         <div class="row-wrap center left-pad">
@@ -122,11 +122,12 @@
 
 
     </div>
-  </div>
-  <div v-if="blogData[0].related_publications || blogData[0].related_projects">
+  </div> -->
+  <div>
     <div class="row-wrap">
       <div class="col-20">
         <div class="sidebar column-wrap">
+          <div v-if="blogData[0].related_projects">
           <p>RELATED PROJECTS</p>
           <div class="sidebar-wrap"  v-for="project in blogData[0].related_projects">
 
@@ -135,7 +136,9 @@
             <a :href="'http://www.thegovlab.org/' + project.projects_id.slug" target="_blank">{{project.projects_id.name}}</a>
             </div>
           </div>
+          </div>
           <br>
+          <div v-if="blogData[0].related_publications">
           <p>RELATED PUBLICATIONS</p>
           <div class="sidebar-wrap" v-for="member in blogData[0].related_publications">
 
@@ -143,7 +146,7 @@
             <a :href="member.pub_id.url" target="_blank">{{member.pub_id.title}}</a>
             </div>
           </div>
-
+        </div>
         </div>
 
       </div>
