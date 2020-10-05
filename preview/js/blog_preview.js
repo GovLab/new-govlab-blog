@@ -15,13 +15,6 @@ function isReloadedPage() {
 ////////////////////////////////////////////////////////////
 
 
-const client=  new DirectusSDK({
-  url: "https://directus.thegovlab.com/",
-  project: "thegovlab",
-  storage: window.localStorage
-})
-
-
 Vue.use(VueMeta);
 new Vue({
 
@@ -48,7 +41,7 @@ new Vue({
     fetchBlog() {
       self = this;
       const client = new DirectusSDK({
-        url: "https://directusdev.thegovlab.com/",
+        url: "https://directus.thegovlab.com/",
         project: "thegovlab",
         storage: window.localStorage
       });
