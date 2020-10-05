@@ -88,6 +88,7 @@ new Vue({
     self.meta_title = data.data[0].title; 
     self.meta_content = data.data[0].excerpt; 
     self.meta_url = "https://blog.thegovlab.com/post/"+data.data[0].slug;
+    console.log(data.data);
     if(data.data[0].image){ self.meta_image = data.data[0].image.data.full_url;
 	} else { 
 	    self.meta_image = "http://www.thegovlab.org/static/img/govlab-og.png";}
