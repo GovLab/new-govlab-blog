@@ -338,7 +338,8 @@ align-items: flex-start;
 }
 
 .blog-text img{
-  width: 600px;
+  width: auto;
+  height: 400px;
 }
 .related-stories{
   padding: 2rem 15rem 2rem 15rem;
