@@ -32,7 +32,7 @@ new Vue({
   el: '#blog',
   data () {
     return {
-      baseUrl: 'https://dev.thegovlab.com/wp-json/wp/v2/posts?cat=2&_embed',
+      // baseUrl: 'https://dev.thegovlab.com/wp-json/wp/v2/posts?cat=2&_embed',
       perPage: '?per_page=10',
       wpFetchHeaders: {
         headers: {
@@ -58,7 +58,7 @@ new Vue({
     this.slug = this.slug[this.slug.length - 1];
 
     this.client_blog = new DirectusSDK({
-      url:"https://directusdev.thegovlab.com/",
+      url:"https://directus.thegovlab.com/",
       project:"thegovlab",
       storage: window.localStorage
     });

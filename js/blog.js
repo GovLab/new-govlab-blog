@@ -25,7 +25,7 @@ new Vue({
 	data: {
 
       blogData: [],
-      apiURL: 'https://directusdev.thegovlab.com/thegovlab'
+      apiURL: 'https://directus.thegovlab.com/thegovlab'
   },
 
   created: function created() {
@@ -41,7 +41,7 @@ new Vue({
     fetchBlog() {
       self = this;
       const client = new DirectusSDK({
-        url: "https://directusdev.thegovlab.com/",
+        url: "https://directus.thegovlab.com/",
         project: "thegovlab",
         storage: window.localStorage
       });

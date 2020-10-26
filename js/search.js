@@ -33,7 +33,7 @@ new Vue({
   el: '#app',
   data: {
 
-    baseUrl: 'https://dev.thegovlab.com/wp-json/wp/v2/posts?cat=2&_embed',
+    // baseUrl: 'https://dev.thegovlab.com/wp-json/wp/v2/posts?cat=2&_embed',
     perPage: '?per_page=10',
     wpFetchHeaders: {
       headers: {

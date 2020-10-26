@@ -23,7 +23,7 @@ new Vue({
 	data: {
       blogPostID:'',
       blogData: [],
-      apiURL: 'https://directusdev.thegovlab.com/thegovlab'
+      apiURL: 'https://directus.thegovlab.com/thegovlab'
   },
 
   created: function created() {
