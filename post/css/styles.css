@@ -338,7 +338,7 @@ align-items: flex-start;
 }
 
 .blog-text img{
-  width: auto;
+  width: 100%;
   height: 400px;
 }
 .related-stories{
