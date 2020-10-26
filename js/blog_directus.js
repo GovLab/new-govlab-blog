@@ -62,7 +62,7 @@ new Vue({
     this.searchTerm = urlParams.get('q');
 
     this.client_blog = new DirectusSDK({
-      url:"https://directusdev.thegovlab.com/",
+      url:"https://directus.thegovlab.com/",
       project:"thegovlab",
       storage: window.localStorage
     });
@@ -121,7 +121,7 @@ new Vue({
     },
     currentDateTime() {
     var currentTime = moment();
-    return currentTime.tz('America/New_York').format('YYYY-MM-DD h:mm:ss'); 
+    return currentTime.tz('America/New_York').format('YYYY-MM-DD HH:mm:ss'); 
   },
     eventMore(link) {
       window.open(link, '_blank');

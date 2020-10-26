@@ -15,12 +15,6 @@ function isReloadedPage() {
 ////////////////////////////////////////////////////////////
 
 
-const client=  new DirectusSDK({
-  url: "https://directus.thegovlab.com/",
-  project: "thegovlab",
-  storage: window.localStorage
-})
-
 
 Vue.use(VueMeta);
 new Vue({
@@ -28,18 +22,34 @@ new Vue({
   el: '#blogpage',
 
 	data: {
-      meta_title: '',
+     meta_title: '',
       meta_content: '',
-      blogData: [],
-      apiURL: 'https://directusdev.thegovlab.com/thegovlab'
+      meta_image: '',
+      twitter_title:'',
+      twitter_image:'',
+      twitter_desc:'',	
+      blogData: []
   },
   metaInfo () {
         return {
           title: this.meta_title,
           meta: [
-            {title: this.meta_title, property:'og:title'},
-      {  name: 'description', content: this.meta_content, property:'og:description'}
-    ]
+		  
+         {name: 'twitter:card', content: 'summary_large_image'},
+          {name: 'twitter:title', content: this.meta_title},
+          {name: 'twitter:description', content: this.meta_content},
+          // image must be an absolute path
+          {name: 'twitter:image', content: this.meta_image},
+          // Facebook OpenGraph
+          {property: 'og:title', content: this.meta_title},
+          {property: 'og:site_name', content: 'The Govlab Blog'},
+          {property: 'og:type', content: 'website'},
+          {property: 'og:image', content:  this.meta_image},
+          {property: 'og:description', content:  this.meta_content},
+          { itemprop:'name', content: this.meta_title},
+          { itemprop:'image', content: this.meta_image},
+          { itemprop:'description', content: this.meta_content}
+	  ]
     }
   },
 
@@ -59,7 +69,7 @@ new Vue({
     fetchBlog() {
       self = this;
       const client = new DirectusSDK({
-        url: "https://directusdev.thegovlab.com/",
+        url: "https://directus.thegovlab.com/",
         project: "thegovlab",
         storage: window.localStorage
       });
@@ -74,14 +84,17 @@ new Vue({
     fields: ['*.*','authors.team_id.*','authors.team_id.picture.*','related_posts.incoming_blog_id.*','related_publications.pub_id.*','related_publications.pub_id.picture.*','related_projects.projects_id.*','related_projects.projects_id.main_picture.*']
   }
   ).then(data => {
-    console.log(data);
 
-    self.meta_title = data.data[0].title;
-    self.meta_content = data.data[0].excerpt;
+    self.meta_title = data.data[0].title; 
+    self.meta_content = data.data[0].excerpt; 
+    self.meta_url = "https://blog.thegovlab.com/post/"+data.data[0].slug;
+    console.log(data.data);
+    if(data.data[0].image){ self.meta_image = data.data[0].image.data.full_url;
+	} else { 
+	    self.meta_image = "http://www.thegovlab.org/static/img/govlab-og.png";}
 
     if(data.data[0].status == 'published' &&  data.data[0].scheduled <= self.currentDateTime())self.blogData = data.data;
 
-    console.log(self.meta_title, self.meta_content);
 
 }).catch(error => console.error(error));
     }

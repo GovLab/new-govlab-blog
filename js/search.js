@@ -53,7 +53,7 @@ new Vue({
 
     searchTerm:'',
     searchBlob:[],
-    currentPage: 1,
+    currentPage: 0,
     searchactive: false,
     postAmount:3,
 
@@ -113,7 +113,7 @@ new Vue({
 
     // Init Blog API SDK
     this.client_blog = new DirectusSDK({
-      url:"https://directusdev.thegovlab.com/",
+      url:"https://directus.thegovlab.com/",
       project:"thegovlab",
       storage: window.localStorage
     });
@@ -153,22 +153,43 @@ new Vue({
   methods: {
 
     /// Get the initial Posts for the page from the Blog
-    fetchPosts()
-    {
-      self = this;
-      self.client_blog.getItems(
-        'blog',
-        {
-          sort:"-created_on",
-          
-          fields: ['*.*','authors.team_id.*','authors.team_id.picture.*','related_posts.incoming_blog_id.*','related_publications.pub_id.*','related_publications.pub_id.picture.*','related_projects.projects_id.*','related_projects.projects_id.main_picture.*']})
-        .then(data => {
-          self.posts = data.data;
-      }).catch(err => {
-      console.log(err);
-    })
-    },
+      
+     fetchPosts(p)
+   {
+     self = this;
+     self.currentPage++;
+     console.log(self.currentPage)
+     self.client_blog.getItems(
+       'blog', {
+         sort:"-created_on",
+         meta:"*",
+         page:self.currentPage,
+         limit:20,
+         q: self.searchTerm,
+         fields: ['*.*','authors.team_id.*','authors.team_id.picture.*','related_posts.incoming_blog_id.*','related_publications.pub_id.*','related_publications.pub_id.picture.*','related_projects.projects_id.*','related_projects.projects_id.main_picture.*']
+       })
+       .then(data => {
+         Promise.all(data.data.map (function(a,b){ self.posts.push(a)}))
+     }).catch(err => {
+     console.log(err);
+   })
+   },
+    
+//     fetchPosts()
+//     {
+//       self = this;
+//       self.client_blog.getItems(
+//         'blog',
+//         {
+//           sort:"-created_on",
 
+//           fields: ['*.*','authors.team_id.*','authors.team_id.picture.*','related_posts.incoming_blog_id.*','related_publications.pub_id.*','related_publications.pub_id.picture.*','related_projects.projects_id.*','related_projects.projects_id.main_picture.*']})
+//         .then(data => {
+//           self.posts = data.data;
+//       }).catch(err => {
+//       console.log(err);
+//     })
+//     },
     /// Make Search Reqeusts
     searchAll (){
       this.debounceSearch();
@@ -341,9 +362,10 @@ new Vue({
     dateShow(date) {
       return moment(date).format("LL");
     },
-      dateShow(date) {
-        return moment(date).format("LL");
-      },
+currentDateTime() {
+var currentTime = moment();
+return currentTime.tz('America/New_York').format('YYYY-MM-DD HH:mm:ss');
+},
       openURL(link) {
         window.open(link, '_blank');
 
