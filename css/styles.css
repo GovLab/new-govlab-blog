@@ -837,6 +837,11 @@ font-size: 12pt;
   background-repeat: no-repeat;
   background-size: cover;
 }
+.default-image{
+  background-image: url(../img/govlab-card.001.png);
+  background-size: cover;
+  width:
+}
 .text-col{
   display:flex;
   flex-direction: column;
