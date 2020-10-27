@@ -91,7 +91,7 @@ new Vue({
     console.log(data.data);
     if(data.data[0].image){ self.meta_image = data.data[0].image.data.full_url;
 	} else { 
-	    self.meta_image = "http://www.thegovlab.org/static/img/govlab-og.png";}
+	    self.meta_image = "https://github.com/GovLab/new-govlab-blog/blob/master/img/govlab-sm.png";}
 
     if(data.data[0].status == 'published' &&  data.data[0].scheduled <= self.currentDateTime())self.blogData = data.data;
 
