@@ -67,8 +67,14 @@
     <div class="menu-items">
       <div class="menu-sub"><a href="index.html">Home</a></div>
       <div class="menu-sub"><a href="https://thegovlab.com/about.html">About</a></div>
-      <div class="menu-sub"> <a href="https://thegovlab.com/index.html#topics">Topic</a></div>
-      <div class="menu-sub"><a href="https://thegovlab.com/team.html">Team</a></div>
+      <div class="menu-sub"><a href="https://thegovlab.org/projects.html">Projects</a></div>
+      <div class="menu-sub"><a href="https://www.thegovlab.org/events.html">Events</a></div>
+      <div class="menu-sub"><a href="https://www.thegovlab.org/publications.html">Publications</a></div>
+      <div class="menu-sub"><a href="https://www.thegovlab.org/team.html">Team</a></div>
+      <div class="menu-sub"><a href="https://www.thegovlab.org/global-advisory-council.html">Global Advisory Council</a></div>
+      <div class="menu-sub"><a href="https://thegovlab.org/our-transparency.html">Our Transparency</a></div>
+      <div class="menu-sub"><a href="https://www.thegovlab.org/job-board.html">Job Board</a></div>
+      <div class="menu-sub"><a href="https://www.thegovlab.org/contact.html">Contact</a></div>
     </div>
   </div>
 
@@ -197,6 +203,10 @@
                 <a class="post-title" :href="'./post/'+post.slug">
                   <h3 v-html="post.title"></h3>
                 </a>
+                <div class="post-author">
+                  
+                  <p>By <span v-for="(author,index) in post.authors"><span v-if="index != post.authors.length-1">{{author.team_id.name}},&nbsp</span><span v-if="index == post.authors.length-1">{{author.team_id.name}}</span></span</p></p>
+                  </div>
                 <div class="post-date">
                   <!-- <p class="material-icons">insert_invitation</p> -->
                   <h4>
@@ -215,17 +225,25 @@
 
         </div>
 
-        <div class="digest-section">
-          <div>
-            <h3><span><b>SUBSCRIBE</b></span> To the digest</h3>
-            <p>A weekly curation of new finding and developments on innovation in governance</p>
-            <a>Go to the living library</a>
-          </div>
-          <div>
+        <div class="b-subscribe">
+          <div class="e-wrap">
+              <div>
+                  <h4><strong>Subscribe</strong>
+                  To The Digest</h4>
+                  <p>A weekly curation of new findings and developments on innovation in governance</p>
+              </div>
 
-          </div>
+              <form method="post" action="//thegovlab.us6.list-manage.com/subscribe/post?u=1a990feb5c&amp;id=d90a01c7ff" target="_blank" >
+                  <div style="position: absolute; left: -5000px;"><input type="text" name="b_1a990feb5c_d90a01c7ff" tabindex="-1" value=""></div>
 
-        </div>
+                  <input type="email" name="EMAIL" placeholder="Email">
+                  <button type="submit">Subscribe</button>
+              </form>
+          </div>
+          <div class="e-wrap">
+              <p><a href="https://thelivinglib.org/" target="_blank" class="b-button m-naked">Go to Digest<i class="material-icons">arrow_forward</i></a></p>
+          </div>
+      </div>
         <h2 class="section-title">LATEST POSTS FROM THE GOVLAB</h2>
 <!--        
         <div v-for="(post, index) in posts" v-if="index <=10" class="">
