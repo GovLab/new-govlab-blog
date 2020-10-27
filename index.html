@@ -56,7 +56,7 @@
         </a>
       </div>
     </div>
-    <a class="top_logo" href="http://thegovlab.org"><img src="img/govlab-logo-white.png"
+    <a class="top_logo" href="http://thegovlab.org"><img src="img/the-govlab-logo-white@4x.png"
         alt="The GovLab Blog"></a>
     <!-- Navigation links (hidden by default) -->
     <div class='lang-select'>
@@ -165,9 +165,9 @@
 
           <div v-if="result.api=='ogrx'" class="post-content" v-html="cutExcerpt(result.fields.abstract)"></div>
           <div v-if="result.api=='ttl'" class="post-content" v-html="cutExcerpt(result.excerpt.rendered)"></div>
-          <div class="more-button main-color">
+          <div :class="[result.api=='ttl' ? 'ttl-color' : 'ogrx-color']" class="more-button gl-color">
             <a  v-if="result.api=='ogrx'" class="b-button" :href="'https://ogrx.org/paper.html?n='+result.fields.publicationName" target="_blank"> Continue Reading <i class="material-icons">keyboard_arrow_down</i></a>
-            <a  v-if="result.api=='ttl'" class="b-button" :href="'https://thelivinglib.org/'+result.slug"  target="_blank"> Continue Reading <i class="material-icons">keyboard_arrow_down</i></a>
+            <a  v-if="result.api=='ttl'" class="b-button"  :href="'https://thelivinglib.org/'+result.slug"  target="_blank"> Continue Reading <i class="material-icons">keyboard_arrow_down</i></a>
           </div>
 
           </div>

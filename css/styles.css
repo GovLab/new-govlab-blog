@@ -990,7 +990,15 @@ a.b-button{
   margin: 0.5rem 0;
   padding: 0.05rem 0;
 }
-
+.ttl-color{
+  background-color: #f5b833 !important;
+}
+.ogrx-color{
+  background-color: #1c4f6f !important;
+}
+.gl-color{
+  background-color: #523080;
+}
 .source-tag-ttl {
     width: 12%;
     background-color: #f5b833;
