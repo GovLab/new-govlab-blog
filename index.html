@@ -245,32 +245,7 @@
           </div>
       </div>
         <h2 class="section-title">LATEST POSTS FROM THE GOVLAB</h2>
-<!--        
-        <div v-for="(post, index) in posts" v-if="index <=10" class="">
-          <div class="blog-item">
 
-            <div class="text-col full-width">
-              <div class="source-tag">
-                <p>The GovLab Blog</p>
-              </div>
-              <a class="post-title" :href="'./post/'+post.slug">
-                <h3 v-html="post.title"></h3>
-              </a>
-              <div class="post-date">
-                <h4>
-                  <i v-if="post.original_date" v-html="dateShow(post.original_date)"></i>
-                  <i v-if="!post.original_date"v-html="dateShow(post.created_on)"></i>
-                </h4>
-              </div>
-
-              <div class="post-content" v-html="post.excerpt"></div>
-              <div class="more-button main-color">
-                <a class="b-button" :href="'./post/'+post.slug" target="_blank"> Continue Reading <i
-                    class="material-icons">keyboard_arrow_down</i></a>
-              </div>
-            </div>
-          </div>
-        </div> -->
         <div class="blog-col">
           <div v-for="(post, index) in posts" class="blog-col-item" v-if="posts && post.status == 'published' && post.scheduled <= currentDateTime()">
             <div>
@@ -308,7 +283,7 @@
 
 
     </div>
-    <footer class='footer-alt'>
+    <!-- <footer class='footer-alt'>
       <div class="row align-center">
         <div class="medium-6 medium-centered columns">
         </div>
@@ -332,7 +307,43 @@
             International License.</a>.
         </div>
       </div>
-    </div>
+    </div> -->
+    <footer class='b-footer'>
+      <div class="e-wrap">
+          <div class="e-content m-sections">
+              <h4>Sections</h4>
+              <a href="https://www.thegovlab.org/">Home</a>
+              <a href="https://www.thegovlab.org/about.html">About</a>
+              <a href="https://www.thegovlab.org/projects.html">Projects</a>
+              <!-- <a href="https://www.thegovlab.org/events.html">Events</a> -->
+              <a href="https://www.thegovlab.org/events.html" >Events</a>
+              <a href="https://www.thegovlab.org/publications.html">Publications</a>
+              <a href="https://www.thegovlab.org/team.html">Team</a>
+              <a href="https://www.thegovlab.org/global-advisory-council.html">Advisory Council</a>
+              <a href="https://www.thegovlab.org/our-transparency.html">Our Transparency</a>
+              <a href="https://www.thegovlab.org/job-board.html">Job Board</a>
+              <a href="https://www.thegovlab.org/contact.html">Contact</a>
+              <a href="https://www.thegovlab.org/brand.html">Brand Assets</a>
+          </div>
+          <div class="e-content">
+              <!-- <h4>Lead Supporters</h4>
+              <a class="e-partner-logo" href="https://www.macfound.org/" target="_blank"><img src="static/img/partners/macarthur-logo-white.png" alt="MacArthur Foundation"></a>
+              <a class="e-partner-logo m-omidyar" href="https://www.omidyar.com/" tagret="_blank"><img src="static/img/partners/omidyar-logo-white.svg" alt="Omidyar Network"></a> -->
+          </div>
+          <div class="e-content">
+              <h4>Based at</h4>
+              <a class="e-partner-logo" href="http://engineering.nyu.edu/tandon" target="_blank"><img src="img/nyu.png" alt="NYU Tandon School of Engineering - New York University"></a>
+              <!--<a class="e-partner-logo m-mit" href="https://www.media.mit.edu/" target="_blank"><img src="static/img/partners/mit-logo-white.png" alt="MIT Media Lab"></a> -->
+          </div>
+      </div>
+  </footer>
+
+  <div class="b-copyright">
+      <div class="e-wrap">
+          <a class="e-cc-badge" rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a>
+          This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a><br><br>
+      </div>
+  </div>
   </body>
   <script>
     /* Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
