@@ -260,11 +260,11 @@
               <div class="text-col">
 
                 <a class="post-title" :href="'./post/'+post.slug">
-                  <h3 v-html="post.title"></h3>
+                  <h3>{{post.title}}<span v-if="post.subtitle">: {{post.subtitle}}</span></h3>
                 </a>
                 <div class="post-author">
                   
-                <p>By &nbsp<span v-for="(author,index) in post.authors"><span v-if="index != post.authors.length-1">{{author.team_id.name}},&nbsp</span><span v-if="index == post.authors.length-1">{{author.team_id.name}}</span></span</p></p>
+                <p>By <span v-for="(author,index) in post.authors"><span v-if="index != post.authors.length-1">{{author.team_id.name}},&nbsp</span><span v-if="index == post.authors.length-1">{{author.team_id.name}}</span></span</p></p>
                 </div>
                 <div class="post-date">
                   <!-- <p class="material-icons">insert_invitation</p> -->
