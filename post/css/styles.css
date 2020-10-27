@@ -337,10 +337,6 @@ align-items: flex-start;
   text-align: left;
 }
 
-.blog-text img{
-  width: 50%;
-  height: 50%;
-}
 .related-stories{
   padding: 2rem 15rem 2rem 15rem;
   background-color: #f6f6f6;
