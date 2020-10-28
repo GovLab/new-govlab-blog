@@ -25,7 +25,7 @@ main();
 Vue.use(BootstrapVue);
 Vue.use(VueMeta);
 Vue.use(VueGtag, {
-  config: { id: "UA-40012093-25" }
+  config: { id: "UA-40012093-4" }
 });
 
 new Vue({
