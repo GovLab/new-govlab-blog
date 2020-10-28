@@ -194,7 +194,7 @@
     <div  v-if="featuredPost" class="b-events">
       <div class="page-wrapper">
         <div class="blog-col">
-          <div v-for="(post,index) in posts" v-if="posts && post.featured == true && post.status == 'published' && post.scheduled <= currentDateTime() && index<3" class="blog-col-item">
+          <div v-for="(post,index) in posts" v-if="posts && post.featured == true && post.status == 'published' && post.scheduled <= currentDateTime()" class="blog-col-item">
             <div>
               <a :href="'./post/'+post.slug"><div class="img-col" v-if="post.image" :style="{ backgroundImage: 'url(' + post.image.data.full_url+ ')' }"></div>
               <div v-if="post.image == null" class="img-col default-image"></div></a>
