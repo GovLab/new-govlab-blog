@@ -48,6 +48,7 @@ new Vue({
     client_blog:'',
     postdata: [],
     posts: [],
+    fposts: [],
     more_body: false,
     excerptLength: 75,
 
@@ -73,7 +74,8 @@ new Vue({
     ogrxload: false,
     blogload: false,
     ttlload: false,
-    featuredPost: true
+    featuredPost: true,
+    featureAmount: 0
   },
   metaInfo () {
         return {
@@ -84,33 +86,9 @@ new Vue({
     ]
     }
   },
-
   created()
   {
     self = this;
-
-    // FUSE Options, not used momentarily
-    // self.options = {
-    //   keys: [
-    //     "title",
-    //     "content",
-    //     "fields.abstract",
-    //     "fields.publicationName",
-    //     {
-    //         name: 'modified',
-    //         weight: 2
-    //       },
-    //   {
-    //       name: 'created_on',
-    //       weight: 2
-    //     },
-    //     {
-    //         name: 'fields.publicationDate',
-    //         weight: 2
-    //       }
-    //   ]
-    // };
-
     // Init Blog API SDK
     this.client_blog = new DirectusSDK({
       url:"https://directus.thegovlab.com/",
@@ -153,12 +131,11 @@ new Vue({
   methods: {
 
     /// Get the initial Posts for the page from the Blog
-      
-     fetchPosts(p)
+
+ fetchPosts(p)
    {
      self = this;
      self.currentPage++;
-     console.log(self.currentPage)
      self.client_blog.getItems(
        'blog', {
          sort:"-created_on",
@@ -169,27 +146,12 @@ new Vue({
          fields: ['*.*','authors.team_id.*','authors.team_id.picture.*','related_posts.incoming_blog_id.*','related_publications.pub_id.*','related_publications.pub_id.picture.*','related_projects.projects_id.*','related_projects.projects_id.main_picture.*']
        })
        .then(data => {
-         Promise.all(data.data.map (function(a,b){ self.posts.push(a)}))
+         Promise.all(data.data.map (function(a,b){ self.posts.push(a); if(a.featured)self.fposts.push(a);}))
      }).catch(err => {
      console.log(err);
    })
    },
-    
-//     fetchPosts()
-//     {
-//       self = this;
-//       self.client_blog.getItems(
-//         'blog',
-//         {
-//           sort:"-created_on",
 
-//           fields: ['*.*','authors.team_id.*','authors.team_id.picture.*','related_posts.incoming_blog_id.*','related_publications.pub_id.*','related_publications.pub_id.picture.*','related_projects.projects_id.*','related_projects.projects_id.main_picture.*']})
-//         .then(data => {
-//           self.posts = data.data;
-//       }).catch(err => {
-//       console.log(err);
-//     })
-//     },
     /// Make Search Reqeusts
     searchAll (){
       this.debounceSearch();
