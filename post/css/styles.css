@@ -523,6 +523,7 @@ align-items: flex-start;
 
   .related-stories{
     padding: 2rem 1rem 2rem 1rem;
+    font-family: 'proxima-nova';
   }
 }.b-footer {
   font-family: 'proxima-nova';
