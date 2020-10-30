@@ -54,7 +54,7 @@ new Vue({
   },
 
   created: function created() {
-    this.blogslug=window.location.href.split('/');
+    this.blogslug=window.location.href.split('?');
     // this.blogslug=window.location.pathname.split('/');
     this.blogslug = this.blogslug[this.blogslug.length - 1];
     

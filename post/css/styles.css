@@ -492,10 +492,17 @@ align-items: flex-start;
 }
 
 
+
 @media screen and (min-width: 320px) and (max-width: 768px){
   .row-wrap{
     display:flex;
     flex-direction: column-reverse; 
+  }
+  table, thead, tbody, th, td, tr { 
+    display: block; 
+  }
+  td p{
+    padding:0 !important;
   }
   .author-name {
     max-width:180px;
