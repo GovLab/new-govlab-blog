@@ -343,9 +343,7 @@ align-items: flex-start;
   padding: 0 20rem 0 20rem;
   text-align: left;
 }
-.blog-text img{
-max-width:100%;
-}
+
 .related-stories{
   padding: 2rem 15rem 2rem 15rem;
   background-color: #f6f6f6;
