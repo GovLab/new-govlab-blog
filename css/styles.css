@@ -816,8 +816,9 @@ flex-flow: row wrap;
 .blog-col-item .text-col{
   width:100%;
   padding:0;
-  height: 400px;
+  height: 330px;
 }
+
 .blog-col-item .text-col h3{
 font-size: 12pt;
 }
@@ -828,6 +829,9 @@ font-size: 12pt;
   font-size: 10pt;
   margin-top:0;
   }
+  .blog-col-item .text-col .post-content a{
+   color: #523080;
+    }
 .blog-col-item .img-col{
   width: 100%;
   height: 200px;
@@ -920,7 +924,13 @@ margin:0;
 }
 .blog-col-item .post-content{
   margin: 0 2rem;
+  max-height:100px;
+  overflow: hidden;
+  white-space: wrap;
+  max-width:350px;
+  text-overflow: ellipsis; 
 }
+
 .blog-col-item .more-button {
   margin: 0 2rem 2rem 2rem;
 }
