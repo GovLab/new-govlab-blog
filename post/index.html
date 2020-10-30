@@ -63,7 +63,7 @@
   </div>
   <div id="myLinks">
     <div class="menu-items">
-      <div class="menu-sub"><a href="index.html">Home</a></div>
+      <div class="menu-sub"><a href="../index.html">Home</a></div>
       <div class="menu-sub"><a href="https://thegovlab.com/about.html">About</a></div>
       <div class="menu-sub"><a href="https://thegovlab.org/projects.html">Projects</a></div>
       <div class="menu-sub"><a href="https://www.thegovlab.org/events.html">Events</a></div>
@@ -85,8 +85,8 @@
       <p v-if="!blogData[0].original_date">{{formatDate(blogData[0].created_on)}}</p>
 
     </div>
- 
-  
+
+
 <div  v-if="blogData[0].related_publications.length ==0 && blogData[0].related_projects == 0">
 
     <div class="col-wrap">
@@ -164,7 +164,7 @@
               target="_blank">{{member.team_id.name}}<br><span class="author-title">{{member.team_id.title}}</span></a>
           </div>
         </div>
-                
+
         <div v-if="blogData[0].image"  class="featured-image">
           <img v-bind:src="blogData[0].image.data.full_url">
         </div>
