@@ -34,13 +34,13 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-40012093-25"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-40012093-4"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'UA-40012093-25');
+  gtag('config', 'UA-40012093-4');
 </script>
 
 
@@ -65,14 +65,14 @@
   </div>
   <div id="myLinks">
     <div class="menu-items">
-      <div class="menu-sub"><a href="index.html">Home</a></div>
-      <div class="menu-sub"><a href="https://thegovlab.com/about.html">About</a></div>
-      <div class="menu-sub"><a href="https://thegovlab.org/projects.html">Projects</a></div>
+      <div class="menu-sub"><a href="https://www.thegovlab.org/index.html">Home</a></div>
+      <div class="menu-sub"><a href="https://www.thegovlab.org/about.html">About</a></div>
+      <div class="menu-sub"><a href="https://www.thegovlab.org/projects.html">Projects</a></div>
       <div class="menu-sub"><a href="https://www.thegovlab.org/events.html">Events</a></div>
       <div class="menu-sub"><a href="https://www.thegovlab.org/publications.html">Publications</a></div>
       <div class="menu-sub"><a href="https://www.thegovlab.org/team.html">Team</a></div>
       <div class="menu-sub"><a href="https://www.thegovlab.org/global-advisory-council.html">Global Advisory Council</a></div>
-      <div class="menu-sub"><a href="https://thegovlab.org/our-transparency.html">Our Transparency</a></div>
+      <div class="menu-sub"><a href="https://www.thegovlab.org/our-transparency.html">Our Transparency</a></div>
       <div class="menu-sub"><a href="https://www.thegovlab.org/job-board.html">Job Board</a></div>
       <div class="menu-sub"><a href="https://www.thegovlab.org/contact.html">Contact</a></div>
     </div>
@@ -194,10 +194,10 @@
     <div  v-if="featuredPost" class="b-events">
       <div class="page-wrapper">
         <div class="blog-col">
-          <div v-for="(post,index) in posts" v-if="posts && post.featured == true && post.status == 'published' && post.scheduled <= currentDateTime()" class="blog-col-item">
+            <div v-for="(post,index) in fposts" v-if="fposts && post.featured == true && post.status == 'published' && post.scheduled <= currentDateTime() && index<3" class="blog-col-item">
             <div>
-              <div class="img-col" v-if="post.image" :style="{ backgroundImage: 'url(' + post.image.data.full_url+ ')' }"></div>
-              <div v-if="post.image == null" class="img-col default-image"></div>
+              <a :href="'./post/'+post.slug"><div class="img-col" v-if="post.image" :style="{ backgroundImage: 'url(' + post.image.data.full_url+ ')' }"></div>
+              <div v-if="post.image == null" class="img-col default-image"></div></a>
               <div class="text-col">
 
                 <a class="post-title" :href="'./post/'+post.slug">
