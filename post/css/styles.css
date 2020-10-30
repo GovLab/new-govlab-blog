@@ -182,6 +182,7 @@ padding: 0 10rem;
 }
 .featured-image img{
 width:100%;
+max-width:600px;
 }
 .row.top-section h1{
  color: #ffffff;
