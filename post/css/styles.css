@@ -516,6 +516,9 @@ align-items: flex-start;
   .col-80 .blog-text{
     padding:0 2rem;
   }
+  .featured-image{
+    padding:0 2rem;
+  }
   .sidebar{
     padding-top: 1rem;
     padding-left: 8rem;
