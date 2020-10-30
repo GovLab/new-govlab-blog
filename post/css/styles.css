@@ -465,8 +465,8 @@ align-items: flex-start;
   height: 10vh;
 }
 .author-thumb{
-  width:30px;
-  height:30px; 
+  width:40px;
+  height:40px; 
   background-size: contain; 
   background-repeat: no-repeat;
   border-radius:20px;
