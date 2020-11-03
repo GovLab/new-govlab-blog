@@ -79,7 +79,7 @@
 
     <div class="row top-section" v-if="blogData[0].image" >
       <h1 v-html="blogData[0].title"></h1>
-      <h4 v-html="blogData[0].subtitle"></h4>
+      <h4 v-if="blogData[0].subtitle" v-html="blogData[0].subtitle"></h4>
       <!-- <p>Published on: {{blogData[0].original_date}}</p> -->
       <p v-if="blogData[0].original_date">{{formatDate(blogData[0].original_date)}}</p>
       <p v-if="!blogData[0].original_date">{{formatDate(blogData[0].created_on)}}</p>
