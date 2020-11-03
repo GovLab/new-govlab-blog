@@ -164,7 +164,7 @@ new Vue({
     /// Trigger Search after conditions are fullfilled (length of Term, empty term etc. )
     searchLibs (){
       self = this;
-      if(self.searchTerm.length>=3 && self.searchTerm != '')
+      if(self.searchTerm.length>=2 && self.searchTerm != '')
       {
         self.searchBlob.splice(0, self.searchBlob.length);
         self.listHP.splice(0, self.listHP.length);
