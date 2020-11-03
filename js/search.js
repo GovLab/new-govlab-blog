@@ -198,6 +198,7 @@ new Vue({
         el.innerHTML = resultsolr.data;
         var amountTTL = el.getElementsByClassName( 'infor' )[0].innerText.split(' ');
         self.listWPresults = amountTTL[amountTTL.length-1];
+        if(self.listWPresults == self.searchTerm) self.listWPresults = 0;
       })
       .catch(err => {
         console.log(err);
