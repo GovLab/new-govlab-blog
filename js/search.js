@@ -193,16 +193,16 @@ new Vue({
     searchTTL(){
       self = this;
 
-      axios.get('https://thelivinglib.org/search_studio/?wpsolr_q='+self.searchTerm).then(resultsolr => {
-        var el = document.createElement( 'div' );
-        el.innerHTML = resultsolr.data;
-        var amountTTL = el.getElementsByClassName( 'infor' )[0].innerText.split(' ');
-        self.listWPresults = amountTTL[amountTTL.length-1];
-        if(self.listWPresults == self.searchTerm) self.listWPresults = 0;
-      })
-      .catch(err => {
-        console.log(err);
-      })
+      // axios.get('https://thelivinglib.org/search_studio/?wpsolr_q='+self.searchTerm).then(resultsolr => {
+      //   var el = document.createElement( 'div' );
+      //   el.innerHTML = resultsolr.data;
+      //   var amountTTL = el.getElementsByClassName( 'infor' )[0].innerText.split(' ');
+      //   self.listWPresults = amountTTL[amountTTL.length-1];
+      //   if(self.listWPresults == self.searchTerm) self.listWPresults = 0;
+      // })
+      // .catch(err => {
+      //   console.log(err);
+      // })
 
       axios.get('https://thelivinglib.org/wp-json/wp/v2/posts?&per_page=100&_embed&search='+self.searchTerm).then(results => {
 
@@ -224,6 +224,7 @@ new Vue({
         Promise.all(requeststtle).then(() => {
           self.ttlload = true;
         });
+        self.listWPresults = results.headers['x-wp-total'];
         self.listWP = results;
       })
       .catch(err => {
