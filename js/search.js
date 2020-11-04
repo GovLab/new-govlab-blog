@@ -226,6 +226,7 @@ new Vue({
         });
         self.listWPresults = results.headers['x-wp-total'];
         self.listWP = results;
+        console.log(results);
       })
       .catch(err => {
         console.log(err);
