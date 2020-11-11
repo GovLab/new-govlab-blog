@@ -81,12 +81,12 @@ new Vue({
     filter: {
       slug: self.blogslug
     },
-    fields: ['*.*','authors.team_id.*','authors.team_id.picture.*']
+    fields: ['*.*','author.team_id.*','author.team_id.picture.*']
   }
   ).then(data => {
 
     self.meta_title = data.data[0].title;
-    self.meta_content = data.data[0].excerpt;
+    // self.meta_content = data.data[0].excerpt;
     self.meta_url = "https://blog.thegovlab.org/post/"+data.data[0].slug;
     if(data.data[0].image){ self.meta_image = data.data[0].image.data.full_url;
 	} else {
