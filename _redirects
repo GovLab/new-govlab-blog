@@ -1,1 +1,2 @@
 /post/*  /post/index.html?:splat  200
+/archive/*  /archive/index.html?:splat  200
