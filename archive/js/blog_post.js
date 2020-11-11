@@ -76,19 +76,18 @@ new Vue({
 
 
       client.getItems(
-  'blog',
+  'tg_archive',
   {
     filter: {
       slug: self.blogslug
     },
-    fields: ['*.*','authors.team_id.*','authors.team_id.picture.*','related_posts.incoming_blog_id.*','related_publications.pub_id.*','related_publications.pub_id.picture.*','related_projects.projects_id.*','related_projects.projects_id.main_picture.*']
+    fields: ['*.*','authors.team_id.*','authors.team_id.picture.*']
   }
   ).then(data => {
 
     self.meta_title = data.data[0].title;
     self.meta_content = data.data[0].excerpt;
     self.meta_url = "https://blog.thegovlab.org/post/"+data.data[0].slug;
-    console.log(data.data);
     if(data.data[0].image){ self.meta_image = data.data[0].image.data.full_url;
 	} else {
 	    self.meta_image = "https://govlab.github.io/new-govlab-blog/img/govlab-sm.png";}
