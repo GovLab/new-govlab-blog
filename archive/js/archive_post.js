@@ -58,8 +58,6 @@ new Vue({
     // this.blogslug=window.location.pathname.split('/');
     this.blogslug = this.blogslug[this.blogslug.length - 1];
 
-    // this.blogslug = this.blogslug[this.blogslug.length - 1].split('.')[0];
-
     this.fetchBlog();
 
   },
@@ -92,7 +90,7 @@ new Vue({
 	} else {
 	    self.meta_image = "https://govlab.github.io/new-govlab-blog/img/govlab-sm.png";}
 
-    if(data.data[0].status == 'published' &&  data.data[0].scheduled <= self.currentDateTime())self.blogData = data.data;
+    self.blogData = data.data;
 
 
 }).catch(error => console.error(error));
