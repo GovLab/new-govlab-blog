@@ -68,12 +68,14 @@ new Vue({
     listWP:[],
     listWPresults:0,
     listBlog:[],
+    listArchive:[],
     listOGRX:[],
     listHP:[],
     client_blog:'',
     ogrxload: false,
     blogload: false,
     ttlload: false,
+    archiveload: false,
     featuredPost: true,
     featureAmount: 0
   },
@@ -182,6 +184,7 @@ new Vue({
         self.searchBlog()
         self.searchTTL();
         self.searchOGRX();
+        self.searchArchive()
 
       }
       else if (self.searchTerm.length<=3) {
@@ -245,7 +248,6 @@ new Vue({
     searchOGRX(){
       self = this;
       axios.get("https://cdn.contentful.com/spaces/ufh1mvj7xl16/entries?access_token=a9ccc057a1e57a9dfe4ea80441cb35ae2f42ea8e5e8d37dfe08a65f7b0ae9254&content_type=paper&limit=100&query="+self.searchTerm).then(response => {
-        // console.log('ogrx ', response, response.data.total);
         const requestsogrx =  response.data.items.map (function(a,b){
           a['api'] = 'ogrx';
           self.list.push(a);
@@ -288,11 +290,39 @@ new Vue({
           console.log(err);
         })
       },
+      searchArchive(){
+        self = this;
+        self.client_blog.getItems(
+          'tg_archive', {
+            limit: 100,
+            sort:"-created_on",
+            meta:"*",
+            q: self.searchTerm
+          })
+          .then(data => {
+            const requestsArv =  data.data.map (function(a,b){
+              a['api'] = 'archive';
+              self.list.push(a);
+              self.searchactive = true;
+              if(b<self.postAmount)self.listHP.push(a);
+
+        })
+            Promise.all(requestsArv).then(() => {
+              self.archiveload = true;
+            });
+
+            self.listArchive = data.data;
+
+          })
+          .catch(err => {
+            console.log(err);
+          })
+        },
 
 
       loadFinish()
       {
-      if(this.ogrxload && this.blogload && this.ttlload) {
+      if(this.ogrxload && this.blogload && this.ttlload && this.archiveload) {
 
         this.$gtag.event('search', {
         'event_category':'Search The GovLab',
@@ -311,8 +341,9 @@ new Vue({
     {
       self = this;
       const datesort = this.listHP.map( function(a,b) {
-        if(a.api == 'blog'){if(a.created_on){a['modified'] = a.created_on}};
+        if(a.api == 'blog'){if(a.created_on){a['modified'] = a.created_on};console.log(a);};
         if(a.api == 'ogrx'){if(a.fields.publicationDate != undefined) a['modified'] = a.fields.publicationDate.split('T')[0];};
+        if(a.api == 'archive'){if(a.created_on){a['modified'] = a.created_on}};
       });
 
       Promise.all(datesort).then(() => {

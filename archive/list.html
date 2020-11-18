@@ -6,19 +6,18 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>The Governance Lab Blog</title>
+  <title>The Governance Lab Archive</title>
 
-  <link href="/img/favicon-transparent.png" rel="shortcut icon">
+  <link href="/images/favicon-transparent.png" rel="shortcut icon">
 
   <link rel="stylesheet" href="https://use.typekit.net/kad3hcl.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    <!-- <link rel="stylesheet" type="text/css" href="css/main.css" /> -->
-<!-- <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css" /> -->
 <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css" />
-    <link rel="stylesheet" href="/post/css/styles.css">
+    <link rel="stylesheet" href="../post/css/styles.css">
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/styles_archive_list.css">
 
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-40012093-4"></script>
@@ -46,7 +45,7 @@
         </a>
       </div>
     </div>
-    <a class="top_logo" href="index.html"><img src="img/govlab-logo-white.png"
+    <a class="top_logo" href="index.html"><img src="images/govlab-logo-white.png"
         alt="The GovLab Blog"></a>
     <!-- Navigation links (hidden by default) -->
     <div class='lang-select'>
@@ -71,13 +70,13 @@
 
     <div id="blog">
     <div class="hero-blog">
-        <h4 >RESULTS FROM THE GOVLAB BLOG</h4>
+        <h4 >RESULTS FROM THE GOVLAB ARCHIVE</h4>
         <div v-if="searchTerm" class="hero-results"><h4>{{totalResults}} Results found for "{{searchTerm}}"</h4></div>
     </div>
 
           <div style="padding-top:0;" class="blog-col">
 
-      <div v-if="posts.length>0 && post.status == 'published' &&  post.scheduled <= currentDateTime()" class="blog-col-item" v-for="(post,index) in posts">
+      <div v-if="posts.length>0" class="blog-col-item" v-for="(post,index) in posts">
         <div class="text-col">
         <a class="post-title" :href="'/post/'+post.slug" target='_blank'>
           <h3 v-html="post.title"></h3></a>
@@ -89,9 +88,9 @@
             </i>
           </div>
 
-          <div class="post-content" v-html="post.excerpt"></div>
+          <div class="post-content" v-html="cutExcerpt(post.content)"></div>
           <div class="more-button main-color">
-            <a class="b-button" :href="'/post/'+post.slug" target="_blank"> Continue Reading <i
+            <a class="b-button" :href="'../archive/'+post.slug" target="_blank"> Continue Reading <i
                 class="material-icons">keyboard_arrow_down</i></a>
           </div>
           </div>
@@ -122,7 +121,7 @@
       <div class="row">
 
         <a class="footer_partner-logo" href="http://www.thegovlab.org" target="_blank"><img
-            src="./img/govlab-logo-white.png" alt="The GovLab"></a>
+            src="./images/govlab-logo-white.png" alt="The GovLab"></a>
 
       </div>
     </footer>
@@ -170,6 +169,6 @@
 <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
 
 <!-- <script src="js/blog_wp.js"></script> -->
-<script src="js/blog_list.js"></script>
+<script src="js/archive_list.js"></script>
 </body>
 </html>

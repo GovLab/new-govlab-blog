@@ -29,7 +29,6 @@ new Vue({
       twitter_image:'',
       twitter_desc:'',
       blogData: []
-  },
   metaInfo () {
         return {
           title: this.meta_title,
@@ -58,13 +57,13 @@ new Vue({
     // this.blogslug=window.location.pathname.split('/');
     this.blogslug = this.blogslug[this.blogslug.length - 1];
 
-    this.fetchBlog();
+    this.fetchArchive();
 
   },
   methods: {
 
 
-    fetchBlog() {
+    fetchArchive() {
       self = this;
       const client = new DirectusSDK({
         url: "https://directus.thegovlab.com/",
