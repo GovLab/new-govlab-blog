@@ -29,6 +29,7 @@ new Vue({
       twitter_image:'',
       twitter_desc:'',
       blogData: []
+    },
   metaInfo () {
         return {
           title: this.meta_title,
