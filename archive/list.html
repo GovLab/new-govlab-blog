@@ -78,7 +78,7 @@
 
       <div v-if="posts.length>0" class="blog-col-item" v-for="(post,index) in posts">
         <div class="text-col">
-        <a class="post-title" :href="'/post/'+post.slug" target='_blank'>
+        <a class="post-title" :href="'../archive/'+post.slug" target='_blank'>
           <h3 v-html="post.title"></h3></a>
           <div class="post-date">
             <i>
