@@ -271,6 +271,7 @@ new Vue({
         'blog', {
           limit: 100,
           sort:"-created_on",
+          status:'published',
           meta:"*",
           q: self.searchTerm
         })
@@ -297,6 +298,7 @@ new Vue({
           'tg_archive', {
             limit: 100,
             sort:"-created_on",
+            status:'published',
             meta:"*",
             q: self.searchTerm
           })
