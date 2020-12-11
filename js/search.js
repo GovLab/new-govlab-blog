@@ -143,6 +143,7 @@ new Vue({
          sort:"-created_on",
          meta:"*",
          page:self.currentPage,
+         status:'published',
          limit:20,
          q: self.searchTerm,
          fields: ['*.*','authors.team_id.*','authors.team_id.picture.*','related_posts.incoming_blog_id.*','related_publications.pub_id.*','related_publications.pub_id.picture.*','related_projects.projects_id.*','related_projects.projects_id.main_picture.*']
