@@ -230,7 +230,6 @@ new Vue({
         });
         self.listWPresults = results.headers['x-wp-total'];
         self.listWP = results;
-        console.log(results);
       })
       .catch(err => {
         console.log(err);
@@ -344,7 +343,7 @@ new Vue({
     {
       self = this;
       const datesort = this.listHP.map( function(a,b) {
-        if(a.api == 'blog'){if(a.created_on){a['modified'] = a.created_on};console.log(a);};
+        if(a.api == 'blog'){if(a.created_on){a['modified'] = a.created_on};};
         if(a.api == 'ogrx'){if(a.fields.publicationDate != undefined) a['modified'] = a.fields.publicationDate.split('T')[0];};
         if(a.api == 'archive'){if(a.created_on){a['modified'] = a.created_on}};
       });
