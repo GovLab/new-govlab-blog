@@ -29,7 +29,7 @@ new Vue({
       twitter_image:'',
       twitter_desc:'',
       blogData: []
-  },
+    },
   metaInfo () {
         return {
           title: this.meta_title,
@@ -58,15 +58,13 @@ new Vue({
     // this.blogslug=window.location.pathname.split('/');
     this.blogslug = this.blogslug[this.blogslug.length - 1];
 
-    // this.blogslug = this.blogslug[this.blogslug.length - 1].split('.')[0];
-
-    this.fetchBlog();
+    this.fetchArchive();
 
   },
   methods: {
 
 
-    fetchBlog() {
+    fetchArchive() {
       self = this;
       const client = new DirectusSDK({
         url: "https://directus.thegovlab.com/",
@@ -76,24 +74,23 @@ new Vue({
 
 
       client.getItems(
-  'blog',
+  'tg_archive',
   {
     filter: {
       slug: self.blogslug
     },
-    fields: ['*.*','authors.team_id.*','authors.team_id.picture.*','related_posts.incoming_blog_id.*','related_publications.pub_id.*','related_publications.pub_id.picture.*','related_projects.projects_id.*','related_projects.projects_id.main_picture.*']
+    fields: ['*.*','author.team_id.*','author.team_id.picture.*']
   }
   ).then(data => {
 
     self.meta_title = data.data[0].title;
-    self.meta_content = data.data[0].excerpt;
+    // self.meta_content = data.data[0].excerpt;
     self.meta_url = "https://blog.thegovlab.org/post/"+data.data[0].slug;
-    console.log(data.data);
     if(data.data[0].image){ self.meta_image = data.data[0].image.data.full_url;
 	} else {
 	    self.meta_image = "https://govlab.github.io/new-govlab-blog/img/govlab-sm.png";}
 
-    if(data.data[0].status == 'published' &&  data.data[0].scheduled <= self.currentDateTime())self.blogData = data.data;
+    self.blogData = data.data;
 
 
 }).catch(error => console.error(error));

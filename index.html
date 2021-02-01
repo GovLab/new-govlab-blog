@@ -22,7 +22,7 @@
 
 
 
-  
+
 <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="css/styles.css">
@@ -111,7 +111,7 @@
     align-items: center;width:100%; height: 6vh;">
       <!-- <b >Total Results:</b><br> -->
       <div class="source-tag" style="width:34%; padding-top: 15px; height: 6vh;"><p><a :href="'list.html?q='+searchTerm" target="_blank" style="color:#fff; text-decoration:none; font-size: 1.5em;">The Govlab Blog:  <span v-if="listBlog.meta" > {{listBlog.meta.filter_count}}</span></a> <br></p></div>
-      <div class="source-tag-ttl" style="width:34%; padding-top: 15px; height: 6vh;"><p><a :href="'https://thelivinglib.org/search_studio/?wpsolr_q='+searchTerm" target="_blank" style="color:#fff; text-decoration:none; font-size: 1.5em;x"> The Living Library: <span v-if="listWP.headers">  {{listWPresults}}</span></a> <br></p></div>
+      <div class="source-tag-ttl" style="width:34%; padding-top: 15px; height: 6vh;"><p><a :href="'https://thelivinglib.org/?s='+searchTerm" target="_blank" style="color:#fff; text-decoration:none; font-size: 1.5em;x"> The Living Library: <span v-if="listWP.headers">  {{listWPresults}}</span></a> <br></p></div>
       <div class="source-tag-ogrx" style="width:34%; padding-top: 15px; height: 6vh;"><p><a :href="'https://ogrx.org/search.html?q='+searchTerm" target="_blank" style="color:#fff; text-decoration:none; font-size: 1.5em; "> OGRX: <span v-if="listOGRX.data">  {{listOGRX.data.total}}</span></a> <br></p></div>
 
     </div>
@@ -172,15 +172,19 @@
 
           </div>
       </div>
+
     </div>
   </div>
   <!-- SEE MORE FROM THE NETWORKS -->
   <div v-if="listHP.length >0 ">
   <div class="section-title"><h3>SEE MORE RESULTS FROM</h3></div>
   <div class="more-results"><div class="more-button main-color"><a :href="'list.html?q='+searchTerm" target="_blank" class="b-button">THE GOVLAB BLOG</a></div>
-  <div class="more-button ttl-color"><a :href="'https://thelivinglib.org/search_studio/?wpsolr_q='+searchTerm" target="_blank" class="b-button">THE
+  <div class="more-button ttl-color"><a :href="'https://thelivinglib.org/?s='+searchTerm" target="_blank" class="b-button">THE
     LIVING LIBRARY</a></div>
     <div class="more-button ogrx-color"><a :href="'https://ogrx.org/search.html?q='+searchTerm" target="_blank" class="b-button">OGRX</a></div></div>
+
+    <div class="more-results" v-if="listArchive.length >0">
+      <div class="more-button archive-color"><a :href="'/archive/list.html?q='+searchTerm" target="_blank" class="b-button">THE GOVLAB ARCHIVE</a></div></div>
   </div>
 
   <div v-if="!searchactive && searchTerm && listHP.length <=0 ">
@@ -204,7 +208,7 @@
                   <h3 v-html="post.title"></h3>
                 </a>
                 <div class="post-author">
-                  
+
                   <p>By <span v-for="(author,index) in post.authors"><span v-if="index != post.authors.length-1">{{author.team_id.name}},&nbsp</span><span v-if="index == post.authors.length-1">{{author.team_id.name}}</span></span</p></p>
                   </div>
                 <div class="post-date">
@@ -249,14 +253,14 @@
         <div class="blog-col">
           <div v-for="(post, index) in posts" class="blog-col-item" v-if="posts && post.status == 'published' && post.scheduled <= currentDateTime()">
             <div>
-    
+
               <div class="text-col">
 
                 <a class="post-title" :href="'./post/'+post.slug">
                   <h3>{{post.title}}</h3>
                 </a>
                 <div class="post-author">
-                  
+
                 <p>By <span v-for="(author,index) in post.authors"><span v-if="index != post.authors.length-1">{{author.team_id.name}},&nbsp</span><span v-if="index == post.authors.length-1">{{author.team_id.name}}</span></span</p></p>
                 </div>
                 <div class="post-date">
@@ -283,31 +287,7 @@
 
 
     </div>
-    <!-- <footer class='footer-alt'>
-      <div class="row align-center">
-        <div class="medium-6 medium-centered columns">
-        </div>
 
-      </div>
-      <div class="row">
-
-        <a class="footer_partner-logo" href="http://www.thegovlab.org" target="_blank"><img
-            src="img/govlab-logo-white.png" alt="The GovLab"></a>
-
-      </div>
-    </footer>
-    <div class="copyright">
-      <div class="row">
-        <div class="column">
-          <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
-            <img class="copyright_cc-badge" alt="Creative Commons License"
-              src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a>
-          <p>&nbspThis work is licensed under a</p>&nbsp<a rel="license"
-            href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0
-            International License.</a>.
-        </div>
-      </div>
-    </div> -->
     <footer class='b-footer'>
       <div class="e-wrap">
           <div class="e-content m-sections">
@@ -326,14 +306,12 @@
               <a href="https://www.thegovlab.org/brand.html">Brand Assets</a>
           </div>
           <div class="e-content">
-              <!-- <h4>Lead Supporters</h4>
-              <a class="e-partner-logo" href="https://www.macfound.org/" target="_blank"><img src="static/img/partners/macarthur-logo-white.png" alt="MacArthur Foundation"></a>
-              <a class="e-partner-logo m-omidyar" href="https://www.omidyar.com/" tagret="_blank"><img src="static/img/partners/omidyar-logo-white.svg" alt="Omidyar Network"></a> -->
+
           </div>
           <div class="e-content">
               <h4>Based at</h4>
               <a class="e-partner-logo" href="http://engineering.nyu.edu/tandon" target="_blank"><img src="img/nyu.png" alt="NYU Tandon School of Engineering - New York University"></a>
-              <!--<a class="e-partner-logo m-mit" href="https://www.media.mit.edu/" target="_blank"><img src="static/img/partners/mit-logo-white.png" alt="MIT Media Lab"></a> -->
+
           </div>
       </div>
   </footer>
@@ -374,7 +352,7 @@
 <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
 <script src="https://unpkg.com/vue-meta/dist/vue-meta.min.js"></script>
 <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vue-gtag@1.8.0/dist/vue-gtag.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-gtag/dist/vue-gtag.umd.min.js"></script>
 
 <script src="js/search.js"></script>
 </body>

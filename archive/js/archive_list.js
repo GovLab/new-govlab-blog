@@ -37,6 +37,7 @@ new Vue({
       currentPage: 1,
       postdata: [],
       posts: [],
+      excerptLength: 75,
       currentDate: '',
       slug:'',
       more_body: false,
@@ -61,6 +62,7 @@ new Vue({
     const urlParams = new URLSearchParams(queryString);
     this.searchTerm = urlParams.get('q');
 
+
     this.client_blog = new DirectusSDK({
       url:"https://directus.thegovlab.com/",
       project:"thegovlab",
@@ -72,23 +74,14 @@ new Vue({
   },
 
   methods: {
-//     fetchHeader() {
-//
-//       self = this;
-//
-//       axios(`${self.baseUrl}${self.perPage}`, self.wpFetchHeaders).then(data => {
-//         self.totalPages  = data.headers['x-wp-totalpages'];
-//         self.fetchPosts();
-//       })
-//
-// },
+
   fetchPosts(p)
   {
     self.currentPage = p;
     self = this;
 
     self.client_blog.getItems(
-      'blog', {
+      'tg_archive', {
         sort:"-created_on",
         meta:"*",
         page:self.currentPage,
@@ -98,17 +91,20 @@ new Vue({
       .then(data => {
         self.totalResults = data.meta.filter_count;
         self.totalPages = data.meta.page_count;
-        console.log(self.totalPages);
+          console.log(data);
         Promise.all(data.data.map (function(a,b){ self.posts.push(a)}))
     }).catch(err => {
     console.log(err);
   })
 
-    // axios.get(`${self.baseUrl}${self.perPage}&page=${self.currentPage}`, self.wpFetchHeaders).then(data => {
-    //   console.log(data);
-    //   self.posts = data.data;
-    //     window.scrollTo(0,0);
-    // });
+  },
+  cutExcerpt(p)
+  {
+    var s = "";
+    if(p != undefined){
+    var s = p.split(" ").splice(0,this.excerptLength).join(" ");
+    }
+    return s += " [...]";
   },
     showDesc(eventO) {
       eventO['extended'] = true;
@@ -121,7 +117,7 @@ new Vue({
     },
     currentDateTime() {
     var currentTime = moment();
-    return currentTime.tz('America/New_York').format('YYYY-MM-DD HH:mm:ss'); 
+    return currentTime.tz('America/New_York').format('YYYY-MM-DD HH:mm:ss');
   },
     eventMore(link) {
       window.open(link, '_blank');
