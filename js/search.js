@@ -149,7 +149,8 @@ new Vue({
          fields: ['*.*','authors.team_id.*','authors.team_id.picture.*','related_posts.incoming_blog_id.*','related_publications.pub_id.*','related_publications.pub_id.picture.*','related_projects.projects_id.*','related_projects.projects_id.main_picture.*']
        })
        .then(data => {
-         Promise.all(data.data.map (function(a,b){ self.posts.push(a); if(a.featured)self.fposts.push(a);}))
+         Promise.all(data.data.map (function(a,b){ self.posts.push(a); if(a.featured &&  a.status == 'published' && a.scheduled <= self.currentDateTime())self.fposts.push(a);}))
+
      }).catch(err => {
      console.log(err);
    })

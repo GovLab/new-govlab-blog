@@ -199,7 +199,7 @@
       <div class="page-wrapper">
         <div class="blog-col">
             <!-- {{fposts.length}} -->
-            <div v-for="(post,index) in fposts" v-if="fposts && post.featured == true && post.status == 'published' && post.scheduled <= currentDateTime() && index<3" class="blog-col-item">
+            <div v-for="(post,index) in fposts" v-if="fposts && index<3" class="blog-col-item">
               <!-- <div style="color:black">{{post.scheduled <= currentDateTime()}}</div> -->
             <div>
               <a :href="'./post/'+post.slug"><div class="img-col" v-if="post.image" :style="{ backgroundImage: 'url(' + post.image.data.full_url+ ')' }"></div>
