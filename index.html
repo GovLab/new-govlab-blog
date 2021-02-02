@@ -198,7 +198,7 @@
     <div  v-if="featuredPost" class="b-events">
       <div class="page-wrapper">
         <div class="blog-col">
-            {{fposts.length}}
+            <!-- {{fposts.length}} -->
             <div v-for="(post,index) in fposts" v-if="fposts && post.featured == true && post.status == 'published' && post.scheduled <= currentDateTime() && index<3" class="blog-col-item">
               <!-- <div style="color:black">{{post.scheduled <= currentDateTime()}}</div> -->
             <div>
