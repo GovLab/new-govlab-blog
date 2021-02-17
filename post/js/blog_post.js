@@ -59,6 +59,8 @@ new Vue({
     console.log(this.blogslug);
     this.blogslug= this.blogslug.split('?')[0];
     console.log(this.blogslug);
+    this.blogslug= this.blogslug.split('#')[0];
+    console.log(this.blogslug);
     // this.blogslug = this.blogslug[this.blogslug.length - 1].split('.')[0];
 
     this.fetchBlog();
