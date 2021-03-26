@@ -77,12 +77,12 @@
   </div>
   <div id="blogpage" v-cloak>
 
-    <div class="row top-section">
+    <div class="row top-section" style="background-image: url(images/default.jpg);">
       <h1 v-html="blogData[0].title"></h1>
       <h4 v-if="blogData[0].subtitle" v-html="blogData[0].subtitle"></h4>
       <!-- <p>Published on: {{blogData[0].original_date}}</p> -->
-      <p v-if="blogData[0].original_date">{{formatDate(blogData[0].original_date)}}</p>
-      <p v-if="!blogData[0].original_date">{{formatDate(blogData[0].created_on)}}</p>
+      <p class="date-format" v-if="blogData[0].original_date">{{formatDate(blogData[0].original_date)}}</p>
+      <p class="date-format" v-if="!blogData[0].original_date">{{formatDate(blogData[0].created_on)}}</p>
 
     </div>
 
@@ -91,14 +91,13 @@
 
     <div class="col-wrap">
       <div class="col-100">
-        <div class="row-wrap center left-pad">
+        <div class="row-wrap center">
 
           <div class="row-wrap center authors" v-if="blogData[0].authors.length>0" v-for="member in blogData[0].authors">
             <div v-if="member.team_id.picture" class="author-thumb"
               :style="{ backgroundImage: 'url(' + member.team_id.picture.data.thumbnails[3].url+ ')' }"></div>
               <div v-if="!member.team_id.picture" class="author-thumb"
-                style="background-image: url('https://directusdev.thegovlab.com/uploads/thegovlab/originals/97523064-7f03-401c-a89a-81f06480c12e.png')"></div>
-
+                style="background-image: url('https://directus.thegovlab.com/uploads/thegovlab/originals/de2f39cc-a1f3-4ff9-b6eb-06b64d18b759.png')"></div>
 
             <a class="author-name" :href="'http://www.thegovlab.org/team.html#' + member.team_id.slug"
               target="_blank">{{member.team_id.name}}<br><span v-if="member.team_id.title" class="author-title">{{member.team_id.title}}</span></a>
@@ -109,8 +108,8 @@
         </div>
         <div class="blog-text" v-html="blogData[0].content">
         </div>
-        <div class="related-stories column-wrap" >
-          <p  v-if="blogData[0].related_posts.length > 0 ">RELATED STORIES</p>
+        <div class="related-stories column-wrap" v-if="blogData[0].related_posts.length > 0 " >
+          <p>RELATED STORIES</p>
           <a class="related-items" v-for="member in blogData[0].related_posts"
             :href="'https://blog.thegovlab.org/post/' + member.incoming_blog_id.slug"
             target="_blank"><span id="underline" v-html="member.incoming_blog_id.title">.</span></a>
@@ -152,17 +151,16 @@
 
       <div class="col-80">
         <div class="row-wrap left-pad">
-
-          <div class="row-wrap center authors" v-for="member in blogData[0].authors">
+          <div class="row-wrap center authors" v-if="blogData[0].authors.length>0" v-for="member in blogData[0].authors">
             <div v-if="member.team_id.picture" class="author-thumb"
               :style="{ backgroundImage: 'url(' + member.team_id.picture.data.thumbnails[3].url+ ')' }"></div>
               <div v-if="!member.team_id.picture" class="author-thumb"
-                style="background-image: url('https://directus.thegovlab.com/uploads/thegovlab/originals/shadow-profile.png')"></div>
-            <!-- <div v-if="member.team_id.picture" class="author-thumb"
-              :style="{ backgroundImage: 'url(' + member.team_id.picture.data.thumbnails[3].url+ ')' }"></div> -->
+                style="background-image: url('https://directus.thegovlab.com/uploads/thegovlab/originals/de2f39cc-a1f3-4ff9-b6eb-06b64d18b759.png')"></div>
+
             <a class="author-name" :href="'http://www.thegovlab.org/team.html#' + member.team_id.slug"
-              target="_blank">{{member.team_id.name}}<br><span class="author-title">{{member.team_id.title}}</span></a>
+              target="_blank">{{member.team_id.name}}<br><span v-if="member.team_id.title" class="author-title">{{member.team_id.title}}</span></a>
           </div>
+
         </div>
 
         <div v-if="blogData[0].image"  class="featured-image">
