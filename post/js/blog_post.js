@@ -62,6 +62,7 @@ new Vue({
     this.blogslug= this.blogslug.split('#')[0];
     console.log(this.blogslug);
     // this.blogslug = this.blogslug[this.blogslug.length - 1].split('.')[0];
+    this.blogslug = "10-learnings-from-considering-ai-ethics-through-global-perspectives";
 
     this.fetchBlog();
 
@@ -97,7 +98,7 @@ new Vue({
 	    self.meta_image = "https://govlab.github.io/new-govlab-blog/img/govlab-sm.png";}
 
     if(data.data[0].status == 'published' &&  data.data[0].scheduled <= self.currentDateTime())self.blogData = data.data;
-
+    console.log(self.blogData);
 
 }).catch(error => console.error(error));
     }
