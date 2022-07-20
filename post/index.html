@@ -93,7 +93,7 @@
       <div class="col-100">
         <div class="row-wrap center">
 
-          <div class="row-wrap center authors" v-if="blogData[0].authors.length>0" v-for="member in blogData[0].authors">
+          <div class="row-wrap center authors" v-if="blogData[0].authors.length>0 && blogData[0].authors[0]!= null" v-for="member in blogData[0].authors">
             <div v-if="member.team_id.picture" class="author-thumb"
               :style="{ backgroundImage: 'url(' + member.team_id.picture.data.thumbnails[3].url+ ')' }"></div>
               <div v-if="!member.team_id.picture" class="author-thumb"
@@ -151,7 +151,7 @@
 
       <div class="col-80">
         <div class="row-wrap left-pad">
-          <div class="row-wrap center authors" v-if="blogData[0].authors.length>0" v-for="member in blogData[0].authors">
+          <div class="row-wrap center authors" v-if="blogData[0].authors.length>0 && blogData[0].authors[0]!= null" v-for="member in blogData[0].authors">
             <div v-if="member.team_id.picture" class="author-thumb"
               :style="{ backgroundImage: 'url(' + member.team_id.picture.data.thumbnails[3].url+ ')' }"></div>
               <div v-if="!member.team_id.picture" class="author-thumb"
