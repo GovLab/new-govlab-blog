@@ -62,7 +62,7 @@ new Vue({
     this.blogslug= this.blogslug.split('#')[0];
     console.log(this.blogslug);
     // this.blogslug = this.blogslug[this.blogslug.length - 1].split('.')[0];
-    this.blogslug = "10-learnings-from-considering-ai-ethics-through-global-perspectives";
+    this.blogslug = "learning-from-decide-madrid";
 
     this.fetchBlog();
 
