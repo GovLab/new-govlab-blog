@@ -6,15 +6,23 @@ export default {
   name: "SubMenu",
   props: {
     blogslug: String,
-  }
+    name: String,
+  },
+
+    data() {
+      return {
+        symbol: this.$route.params.name
+      }
+    },
 }
+
 
 const count = ref(0)
 </script>
 
 <template>
-POST!!!!
-  <h1>{{ blogslug }}</h1>
+POST!!!! 
+  <h1>{{ symbol }}</h1>
 
   <div class="card">
     <button type="button" @click="count++">count is {{ count }}</button>
