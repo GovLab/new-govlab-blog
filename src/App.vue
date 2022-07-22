@@ -3,8 +3,8 @@
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 import { ref } from "vue";
 import { Directus } from "@directus/sdk";
-import index from './pages/index.vue'
-import post from './pages/post.vue'
+// import index from './pages/index.vue'
+// import post from './pages/post.vue'
 
     let blogslug=window.location.href.split('/');
     blogslug = blogslug[blogslug.length - 1];
@@ -16,7 +16,8 @@ import post from './pages/post.vue'
 
 <template>
 
-  <component :is="blogslug=='' ? index : post"  :blogslug="blogslug"/>
+<router-view></router-view>
+  <!-- <component :is="blogslug=='' ? index : post"  :blogslug="blogslug"/> -->
 
 </template>
 
