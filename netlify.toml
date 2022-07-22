@@ -1,3 +1,4 @@
 [[redirects]]
   from = "/*"
-  to = "index.html/:splat"
+  to = "https://blog2022.thegovlab.org/:splat"
+ 
