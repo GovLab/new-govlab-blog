@@ -45,13 +45,11 @@ export default {
 </script>
 
 <template>
-  
 
-{{listHP.length}}
   <div v-for="result in listHP">
         <div class="text-col full-width">
    
-        <a class="post-title" :href="'post/'+result.slug" target='_blank'>
+        <a class="post-title" :href="'/'+result.slug" >
           <h3 v-html="result.title"></h3></a>
           <div class="post-date">
             
@@ -64,7 +62,7 @@ export default {
 
           <div class="post-content" v-html="result.excerpt"></div>
           <div class="more-button main-color">
-            <a class="b-button" :href="'post/'+result.slug" target="_blank"> Continue Reading <i
+            <a class="b-button" :href="'/'+result.slug"> Continue Reading <i
                 class="material-icons"></i></a>
           </div>
 

@@ -1,6 +1,6 @@
 <script>
 import { ref } from 'vue'
-
+import { Directus } from "@directus/sdk";
 
 export default {
   name: "SubMenu",
@@ -11,9 +11,29 @@ export default {
 
     data() {
       return {
-        symbol: this.$route.params.name
+        directus: new Directus("https://directus9-dev.thegovlab.com/"),
+        blogslug: this.$route.params.name,
+        blogPost:[]
       }
     },
+     mounted() {
+    this.d9blogpost = this.directus.items("blog");
+    this.loadPost();
+  },
+    methods: 
+  {
+    loadPost()
+    {
+       this.d9blogpost
+      .readByQuery({
+        filter: { slug: { _eq: this.blogslug } }
+      })
+      .then((bpost) => {
+        this.blogPost = bpost.data[0];
+       
+      });
+    }
+  }
 }
 
 
@@ -21,29 +41,16 @@ const count = ref(0)
 </script>
 
 <template>
-POST!!!! 
-  <h1>{{ symbol }}</h1>
+
+  <h1>{{ blogPost.title }}</h1>
 
   <div class="card">
-    <button type="button" @click="count++">count is {{ count }}</button>
-    <p>
-      Edit
-      <code>components/HelloWorld.vue</code> to test HMR
-    </p>
+    <div v-html="blogPost.content">
+      </div>
+
   </div>
 
-  <p>
-    Check out
-    <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank"
-      >create-vue</a
-    >, the official Vue + Vite starter
-  </p>
-  <p>
-    Install
-    <a href="https://github.com/johnsoncodehk/volar" target="_blank">Volar</a>
-    in your IDE for a better DX
-  </p>
-  <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p>
+  
 </template>
 
 <style scoped>
