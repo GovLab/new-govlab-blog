@@ -11,6 +11,7 @@
   "dependencies": {
     "@directus/sdk": "^10.1.1",
     "axios": "^0.27.2",
+    "dayjs": "^1.11.9",
     "vite-plugin-fonts": "^0.6.0",
     "vite-plugin-pages": "^0.25.0",
     "vue": "^3.2.37",
