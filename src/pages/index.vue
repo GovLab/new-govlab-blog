@@ -12,9 +12,11 @@ export default {
     return {
       listHP: [],
       fposts: [],
+      d9Page:1,
       directus: new Directus("https://directus9.thegovlab.com/"),
       d9blog: "",
       slug: "",
+      
     };
   },
 
@@ -32,14 +34,16 @@ export default {
       this.d9blog
         .readByQuery({
           limit: 10,
-          page: 1,
-          sort: "-scheduled",
+          page: this.d9Page,
+          sort: "-original_date",
           fields: ["*.*,authors.team_id.*"],
         })
         .then((b) => {
-          this.listHP =  b.data.sort((a, b) => new Date(b.scheduled) - new Date(a.scheduled));
+          const tempListHP = b.data
+          this.listHP =  this.listHP.concat(tempListHP);
+          
           this.fposts = this.fposts.concat(
-            this.listHP.filter(
+            tempListHP.filter(
             a =>
                 a.featured &&
                 a.status === "published" &&
@@ -75,12 +79,12 @@ export default {
         </div>
       </div>
       <a class="top_logo" href="index.html"
-        ><img src="img/the-govlab-logo-white@4x.png" alt="The GovLab Blog"
+        ><img src="../assets/the-govlab-logo-white@4x.png" alt="The GovLab Blog"
       /></a>
       <!-- Navigation links (hidden by default) -->
       <div class="lang-select"></div>
     </div>
-    <div id="myLinks">
+    <!-- <div id="myLinks">
       <div class="menu-items">
         <div class="menu-sub">
           <a href="https://www.thegovlab.org/index.html">Home</a>
@@ -117,13 +121,13 @@ export default {
           <a href="https://www.thegovlab.org/contact.html">Contact</a>
         </div>
       </div>
-    </div>
+    </div> -->
     <div id="app" v-cloak>
       <div class="hero">
         <img
           style="padding-top: 20px"
           v-if="!searchactive"
-          src="img/govlab-logo-wp.png"
+          src="../assets/govlab-logo-wp.png"
         />
         <div v-if="searchactive" class="pulsating-circle"></div>
         <h2>THE GOVLAB BLOG</h2>
@@ -316,6 +320,7 @@ export default {
             
             <div
               v-for="(post, index2) in listHP"
+              v-show="post.status =='published'"
               class="blog-col-item"
               
             >
@@ -358,11 +363,11 @@ export default {
             </div>
           </div>
           <div class="more-results">
-            <!-- <div class="more-button main-color">
-              <a @click="fetchPosts()" target="_blank" class="b-button"
+            <div class="more-button main-color">
+              <a @click="d9Page++; loadBlog()" target="_blank" class="b-button"
                 >SEE MORE RESULTS</a
               >
-            </div> -->
+            </div>
           </div>
         </div>
       </div>
