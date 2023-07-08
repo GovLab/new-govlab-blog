@@ -136,9 +136,12 @@ const count = ref(0)
         <div v-if="blogPost.image"  class="featured-image">
           <img v-bind:src="blogPost.image">
         </div>
+        <div v-if="!blogPost.image"  class="featured-image">
+          <img v-bind:src="blogPost.image_blog2020">
+        </div>
         <div class="blog-text" v-html="blogPost.content">
         </div>
-        <div class="related-stories column-wrap" v-show="blogPost.related_posts.length>0" >
+        <div class="related-stories column-wrap" v-show="blogPost.related_posts && blogPost.related_posts.length>0" >
           <p>RELATED STORIES</p>
           
           <a class="related-items" v-for="member in blogPost.related_posts"
