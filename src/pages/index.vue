@@ -54,11 +54,11 @@ export default {
         });
     },
     currentDateTime() {
-      return dayjs().tz("America/Toronto").format("YYYY-MM-DD HH:mm:ss");
+      return dayjs().tz("America/Toronto").format("YYYY-MM-DDTHH:mm:ss");
 
     },
     dateShow(date) {
-      console.log(date, dayjs(date).format("LL"))
+      
       return dayjs(date).format("LL");
     },
   },
@@ -79,7 +79,7 @@ export default {
         </div>
       </div>
       <a class="top_logo" href="index.html"
-        ><img src="../assets/the-govlab-logo-white@4x.png" alt="The GovLab Blog"
+        ><img src="/the-govlab-logo-white@4x.png" alt="The GovLab Blog"
       /></a>
       <!-- Navigation links (hidden by default) -->
       <div class="lang-select"></div>
@@ -214,7 +214,8 @@ export default {
       <div class="b-events">
         <div class="page-wrapper">
           <div class="blog-col">
-            <div v-for="(fpost, index) in fposts" class="blog-col-item">
+            <div 
+            v-for="(fpost, index) in fposts" class="blog-col-item">
               <div>
                 <a :href="'./' + fpost.slug">
                   <div
@@ -240,12 +241,13 @@ export default {
                   <a class="post-title" :href="'./' + fpost.slug">
                     <h3 v-html="fpost.title"></h3>
                   </a>
-                  <!-- <div class="post-author">
-                    <p>By <span v-for="(author,index) in post.authors">
-                      <span v-if="index != post.authors.length-1">{{author.team_id.name}},&nbsp</span>
-                      <span v-if="index == post.authors.length-1">{{author.team_id.name}}</span>
-                    </span></p>
-                  </div> -->
+                  <div class="post-author">
+                    <!-- <p>By <span v-for="(author,index) in fpost.authors">
+                     
+                      <span v-if="index != fpost.authors.length-1">{{author.team_id.name}},&nbsp</span>
+                      <span v-if="index == fpost.authors.length-1">{{author.team_id.name}}</span>
+                    </span></p> -->
+                  </div>
                   <div class="post-date">
                     <h4>
                       <i
@@ -320,21 +322,23 @@ export default {
             
             <div
               v-for="(post, index2) in listHP"
-              v-show="post.status =='published'"
+              v-show="post.status =='published' && post.scheduled <= currentDateTime()"
+              
               class="blog-col-item"
               
             >
+            
               <div>
                 
                 <div class="text-col">
                   <a class="post-title" :href="'./' + post.slug">
                     <h3>{{ post.title }}</h3>
                   </a>
-                  <div class="post-author">
-                    <!-- <p>By <span v-for="(author,index) in post.authors"><span v-if="index != post.authors.length-1 && author.team_id != null && author.team_id != 0">{{author.team_id.name}},&nbsp</span><span v-if="index == post.authors.length-1 && author.team_id != null && author.team_id != 0">{{author.team_id.name}}</span></span</p></p> -->
+                  <div class="post-author" v-show="post.authors.length>0">
+                    <p>By <span v-for="(author,index) in post.authors"><span v-if="index != post.authors.length-1 && author.team_id != null && author.team_id != 0">{{author.team_id.name}},&nbsp</span><span v-if="index == post.authors.length-1 && author.team_id != null && author.team_id != 0">{{author.team_id.name}}</span></span></p>
                   </div>
                   <div class="post-date">
-                    <p class="material-icons">insert_invitation</p>
+                    <!-- <p class="material-icons">insert_invitation</p> -->
                     <h4>
                       <i
                         v-if="post.original_date"
@@ -373,5 +377,32 @@ export default {
       </div>
     </div>
   </div>
+  <footer class='b-footer'>
+      <div class="e-wrap">
+          <div class="e-content m-sections">
+              <h4>Sections</h4>
+              <a href="https://www.thegovlab.org/">Home</a>
+              <a href="https://www.thegovlab.org/about.html">About</a>
+              <a href="https://www.thegovlab.org/projects.html">Projects</a>
+              <!-- <a href="https://www.thegovlab.org/events.html">Events</a> -->
+              <a href="https://www.thegovlab.org/events.html" >Events</a>
+              <a href="https://www.thegovlab.org/publications.html">Publications</a>
+              <a href="https://www.thegovlab.org/team.html">Team</a>
+              <a href="https://www.thegovlab.org/global-advisory-council.html">Advisory Council</a>
+              <a href="https://www.thegovlab.org/our-transparency.html">Our Transparency</a>
+              <a href="https://www.thegovlab.org/job-board.html">Job Board</a>
+              <a href="https://www.thegovlab.org/contact.html">Contact</a>
+              <a href="https://www.thegovlab.org/brand.html">Brand Assets</a>
+          </div>
+          <div class="e-content">
+
+          </div>
+          <div class="e-content">
+            <h4>Affiliated With</h4>
+            <a class="e-partner-logo burnes-logo" href="http://northeastern.edu" target="_blank"><img src="/NU_Wordmark_Wv.png" alt="Northeastern University"></a>
+  
+        </div>
+      </div>
+  </footer>
 </template>
 
