@@ -168,7 +168,7 @@ const count = ref(0)
 
   <div v-if="blogPost.related_publications || blogPost.related_projects">
     <div class="row-wrap">
-      <div class="col-20">
+      <div class="col-20" v-show="blogPost.related_publications.length >0 || blogPost.related_projects.length >0">
         <div class="sidebar column-wrap">
           <div v-show="blogPost.related_projects.length>0">
           <p>RELATED PROJECTS</p>
@@ -194,11 +194,10 @@ const count = ref(0)
 
       </div>
 
-      <div class="col-80">
+      <div :class="{'col-100':true,'col-80': blogPost.related_publications.length >0 || blogPost.related_projects.length >0}">
         <div class="row-wrap left-pad">
           <div class="row-wrap center authors" v-if="blogPost.authors.length>0" v-for="member in blogPost.authors">
      
-            
             <div v-if="!member.team_id.picture" class="author-thumb"
               :style="{ backgroundImage: 'url(' + member.team_id.picture_blog2020+ ')' }"></div>
               <div v-if="member.team_id.picture" class="author-thumb"
@@ -210,10 +209,10 @@ const count = ref(0)
         </div>
 
         <div v-if="blogPost.image"  class="featured-image">
-          <img v-bind:src="blogPost.image">
+          <img :src="directus._url+'assets/'+blogPost.image.id">
         </div>
-        <div v-if="!blogPost.image && blogPost.image_blog2020"  class="featured-image">
-          <img v-bind:src="blogPost.image_blog2020">
+        <div v-show="!blogPost.image && blogPost.image_blog2020"  class="featured-image">
+          <img :src="blogPost.image_blog2020">
         </div>
         <div class="blog-text" v-html="blogPost.content">
         </div>
