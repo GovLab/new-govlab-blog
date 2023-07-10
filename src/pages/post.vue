@@ -108,7 +108,7 @@ const count = ref(0)
       <h4 v-if="blogPost.subtitle && blogPost.subtitle != 'NULL'" v-html="blogPost.subtitle"></h4>
       <!-- <p>Published on: {{blogPost.original_date}}</p> -->
       <p class="date-format" v-if="blogPost.original_date">{{formatDate(blogPost.original_date)}}</p>
-      <p class="date-format" v-if="!blogPost.original_date">{{formatDate(blogPost.created_on)}}</p>
+      <p class="date-format" v-if="!blogPost.original_date">{{formatDate(blogPost.scheduled)}}</p>
 
     </div>
 
@@ -193,14 +193,13 @@ const count = ref(0)
         </div>
 
       </div>
-
+      
       <div :class="{'col-100':true,'col-80': blogPost.related_publications.length >0 || blogPost.related_projects.length >0}">
-        <div class="row-wrap left-pad">
+        <div class="row-wrap center">
           <div class="row-wrap center authors" v-if="blogPost.authors.length>0" v-for="member in blogPost.authors">
-     
-            <div v-if="!member.team_id.picture" class="author-thumb"
-              :style="{ backgroundImage: 'url(' + member.team_id.picture_blog2020+ ')' }"></div>
-              <div v-if="member.team_id.picture" class="author-thumb"
+            <div v-if="member.team_id.picture" class="author-thumb"
+              :style="{ backgroundImage: 'url(' + directus._url+'assets/'+member.team_id.picture+ ')' }"></div>
+              <div v-if="!member.team_id.picture" class="author-thumb"
                 style="background-image: url('/govlab-logo-wp.png')"></div>
 
             <a class="author-name" :href="'http://www.thegovlab.org/team.html#' + member.team_id.slug"
@@ -208,13 +207,14 @@ const count = ref(0)
           </div>
         </div>
 
+      
+        <div class="blog-text" v-html="blogPost.content">
+        </div>
         <div v-if="blogPost.image"  class="featured-image">
           <img :src="directus._url+'assets/'+blogPost.image.id">
         </div>
         <div v-show="!blogPost.image && blogPost.image_blog2020"  class="featured-image">
           <img :src="blogPost.image_blog2020">
-        </div>
-        <div class="blog-text" v-html="blogPost.content">
         </div>
       </div>
 

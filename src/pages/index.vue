@@ -225,7 +225,8 @@ export default {
         <div class="page-wrapper">
           <div class="blog-col">
             <div 
-            v-for="(fpost, index) in fposts" class="blog-col-item">
+            v-for="(fpost, index) in fposts" class="blog-col-item"
+            v-show="index<3">
               <div>
                 <a :href="'./' + fpost.slug">
                   <div
@@ -261,12 +262,12 @@ export default {
                   <div class="post-date">
                     <h4>
                       <i
-                        v-if="fpost.original_date"
-                        v-html="dateShow(fpost.original_date)"
+                        v-if="fpost.scheduled"
+                        v-html="dateShow(fpost.scheduled)"
                       ></i>
                       <i
-                        v-if="!fpost.original_date"
-                        v-html="dateShow(fpost.scheduled)"
+                        v-if="!fpost.scheduled"
+                        v-html="dateShow(fpost.original_date)"
                       ></i>
                     </h4>
                   </div>
@@ -342,7 +343,7 @@ export default {
                 
                 <div class="text-col">
                   <a class="post-title" :href="'./' + post.slug">
-                    <h3>{{ post.title }}</h3>
+                    <h3 v-html="post.title"></h3>
                   </a>
                   <div class="post-author" v-show="post.authors.length>0">
                     <p>By <span v-for="(author,index) in post.authors"><span v-if="index != post.authors.length-1 && author.team_id != null && author.team_id != 0">{{author.team_id.name}},&nbsp</span><span v-if="index == post.authors.length-1 && author.team_id != null && author.team_id != 0">{{author.team_id.name}}</span></span></p>
@@ -351,12 +352,12 @@ export default {
                     <!-- <p class="material-icons">insert_invitation</p> -->
                     <h4>
                       <i
-                        v-if="post.original_date"
-                        v-html="dateShow(post.original_date)"
+                        v-if="post.scheduled"
+                        v-html="dateShow(post.scheduled)"
                       ></i>
                       <i
-                        v-if="!post.original_date"
-                        v-html="dateShow(post.scheduled)"
+                        v-if="!post.scheduled"
+                        v-html="dateShow(post.original_date)"
                       ></i>
                     </h4>
                   </div>
