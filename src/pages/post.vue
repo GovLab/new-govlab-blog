@@ -35,7 +35,7 @@ export default {
        this.d9blogpost
       .readByQuery({
         filter: { slug: { _eq: this.blogslug } },
-        fields: ["*.*,authors.team_id.*.related_posts.*"],
+        fields: ["*.*,authors.team_id.*,related_posts.incoming_blog_id.*,related_projects.projects_id.*,related_publications.pub_id.*"],
       })
       .then((bpost) => {
         console.log(bpost)
@@ -45,6 +45,16 @@ export default {
     formatDate(date) {
   return dayjs(date).format('DD MMMM YYYY');
 },
+toggleMenu()
+{
+  
+    var x = document.getElementById("myLinks");
+    if (x.style.display === "block") {
+      x.style.display = "none";
+    } else {
+      x.style.display = "block";
+    }
+}
   }
 }
 
@@ -65,7 +75,7 @@ const count = ref(0)
   <div class="topnav">
     <div class="menu-bars">
       <div class="bar-wrap">
-        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+        <a href="javascript:void(0);" class="icon" @click="toggleMenu()">
           <i class="fa fa-bars"></i>
         </a>
       </div>
@@ -77,7 +87,7 @@ const count = ref(0)
 
     </div>
   </div>
-  <div id="myLinks">
+  <div id="myLinks" @click="toggleMenu()">
     <div class="menu-items">
       <div class="menu-sub"><a href="../index.html">Home</a></div>
       <div class="menu-sub"><a href="https://thegovlab.com/about.html">About</a></div>
@@ -102,9 +112,10 @@ const count = ref(0)
 
     </div>
 
-
+  </div>
 <div >
 
+<!-- 
     <div class="col-wrap">
       <div class="col-100">
         <div class="row-wrap center">
@@ -122,7 +133,7 @@ const count = ref(0)
           </div>
         </div>
 
-        <!-- <div class="row-wrap center authors" v-if="blogPost.authors[0] != null" v-for="member in blogPost.authors">   
+        <div class="row-wrap center authors" v-if="blogPost.authors[0] != null" v-for="member in blogPost.authors">   
          <span v-if="member.team_id != null"> {{member.team_id}}</span>>
             <div v-if="member.team_id != null" class="author-thumb"
               :style="{ backgroundImage: 'url(' + member.team_id.picture.data.thumbnails[3].url+ ')' }"></div>
@@ -131,12 +142,12 @@ const count = ref(0)
 
             <a v-if="member.team_id != null" class="author-name" :href="'http://www.thegovlab.org/team.html#' + member.team_id.slug"
               target="_blank">{{member.team_id.name}}<br><span  class="author-title">{{member.team_id.title}}</span></a>
-          </div> -->
+          </div>
         </div>
         <div v-if="blogPost.image"  class="featured-image">
           <img v-bind:src="blogPost.image">
         </div>
-        <div v-if="!blogPost.image"  class="featured-image">
+        <div v-if="!blogPost.image && blogPost.image_blog2020"  class="featured-image">
           <img v-bind:src="blogPost.image_blog2020">
         </div>
         <div class="blog-text" v-html="blogPost.content">
@@ -153,16 +164,16 @@ const count = ref(0)
 
 
     </div>
-  </div> 
+  </div>  -->
 
-  <!-- <div v-if="blogPost.related_publications.length >0 || blogPost.related_projects.length >0">
+  <div v-if="blogPost.related_publications || blogPost.related_projects">
     <div class="row-wrap">
       <div class="col-20">
         <div class="sidebar column-wrap">
-          <div v-if="blogPost.related_projects.length >0">
+          <div v-show="blogPost.related_projects.length>0">
           <p>RELATED PROJECTS</p>
           <div class="sidebar-wrap"  v-for="project in blogPost.related_projects">
-
+            
             <div class="related-project-text">
 
             <a :href="'http://www.thegovlab.org/' + project.projects_id.slug" target="_blank">{{project.projects_id.name}}</a>
@@ -170,7 +181,7 @@ const count = ref(0)
           </div>
           </div>
           <br>
-          <div v-if="blogPost.related_publications.length >0 ">
+          <div v-show="blogPost.related_publications.length >0 ">
           <p>RELATED PUBLICATIONS</p>
           <div class="sidebar-wrap" v-for="member in blogPost.related_publications">
 
@@ -186,33 +197,38 @@ const count = ref(0)
       <div class="col-80">
         <div class="row-wrap left-pad">
           <div class="row-wrap center authors" v-if="blogPost.authors.length>0" v-for="member in blogPost.authors">
-            <div v-if="member.team_id.picture" class="author-thumb"
-              :style="{ backgroundImage: 'url(' + member.team_id.picture.data.thumbnails[3].url+ ')' }"></div>
-              <div v-if="!member.team_id.picture" class="author-thumb"
-                style="background-image: url('https://directus.thegovlab.com/uploads/thegovlab/originals/de2f39cc-a1f3-4ff9-b6eb-06b64d18b759.png')"></div>
+     
+            
+            <div v-if="!member.team_id.picture" class="author-thumb"
+              :style="{ backgroundImage: 'url(' + member.team_id.picture_blog2020+ ')' }"></div>
+              <div v-if="member.team_id.picture" class="author-thumb"
+                style="background-image: url('/govlab-logo-wp.png')"></div>
 
             <a class="author-name" :href="'http://www.thegovlab.org/team.html#' + member.team_id.slug"
-              target="_blank">{{member.team_id.name}}<br><span v-if="member.team_id.title" class="author-title">{{member.team_id.title}}</span></a>
+              target="_blank">{{member.team_id.name}}<br><span v-if="member.team_id.title && member.team_id.title!= 'NULL'" class="author-title">{{member.team_id.title}}</span></a>
           </div>
-
         </div>
 
         <div v-if="blogPost.image"  class="featured-image">
-          <img v-bind:src="blogPost.image.data.full_url">
+          <img v-bind:src="blogPost.image">
+        </div>
+        <div v-if="!blogPost.image && blogPost.image_blog2020"  class="featured-image">
+          <img v-bind:src="blogPost.image_blog2020">
         </div>
         <div class="blog-text" v-html="blogPost.content">
         </div>
       </div>
 
     </div> 
-    <div v-if="blogPost.related_posts.length > 0 " class="related-stories column-wrap">
+    
+    <div v-show="blogPost.related_posts.length > 0 " class="related-stories column-wrap">
       <p>RELATED STORIES</p>
       <a class="related-items" v-for="member in blogPost.related_posts"
-        :href="'https://blog.thegovlab.org/post/' + member.incoming_blog_id.slug"
+        :href="'https://blog.thegovlab.org/' + member.incoming_blog_id.slug"
         target="_blank"><span id="underline">{{member.incoming_blog_id.title}}.</span></a>
     </div>
-</div>-->
-  <!-- </div> -->
+  </div>
+  </div>
   <footer class='b-footer'>
     <div class="e-wrap">
         <div class="e-content m-sections">

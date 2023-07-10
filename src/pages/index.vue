@@ -61,6 +61,16 @@ export default {
       
       return dayjs(date).format("LL");
     },
+    toggleMenu()
+{
+  
+    var x = document.getElementById("myLinks");
+    if (x.style.display === "block") {
+      x.style.display = "none";
+    } else {
+      x.style.display = "block";
+    }
+}
   },
 };
 </script>
@@ -73,7 +83,7 @@ export default {
     <div class="topnav">
       <div class="menu-bars">
         <div class="bar-wrap">
-          <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+          <a href="javascript:void(0);" class="icon" @click="toggleMenu()">
             <i class="fa fa-bars"></i>
           </a>
         </div>
@@ -84,7 +94,7 @@ export default {
       <!-- Navigation links (hidden by default) -->
       <div class="lang-select"></div>
     </div>
-    <!-- <div id="myLinks">
+    <div id="myLinks">
       <div class="menu-items">
         <div class="menu-sub">
           <a href="https://www.thegovlab.org/index.html">Home</a>
@@ -121,7 +131,7 @@ export default {
           <a href="https://www.thegovlab.org/contact.html">Contact</a>
         </div>
       </div>
-    </div> -->
+    </div>
     <div id="app" v-cloak>
       <div class="hero">
         <img
