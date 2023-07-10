@@ -197,9 +197,12 @@ const count = ref(0)
       <div :class="{'col-100':true,'col-80': blogPost.related_publications.length >0 || blogPost.related_projects.length >0}">
         <div class="row-wrap center">
           <div class="row-wrap center authors" v-if="blogPost.authors.length>0" v-for="member in blogPost.authors">
+            <!-- {{ member.team_id.picture_blog2020 }} -->
             <div v-if="member.team_id.picture" class="author-thumb"
               :style="{ backgroundImage: 'url(' + directus._url+'assets/'+member.team_id.picture+ ')' }"></div>
-              <div v-if="!member.team_id.picture" class="author-thumb"
+              <div v-if="!member.team_id.picture && member.team_id.picture_blog2020" class="author-thumb"
+                :style="{ backgroundImage: 'url('+member.team_id.picture_blog2020+')' }"></div>
+              <div v-if="!member.team_id.picture && !member.team_id.picture_blog2020" class="author-thumb"
                 style="background-image: url('/govlab-logo-wp.png')"></div>
 
             <a class="author-name" :href="'http://www.thegovlab.org/team.html#' + member.team_id.slug"
