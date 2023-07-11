@@ -5,7 +5,7 @@ import dayjs from "dayjs/esm/index.js";
 import utc from 'dayjs/esm/plugin/utc/index.js'
 import timezone from 'dayjs/esm/plugin/timezone/index.js'
 import localizedFormat from 'dayjs/esm/plugin/localizedFormat/index.js'
-
+import {useHead } from '@vueuse/head'
 
 export default {
   data() {
@@ -28,8 +28,27 @@ export default {
 
     this.d9blog = this.directus.items("blog");
     this.loadBlog();
+    this.fillMeta();
+
   },
   methods: {
+    fillMeta()
+    {
+     useHead({
+      title: "THE GOVLAB BLOG",
+      meta: [
+
+        { property: 'og:title', content: "THE GOVLAB BLOG" },
+        { property: 'og:description', content: "Deepening Our Understanding of How to Govern More Effectively and Legitimately Through Technology."},
+        { property: 'og:image', content: "https://raw.githubusercontent.com/GovLab/new-govlab-blog/master/img/govlab-sm.png"},
+        { property: 'og:url', content: "https://blog.thegovlab.org/"},
+        { property: 'twitter:title', content: "THE GOVLAB BLOG"},
+        { property: 'twitter:description', content: "Deepening Our Understanding of How to Govern More Effectively and Legitimately Through Technology."},
+        { property: 'twitter:image', content: "https://raw.githubusercontent.com/GovLab/new-govlab-blog/master/img/govlab-sm.png"},
+        { property: 'twitter:card', content: "summary_large_image" },
+      ],
+    })
+    },
     loadBlog() {
       this.d9blog
         .readByQuery({
@@ -50,6 +69,7 @@ export default {
                 a.scheduled <= this.currentDateTime()
             )
           );
+          this.fillMeta()
           console.log(this.fposts);
         });
     },

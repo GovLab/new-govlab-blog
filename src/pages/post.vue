@@ -5,6 +5,7 @@ import dayjs from "dayjs/esm/index.js";
 import utc from 'dayjs/esm/plugin/utc/index.js'
 import timezone from 'dayjs/esm/plugin/timezone/index.js'
 import localizedFormat from 'dayjs/esm/plugin/localizedFormat/index.js'
+import {useHead } from '@vueuse/head'
 
 export default {
   name: "SubMenu",
@@ -30,6 +31,23 @@ export default {
   },
     methods: 
   {
+    fillMeta()
+    {
+     useHead({
+      title: this.blogPost.title + " | THE GOVLAB BLOG",
+      meta: [
+
+        { property: 'og:title', content: this.blogPost.title + " | THE GOVLAB BLOG" },
+        { property: 'og:description', content: this.htmlToPlainText(this.blogPost.excerpt)},
+        { property: 'og:image', content: !this.blogPost.image ?this.blogPost.image_blog2020: this.directus._url+'assets/'+this.blogPost.image.id},
+        { property: 'og:url', content: "https://blog.thegovlab.org/" + this.blogPost.slug},
+        { property: 'twitter:title', content: this.blogPost.title + " | THE GOVLAB BLOG"},
+        { property: 'twitter:description', content: this.htmlToPlainText(this.blogPost.excerpt)},
+        { property: 'twitter:image', content: !this.blogPost.image ?this.blogPost.image_blog2020: this.directus._url+'assets/'+this.blogPost.image.id},
+        { property: 'twitter:card', content: "summary_large_image" },
+      ],
+    })
+    },
     loadPost()
     {
        this.d9blogpost
@@ -40,6 +58,7 @@ export default {
       .then((bpost) => {
         console.log(bpost)
         this.blogPost = bpost.data[0];
+        this.fillMeta()
       });
     },
     formatDate(date) {
@@ -54,6 +73,11 @@ toggleMenu()
     } else {
       x.style.display = "block";
     }
+},
+htmlToPlainText(html) {
+    const parser = new DOMParser();
+    const dom = parser.parseFromString(html, 'text/html');
+    return dom.body.textContent || "";
 }
   }
 }
