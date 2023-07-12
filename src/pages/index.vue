@@ -13,7 +13,7 @@ export default {
       listHP: [],
       fposts: [],
       d9Page:1,
-      directus: new Directus("https://directus9.thegovlab.com/"),
+      directus: new Directus("https://directus10.thegovlab.com/"),
       d9blog: "",
       slug: "",
       
