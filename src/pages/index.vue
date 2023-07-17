@@ -13,6 +13,7 @@ export default {
       listHP: [],
       fposts: [],
       d9Page:1,
+      filterCount:0,
       directus: new Directus("https://content.thegovlab.com/"),
       d9blog: "",
       slug: "",
@@ -52,16 +53,48 @@ export default {
       ],
     })
     },
+  
     loadBlog() {
+      
+      // init the API load
+      this.loadAPI = true;
+      this.filterCount =0;
+      this.searchTerm!=''? this.searchactive = true:this.searchactive = false;
+
+      let searchTArray = this.searchTerm.split(" ");
+      searchTArray = searchTArray.filter(item => item); // filter out empty entries
+      const searchObj = [];
+
+      searchTArray.map((a) => {
+        searchObj.push({ excerpt: { _contains: a } });
+        searchObj.push({ title: { _contains: a } });
+        searchObj.push({ content: { _contains: a } });
+        searchObj.push({ slug: { _contains: a } });
+        searchObj.push({ authors: { team_id: { name: { _contains: a } } } });
+        searchObj.push({ authors: { team_id: { title: { _contains: a } } } });
+      });
+
       this.d9blog
         .readByQuery({
+          filter: {
+            _and: [
+            {
+               status: {
+              _eq: "published",
+            },
+            }
+            ],
+            _or: searchObj,
+          },
           limit: 10,
           page: this.d9Page,
           sort: "-original_date",
           fields: ["*.*,authors.team_id.*"],
+          meta:'*',
         })
-        .then((b) => {
-          const tempListHP = b.data
+        .then(data => {
+          this.filterCount = data.meta.filter_count;
+          const tempListHP = data.data
           this.listHP =  this.listHP.concat(tempListHP);
           
           this.fposts = this.fposts.concat(
@@ -73,29 +106,16 @@ export default {
             )
           );
           this.fillMeta()
-          console.log(this.fposts);
+          this.loadAPI = false;
         });
     },
-    searchBlog(){
-      this.searchTerm!=''? this.searchactive = true:this.searchactive = false;
-      this.listHP = [];
-      this.loadAPI = true;
-      this.d9blog.readByQuery({
-          limit: 100,
-          sort:"-original_date",
-          status:'published',
-          fields: ["*.*,authors.team_id.*"],
-          meta:"*",
-          search: this.searchTerm
-        })
-        .then(data => {
-            this.listHP = data.data
-            this.loadAPI = false;
-        })
-        .catch(err => {
-          console.log(err);
-        })
-      },
+    resetSearch()
+    {
+      this.listHP=[],
+      this.d9Page=1;
+      this.searchactive=false;
+      this.loadBlog();
+    },
     currentDateTime() {
       return dayjs().tz("America/Toronto").format("YYYY-MM-DDTHH:mm:ss");
 
@@ -192,8 +212,8 @@ export default {
       <div class="search-section" >
       <h3>Explore our knowledge base</h3>
       <div>
-      <input class="search-bar" v-model="searchTerm" @keyup.enter="searchBlog()" id="credit-limit-input" type="text" placeholder="SEARCH HERE">
-      <span v-show="searchactive" type="submit" class="search-bar-btn material-icons" @click="searchTerm='';searchactive=false;loadBlog()">close</span>
+      <input class="search-bar" v-model="searchTerm" @keyup.enter="resetSearch()" id="credit-limit-input" type="text" placeholder="SEARCH HERE">
+      <span v-show="searchactive" type="submit" class="search-bar-btn material-icons" @click="searchTerm='';resetSearch()">close</span>
       </div>
       
 <!-- <form>   
@@ -329,11 +349,11 @@ export default {
             </div>
           </div>
         </div>
-          <h2 v-show="searchactive" class="section-title">Search Results </h2>
+          <h2 v-show="searchactive" class="section-title">{{filterCount}} Search Results </h2>
           <h2 v-show="!searchactive" class="section-title">LATEST POSTS </h2>
 
           <div class="blog-col">
-          <h4 style="margin:auto" v-show="listHP.length<=0 && !loadAPI">NO RESULT FOUND</h4>
+          <h4 style="margin:auto" v-show="listHP.length<=0 && !loadAPI ">NO RESULT FOUND</h4>
             <div
               v-for="(post, index2) in listHP"
               v-show="post.status =='published' && post.scheduled <= currentDateTime()"
@@ -380,7 +400,7 @@ export default {
               </div>
             </div>
           </div>
-          <div class="more-results" v-show="listHP.length>0 && !searchactive">
+          <div class="more-results" v-show="filterCount>10 && filterCount>(d9Page*10)">
             <div class="more-button main-color">
               <a @click="d9Page++; loadBlog()" target="_blank" class="b-button"
                 >SEE MORE RESULTS</a
