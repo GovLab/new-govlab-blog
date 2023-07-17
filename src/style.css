@@ -97,7 +97,9 @@ button:focus-visible {
   background-repeat: no-repeat;
   border-radius: 20px;
 }  */
-
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
 
 :root {
   --main-color: #523080;
@@ -819,16 +821,29 @@ margin:0;
   color: var(--white5);
   border:none;
   text-align: center;
+
+}
+.search-bar-btn{
+  position: absolute;
+  background: none;
+  color: var(--white5);
+  margin-left: -1.5em;
+  margin-top: 0.5em;
+  cursor: pointer;
+  /* text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 */
 }
 .search-bar-box{
   width:200px;
   position:absolute;
   margin-left:40%;
-  margin-bottom:5%
+  margin-bottom:5%;
+
 }
 p.search-bar{
   font-weight: 200;
 }
+
+
 p.search-desc{
   color: var(--white8);
   font-weight: 300;
@@ -1223,9 +1238,11 @@ a.b-button{
 }
 .pulsating-circle {
 
+  position: relative;
   transform: translateX(-50%) translateY(-50%);
   width: 60px;
   height: 60px;
+  top:-3.5em
 }
 .pulsating-circle:before {
     content: '';

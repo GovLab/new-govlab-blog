@@ -16,6 +16,9 @@ export default {
       directus: new Directus("https://content.thegovlab.com/"),
       d9blog: "",
       slug: "",
+      searchTerm:"",
+      searchactive:false,
+      loadAPI:false
       
     };
   },
@@ -73,6 +76,26 @@ export default {
           console.log(this.fposts);
         });
     },
+    searchBlog(){
+      this.searchTerm!=''? this.searchactive = true:this.searchactive = false;
+      this.listHP = [];
+      this.loadAPI = true;
+      this.d9blog.readByQuery({
+          limit: 100,
+          sort:"-original_date",
+          status:'published',
+          fields: ["*.*,authors.team_id.*"],
+          meta:"*",
+          search: this.searchTerm
+        })
+        .then(data => {
+            this.listHP = data.data
+            this.loadAPI = false;
+        })
+        .catch(err => {
+          console.log(err);
+        })
+      },
     currentDateTime() {
       return dayjs().tz("America/Toronto").format("YYYY-MM-DDTHH:mm:ss");
 
@@ -156,93 +179,51 @@ export default {
       <div class="hero">
         <img
           style="padding-top: 20px"
-          v-if="!searchactive"
           src="../assets/govlab-logo-wp.png"
         />
-        <div v-if="searchactive" class="pulsating-circle"></div>
+        <!-- <img
+          style="padding-top: 20px"
+          v-if="!searchactive"
+          src="../assets/govlab-logo-wp.png"
+        />  -->
+        <div v-if="loadAPI" class="pulsating-circle"></div>
         <h2>THE GOVLAB BLOG</h2>
       </div>
-      <!-- <div class="search-section">
+      <div class="search-section" >
       <h3>Explore our knowledge base</h3>
+      <div>
+      <input class="search-bar" v-model="searchTerm" @keyup.enter="searchBlog()" id="credit-limit-input" type="text" placeholder="SEARCH HERE">
+      <span v-show="searchactive" type="submit" class="search-bar-btn material-icons" @click="searchTerm='';searchactive=false;loadBlog()">close</span>
+      </div>
+      
+<!-- <form>   
+    <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+    <div class="relative">
+        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+            </svg>
+        </div>
+        <input type="search" id="default-search" class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Mockups, Logos..." required>
+        <button type="submit" class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+    </div>
+</form> -->
 
-      <input class="search-bar" v-model="searchTerm" v-on:input="searchAll" id="credit-limit-input" type="text" placeholder="SEARCH HERE">
       <div style="width:200px; position:absolute; margin-left:40%; margin-bottom:5%">
 
       </div>
+      <!-- <p class="search-desc">The GovLab’s resources includes results from this blog, The Living Library and the Open
+        Governance Research Exchange</p> -->
+    </div>
+    
 
-
-      <p class="search-desc">The GovLab’s resources includes results from this blog, The Living Library and the Open
-        Governance Research Exchange</p>
-
-
-
-    </div> -->
-      <!-- <div v-for="result in listHP">
-        <div v-if="result.status == 'published'">
-          <div class="text-col full-width">
-            <a class="post-title" :href="'/' + result.slug">
-              <h3 v-html="result.title"></h3
-            ></a>
-            <div class="post-date">
-              <i>
-                <h4
-                  v-if="result.scheduled > '2020-08-21T11:33:07'"
-                  v-html="'Scheduled: ' + result.scheduled"
-                ></h4>
-                <h4
-                  v-if="result.original_date"
-                  v-html="'Original: ' + result.original_date"
-                ></h4>
-              </i>
-            </div>
-
-            <div
-              class="row-wrap center authors"
-              v-for="member in result.authors"
-            >
-
-              <div
-                v-if="member.team_id != null"
-                class="author-thumb"
-                :style="{
-                  backgroundImage:
-                    'url(' +
-                    (member.team_id.picture != null
-                      ? member.team_id.picture.data.thumbnails[3].url
-                      : member.team_id.picture_blog2020) +
-                    ')',
-                }"
-              ></div>
-              <div v-if="member.team_id != null" class="author-thumb"
-                style="background-image: url('https://directus.thegovlab.com/uploads/thegovlab/originals/de2f39cc-a1f3-4ff9-b6eb-06b64d18b759.png')"></div>
-
-              <a
-                v-if="member.team_id != null"
-                class="author-name"
-                :href="
-                  'http://www.thegovlab.org/team.html#' + member.team_id.slug
-                "
-                target="_blank"
-                >{{ member.team_id.name }}<br /><span class="author-title">{{
-                  member.team_id.title
-                }}</span></a
-              >
-            </div>
-            <img height="200" :src="result.image_blog2020" />
-            <div class="post-content" v-html="result.excerpt"></div>
-            <div class="more-button main-color">
-              <a class="b-button" :href="'/' + result.slug">
-                Continue Reading <i class="material-icons"></i
-              ></a>
-            </div>
-          </div>
-          <hr />
-        </div>
-      </div> -->
-
-      <h2 class="section-title">FEATURED POSTS</h2>
+      
       <div class="b-events">
         <div class="page-wrapper">
+          <div v-show="!searchactive">
+
+        
+          <h2 class="section-title">FEATURED POSTS</h2>
           <div class="blog-col">
             <div 
             v-for="(fpost, index) in fposts" class="blog-col-item"
@@ -347,10 +328,12 @@ export default {
               </p>
             </div>
           </div>
-          <h2 class="section-title">LATEST POSTS FROM THE GOVLAB</h2>
+        </div>
+          <h2 v-show="searchactive" class="section-title">Search Results </h2>
+          <h2 v-show="!searchactive" class="section-title">LATEST POSTS </h2>
 
           <div class="blog-col">
-            
+          <h4 style="margin:auto" v-show="listHP.length<=0 && !loadAPI">NO RESULT FOUND</h4>
             <div
               v-for="(post, index2) in listHP"
               v-show="post.status =='published' && post.scheduled <= currentDateTime()"
@@ -397,7 +380,7 @@ export default {
               </div>
             </div>
           </div>
-          <div class="more-results">
+          <div class="more-results" v-show="listHP.length>0">
             <div class="more-button main-color">
               <a @click="d9Page++; loadBlog()" target="_blank" class="b-button"
                 >SEE MORE RESULTS</a
