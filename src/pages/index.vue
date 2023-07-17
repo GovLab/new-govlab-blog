@@ -380,7 +380,7 @@ export default {
               </div>
             </div>
           </div>
-          <div class="more-results" v-show="listHP.length>0">
+          <div class="more-results" v-show="listHP.length>0 && !searchactive">
             <div class="more-button main-color">
               <a @click="d9Page++; loadBlog()" target="_blank" class="b-button"
                 >SEE MORE RESULTS</a
