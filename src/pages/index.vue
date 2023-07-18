@@ -61,7 +61,8 @@ export default {
       this.filterCount =0;
       this.searchTerm!=''? this.searchactive = true:this.searchactive = false;
 
-      let searchTArray = this.searchTerm.split(" ");
+      // let searchTArray = this.searchTerm.split(" ");
+      let searchTArray = [this.searchTerm];
       searchTArray = searchTArray.filter(item => item); // filter out empty entries
       const searchObj = [];
 
@@ -212,7 +213,7 @@ export default {
       <div class="search-section" >
       <h3>Explore our knowledge base</h3>
       <div>
-      <input class="search-bar" v-model="searchTerm" @keyup.enter="resetSearch()" id="credit-limit-input" type="text" placeholder="SEARCH HERE">
+      <input class="search-bar" v-model="searchTerm" @keyup.enter="resetSearch()" type="text" placeholder="SEARCH HERE">
       <span v-show="searchactive" type="submit" class="search-bar-btn material-icons" @click="searchTerm='';resetSearch()">close</span>
       </div>
       
