@@ -816,19 +816,20 @@ margin:0;
 }
 
 .search-bar{
-  padding: 1rem 10rem;
+  padding: 1rem;
+  padding-right: 2.5rem;
   background-color: var(--white2);
   color: var(--white5);
-  border:none;
+  border: none;
   text-align: center;
-
+  width: 22rem;
 }
 .search-bar-btn{
-  position: absolute;
+  position: relative;
   background: none;
   color: var(--white5);
   margin-left: -1.5em;
-  margin-top: 0.5em;
+  margin-top: 0.7rem;
   cursor: pointer;
   /* text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 */
 }
@@ -906,13 +907,9 @@ h2.section-title{
     text-align: center;
   }
   .search-bar{
-    padding: 1rem 1rem;
+    padding: 0.5rem 8rem;
     background-color: var(--white2);
     color: var(--white5);
-    border: none;
-    text-align: center;
-    margin: 1rem 10rem;
-    width: 22rem;
   }
 }
 .digest-section h3{
