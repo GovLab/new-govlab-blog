@@ -389,7 +389,7 @@ export default {
             </div>
           </div>
         </div>
-          <h2 v-show="searchactive" class="section-title">{{filterCount}} Search Results </h2>
+          <h2 v-show="searchactive" class="section-title">{{!loadAPI?filterCount:''}} Search Results </h2>
           <h2 v-show="!searchactive" class="section-title">LATEST POSTS </h2>
 
           <div class="blog-col">
