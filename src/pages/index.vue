@@ -251,9 +251,9 @@ export default {
       </div>
       <div class="search-section" >
       <h3>Explore our knowledge base</h3>
-      <div>
+      <div  class="search-bar-section">
       <input class="search-bar" v-model="searchTerm" @keyup.enter="resetSearch()" type="text" placeholder="SEARCH HERE">
-      <span v-show="searchactive" type="submit" class="search-bar-btn material-icons" @click="searchTerm='';resetSearch()">close</span>
+      <span  type="submit" class="search-bar-btn material-icons" @click="searchTerm='';resetSearch()">close</span>
       </div>
       
 <!-- <form>   
