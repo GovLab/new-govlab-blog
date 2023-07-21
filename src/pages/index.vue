@@ -12,6 +12,7 @@ export default {
     return {
       listHP: [],
       fposts: [],
+      searchObj:[],
       d9Page:1,
       filterCount:0,
       directus: new Directus("https://content.thegovlab.com/"),
@@ -31,6 +32,7 @@ export default {
     dayjs.extend(localizedFormat)
 
     this.d9blog = this.directus.items("blog");
+    this.d9archive = this.directus.items("tg_archive");
     this.loadBlog();
     this.fillMeta();
 
@@ -64,15 +66,15 @@ export default {
       // let searchTArray = this.searchTerm.split(" ");
       let searchTArray = [this.searchTerm];
       searchTArray = searchTArray.filter(item => item); // filter out empty entries
-      const searchObj = [];
+      this.searchObj = [];
 
       searchTArray.map((a) => {
-        searchObj.push({ excerpt: { _contains: a } });
-        searchObj.push({ title: { _contains: a } });
-        searchObj.push({ content: { _contains: a } });
-        searchObj.push({ slug: { _contains: a } });
-        searchObj.push({ authors: { team_id: { name: { _contains: a } } } });
-        searchObj.push({ authors: { team_id: { title: { _contains: a } } } });
+        this.searchObj.push({ excerpt: { _contains: a } });
+        this.searchObj.push({ title: { _contains: a } });
+        this.searchObj.push({ content: { _contains: a } });
+        this.searchObj.push({ slug: { _contains: a } });
+        this.searchObj.push({ authors: { team_id: { name: { _contains: a } } } });
+        this.searchObj.push({ authors: { team_id: { title: { _contains: a } } } });
       });
 
       this.d9blog
@@ -85,10 +87,10 @@ export default {
             },
             }
             ],
-            _or: searchObj,
+            _or: this.searchObj,
           },
-          limit: 10,
-          page: this.d9Page,
+          limit: this.searchactive?-1:10,
+          page: this.searchactive?1:this.d9Page, 
           sort: "-original_date",
           fields: ["*.*,authors.team_id.*"],
           meta:'*',
@@ -107,6 +109,43 @@ export default {
             )
           );
           this.fillMeta()
+          this.searchactive ? this.searchArchive() :this.loadAPI = false;;
+          
+        });
+    },
+    searchArchive()
+    {
+      
+      let searchObjArchive = this.searchObj.filter(obj => {
+      let keys = Object.keys(obj);
+      if (keys[0] !== 'excerpt' && keys[0] !== 'authors' && keys[0] !== 'excerpt') {
+    console.log(keys[0]);
+    return obj;
+  }
+});
+
+      this.d9archive
+        .readByQuery({
+          filter: {
+            _and: [
+            {
+               status: {
+              _eq: "published",
+            },
+            }
+            ],
+            _or: searchObjArchive,
+          },
+          limit: -1,
+          sort: "-created_on",
+          fields: ["*.*"],
+          meta:'*'
+        })
+        .then(data => {
+
+         this.listHP =  this.listHP.concat(data.data);
+         console.log(this.listHP )
+         this.filterCount += data.meta.filter_count;
           this.loadAPI = false;
         });
     },
@@ -355,6 +394,13 @@ export default {
 
           <div class="blog-col">
           <h4 style="margin:auto" v-show="listHP.length<=0 && !loadAPI ">NO RESULT FOUND</h4>
+            <!-- <div
+              v-for="(post, index2) in listHP"
+              v-show="post.status =='published' && post.scheduled <= currentDateTime()"
+              
+              class="blog-col-item"
+              
+            > -->
             <div
               v-for="(post, index2) in listHP"
               v-show="post.status =='published' && post.scheduled <= currentDateTime()"
@@ -363,13 +409,13 @@ export default {
               
             >
             
-              <div>
+              
                 
                 <div class="text-col">
                   <a class="post-title" :href="'./' + post.slug">
                     <h3 v-html="post.title"></h3>
                   </a>
-                  <div class="post-author" v-show="post.authors.length>0">
+                  <div class="post-author" v-show="post.authors && post.authors.length>0">
                     <p>By <span v-for="(author,index) in post.authors"><span v-if="index != post.authors.length-1 && author.team_id != null && author.team_id != 0">{{author.team_id.name}},&nbsp</span><span v-if="index == post.authors.length-1 && author.team_id != null && author.team_id != 0">{{author.team_id.name}}</span></span></p>
                   </div>
                   <div class="post-date">
@@ -399,9 +445,8 @@ export default {
                   </div>
                 </div>
               </div>
-            </div>
           </div>
-          <div class="more-results" v-show="filterCount>10 && filterCount>(d9Page*10)">
+          <div class="more-results" v-show="filterCount>10 && filterCount>(d9Page*10) && !searchactive">
             <div class="more-button main-color">
               <a @click="d9Page++; loadBlog()" target="_blank" class="b-button"
                 >SEE MORE RESULTS</a

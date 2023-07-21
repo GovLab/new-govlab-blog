@@ -27,6 +27,7 @@ export default {
     dayjs.extend(localizedFormat)
 
     this.d9blogpost = this.directus.items("blog");
+    this.d9archive= this.directus.items("tg_archive");
     this.loadPost();
   },
     methods: 
@@ -57,6 +58,19 @@ export default {
       })
       .then((bpost) => {
         console.log(bpost)
+        if(bpost.data.length<=0){this.loadArchivePost();}
+        else {this.blogPost = bpost.data[0];this.fillMeta();}
+        
+      });
+    },
+    loadArchivePost()
+    {
+       this.d9archive
+      .readByQuery({
+        filter: { slug: { _eq: this.blogslug } },
+        fields: ["*.*"],
+      })
+      .then((bpost) => {
         this.blogPost = bpost.data[0];
         this.fillMeta()
       });
@@ -190,11 +204,11 @@ const count = ref(0)
     </div>
   </div>  -->
 
-  <div v-if="blogPost.related_publications || blogPost.related_projects">
+  <div >
     <div class="row-wrap">
-      <div class="col-20" v-show="blogPost.related_publications.length >0 || blogPost.related_projects.length >0">
+      <div class="col-20" v-if="blogPost.related_publications || blogPost.related_projects">
         <div class="sidebar column-wrap">
-          <div v-show="blogPost.related_projects.length>0">
+          <div v-show="blogPost.related_projects && blogPost.related_projects.length>0">
           <p>RELATED PROJECTS</p>
           <div class="sidebar-wrap"  v-for="project in blogPost.related_projects">
             
@@ -205,7 +219,7 @@ const count = ref(0)
           </div>
           </div>
           <br>
-          <div v-show="blogPost.related_publications.length >0 ">
+          <div v-show="blogPost.related_publications && blogPost.related_publications.length >0 ">
           <p>RELATED PUBLICATIONS</p>
           <div class="sidebar-wrap" v-for="member in blogPost.related_publications">
 
@@ -218,9 +232,9 @@ const count = ref(0)
 
       </div>
       
-      <div :class="{'col-100':true,'col-80': blogPost.related_publications.length >0 || blogPost.related_projects.length >0}">
+      <div :class="{'col-100':true,'col-80': (blogPost.related_publications && blogPost.related_publications.length >0) || (blogPost.related_projects && blogPost.related_projects.length >0)}">
         <div class="row-wrap center">
-          <div class="row-wrap center authors" v-if="blogPost.authors.length>0" v-for="member in blogPost.authors">
+          <div class="row-wrap center authors" v-if="blogPost.authors && blogPost.authors.length>0" v-for="member in blogPost.authors">
             <!-- {{ member.team_id.picture_blog2020 }} -->
             <div v-if="member.team_id.picture" class="author-thumb"
               :style="{ backgroundImage: 'url(' + directus._url+'assets/'+member.team_id.picture+ ')' }"></div>
@@ -247,7 +261,7 @@ const count = ref(0)
 
     </div> 
     
-    <div v-show="blogPost.related_posts.length > 0 " class="related-stories column-wrap">
+    <div v-show="blogPost.related_posts && blogPost.related_posts.length > 0 " class="related-stories column-wrap">
       <p>RELATED STORIES</p>
       <a class="related-items" v-for="member in blogPost.related_posts"
         :href="'https://blog.thegovlab.org/' + member.incoming_blog_id.slug"
