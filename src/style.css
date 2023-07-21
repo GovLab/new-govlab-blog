@@ -908,9 +908,10 @@ h2.section-title{
     text-align: center;
   }
   .search-bar{
-    padding: 0.5rem 8rem;
+    padding: 0.5rem 6rem;
     background-color: var(--white2);
     color: var(--white5);
+    width: auto;
   }
 }
 .digest-section h3{
