@@ -5,7 +5,8 @@ import Post from '../pages/post.vue';
 const routes = [
   { path:"/", component: List },
   { path:"/:name", component: Post, props:true },
-
+  { path:"/post/:name", redirect: to => {return '/' + to.params.name;} },
+  { path:"/archive/:name", redirect: to => {return '/' + to.params.name;} },
 ]
 
 const router = createRouter({
