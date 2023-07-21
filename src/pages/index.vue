@@ -422,11 +422,11 @@ export default {
                     <!-- <p class="material-icons">insert_invitation</p> -->
                     <h4>
                       <i
-                        v-if="post.scheduled"
+                        v-if="post.scheduled && post.scheduled!='2020-08-21T11:33:07'"
                         v-html="dateShow(post.scheduled)"
                       ></i>
                       <i
-                        v-if="!post.scheduled"
+                        v-if="!post.scheduled || post.scheduled=='2020-08-21T11:33:07'"
                         v-html="dateShow(post.original_date)"
                       ></i>
                     </h4>

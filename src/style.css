@@ -1240,11 +1240,12 @@ a.b-button{
 }
 .pulsating-circle {
 
-  position: relative;
+  position: absolute;
   transform: translateX(-50%) translateY(-50%);
   width: 60px;
   height: 60px;
-  top:-3.5em
+  top:4.3em;
+  
 }
 .pulsating-circle:before {
     content: '';
