@@ -40,11 +40,11 @@ export default {
 
         { property: 'og:title', content: this.blogPost.title + " | THE GOVLAB BLOG" },
         { property: 'og:description', content: this.htmlToPlainText(this.blogPost.excerpt)},
-        { property: 'og:image', content: !this.blogPost.image ?this.blogPost.image_blog2020: this.directus._url+'assets/'+this.blogPost.image.id},
+        { property: 'og:image', content: !this.blogPost.image ?this.blogPost.image_blog2020: this.directus._url+'assets/'+this.blogPost.image.filename_disk},
         { property: 'og:url', content: "https://blog.thegovlab.org/" + this.blogPost.slug},
         { property: 'twitter:title', content: this.blogPost.title + " | THE GOVLAB BLOG"},
         { property: 'twitter:description', content: this.htmlToPlainText(this.blogPost.excerpt)},
-        { property: 'twitter:image', content: !this.blogPost.image ?this.blogPost.image_blog2020: this.directus._url+'assets/'+this.blogPost.image.id},
+        { property: 'twitter:image', content: !this.blogPost.image ?this.blogPost.image_blog2020: this.directus._url+'assets/'+this.blogPost.image.filename_disk},
         { property: 'twitter:card', content: "summary_large_image" },
       ],
     })
@@ -63,7 +63,7 @@ export default {
             ],
           slug: { _eq: this.blogslug } 
         },
-        fields: ["*.*,authors.team_id.*,related_posts.incoming_blog_id.*,related_projects.projects_id.*,related_publications.pub_id.*"],
+        fields: ["*.*,authors.team_id.*,related_posts.incoming_blog_id.*,related_projects.projects_id.*,related_publications.pub_id.*,image.*"],
       })
       .then((bpost) => {
         console.log(bpost)
@@ -201,7 +201,7 @@ const count = ref(0)
         <div class="blog-text" v-html="blogPost.content">
         </div>
         <div v-if="blogPost.image"  class="featured-image">
-          <img :src="directus._url+'assets/'+blogPost.image.id">
+          <img :src="directus._url+'assets/'+blogPost.image.filename_disk">
         </div>
         <div v-if="!blogPost.image && blogPost.image_blog2020"  class="featured-image">
           <img :src="blogPost.image_blog2020">
