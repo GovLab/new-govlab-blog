@@ -146,8 +146,7 @@ const count = ref(0)
       <h1 v-html="blogPost.title"></h1>
       <h4 v-if="blogPost.subtitle && blogPost.subtitle != 'NULL'" v-html="blogPost.subtitle"></h4>
       <!-- <p>Published on: {{blogPost.original_date}}</p> -->
-      <p class="date-format" v-if="blogPost.original_date">{{formatDate(blogPost.original_date)}}</p>
-      <p class="date-format" v-if="!blogPost.original_date">{{formatDate(blogPost.scheduled)}}</p>
+      <p class="date-format">{{formatDate(blogPost.publication_date)}}</p>
 
     </div>
 

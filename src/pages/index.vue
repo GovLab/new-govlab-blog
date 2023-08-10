@@ -89,9 +89,9 @@ export default {
             ],
             _or: this.searchObj,
           },
-          limit: this.searchactive?-1:10,
+          limit: this.searchactive?-1:25,
           page: this.searchactive?1:this.d9Page, 
-          sort: "-original_date",
+          sort: "-publication_date",
           fields: ["*.*,authors.team_id.*"],
           meta:'*',
         })
@@ -105,7 +105,7 @@ export default {
             a =>
                 a.featured &&
                 a.status === "published" &&
-                a.scheduled <= this.currentDateTime()
+                a.publication_date <= this.currentDateTime()
             )
           );
           this.fillMeta()
@@ -323,13 +323,12 @@ export default {
                   <div class="post-date">
                     <h4>
                       <i
-                        v-if="fpost.scheduled"
-                        v-html="dateShow(fpost.scheduled)"
+                        v-html="dateShow(fpost.publication_date)"
                       ></i>
-                      <i
+                      <!-- <i
                         v-if="!fpost.scheduled"
                         v-html="dateShow(fpost.original_date)"
-                      ></i>
+                      ></i> -->
                     </h4>
                   </div>
                   <div class="post-content" v-html="fpost.excerpt"></div>
@@ -403,7 +402,7 @@ export default {
             > -->
             <div
               v-for="(post, index2) in listHP"
-              v-show="post.status =='published' && post.scheduled <= currentDateTime()"
+              v-show="post.status =='published' && post.publication_date <= currentDateTime()"
               
               class="blog-col-item"
               
@@ -422,11 +421,11 @@ export default {
                     <!-- <p class="material-icons">insert_invitation</p> -->
                     <h4>
                       <i
-                        v-if="post.scheduled && post.scheduled!='2020-08-21T11:33:07'"
+                        v-if="post.publication_date && post.publication_date!='2020-08-21T11:33:07'"
                         v-html="dateShow(post.scheduled)"
                       ></i>
                       <i
-                        v-if="!post.scheduled || post.scheduled=='2020-08-21T11:33:07'"
+                        v-if="!post.publication_date || post.publication_date=='2020-08-21T11:33:07'"
                         v-html="dateShow(post.original_date)"
                       ></i>
                     </h4>
