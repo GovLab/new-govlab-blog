@@ -124,7 +124,8 @@ button:focus-visible {
 }
 body {
   margin: 0;
-  font-family: 'proxima-nova', sans-serif;
+
+  font-family: 'Merriweather', serif;
 }
 /* Style the navigation menu */
 .topnav {
@@ -168,6 +169,7 @@ body {
 
 .menu-items{
   display:none;
+  font-family: 'proxima-nova', sans-serif;
 }
 /* Style the hamburger menu */
 .topnav a.icon {
@@ -271,22 +273,27 @@ color: #ffffff;
   justify-content: center;
   align-items: center;
 }
+
 .row.top-section{
-  background-blend-mode: multiply;
-background-color: var(--main-overlay-color);
-background-size: cover;
-background-position: center top;
-height: 50vh;
-padding: 0 10rem;
+
+height: fit-content;
+min-height:50vh;
+padding: 0 5rem;
+display:flex;
+flex-direction: row;
+gap:1rem;
 }
 
 .row.top-section h1{
- color: #ffffff;
+ color: #3d3d3d;
  font-size: 3rem;
  font-weight: 100;
+ text-align: left;
 
 }
+
 .row.top-section h4 {
+  
   color: #ffffffc4;
   font-size: 1.2rem;
   font-weight: 300;
@@ -302,11 +309,52 @@ padding: 0 10rem;
  .row.top-section p.date-format {
   font-weight: 600;
   font-size: 1rem;
+  color: #3d3d3d;
+  text-align: left;
+  margin:0;
+ 
 }
+.featured-image{
+  width:40%;
+}
+
+.blogpost-details{
+  height: 100%;
+  width:50%;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
  .b-subscribe {
   background-color: #523080;
   padding: 35px 0; }
   @media (max-width: 800px) {
+    .row.top-section{
+
+      height: fit-content !important;
+      padding: 2rem !important;
+      display:flex;
+      flex-direction: column;
+      }
+      .featured-image{
+        width:100%;
+      }
+      
+      .blogpost-details{
+        height: 100%;
+        width:100%;
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      
+      }
+      .blog-col-item .text-col {
+        width:fit-content
+      }
+      
     .b-subscribe {
       padding: 20px; } }
   .b-subscribe .e-wrap {
@@ -375,7 +423,6 @@ padding: 0 10rem;
         color: white;
         font-size: 16px;
         text-transform: uppercase;
-        font-family: 'proxima-nova', sans-serif;
         font-weight: 600;
         padding: 8px 20px;
         letter-spacing: 1px; }
@@ -518,8 +565,8 @@ align-items: flex-start;
 .blog-text{
   color: var(--grey8);
   line-height: 1.8;
-  font-size:1.1rem;
-  font-weight: 300;
+  font-size:1rem;
+  font-weight: 500;
   padding: 0 15rem 0 15rem;
   text-align: justify;
 }
@@ -578,7 +625,7 @@ align-items: flex-start;
   align-content: center;
   text-align: center;
   margin-top: 20px;
-  padding:20px 0;
+  padding:10px 0;
 }
 .sidebar-wrap a{
   margin-top: 10px;
@@ -591,8 +638,12 @@ align-items: flex-start;
 }
 .related-project-text{
   background-color: #d6d6d6;
-  padding: 15px 0;
+  padding: 10px 0;
+  border-radius: 8px;
 
+}
+.related-project-text a{
+  font-size: 80%;
 }
 .related-projects{
   height: 20vh;
@@ -619,10 +670,10 @@ align-items: flex-start;
   height: 10vh;
 }
 .author-thumb{
-  width:30px;
-  height:30px;
+  width:50px;
+  height:50px;
   background-size: contain;
-  border-radius:20px;
+  border-radius:50%;
 }
 .row-wrap.left-pad{
   padding-left:5rem;
@@ -649,12 +700,10 @@ align-items: flex-start;
   align-items: center;
 }
 .featured-image img {
-  width: 100%;
-  max-width: 100%;
-  height: 100%;
-  max-height: 400px;
+
+  max-height: 300px;
   object-fit: contain;
-  margin: 2rem 0;
+  border-radius: 10px;
 }
 
 
@@ -761,6 +810,8 @@ text-align: center;
   flex-direction: column;
   justify-content: left;
   align-items: center;
+  font-family: 'proxima-nova', sans-serif;
+  background-color: var(--main-color);
   /* height: 35vh; */
 }
 .hero img{
@@ -769,10 +820,17 @@ text-align: center;
       padding-bottom: 15px;
 }
 .hero h2{
-  font-size: 24pt;
+  font-size: 16pt;
  margin-top: 4rem;
-  font-weight: 300;
-  color: var(--main-color);
+ margin-bottom:0;
+ padding: 1rem;
+  font-weight: 400;
+  color: #ffffff;
+  width:100%;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--main-overlay-color);
 }
 
 .hero-blog{
@@ -805,6 +863,7 @@ margin:0;
   align-items: center;
   height: 15vh;
   padding: 4rem 15rem;
+  font-family: 'proxima-nova', sans-serif;
   text-align: center;
 }
 .search-section h3{
@@ -819,26 +878,33 @@ margin:0;
 display: flex;
 flex-direction: row;
 justify-content: flex-end;
+margin:10px;
+width: 250px;
 }
 .search-bar{
   padding: 1rem;
   padding-right: 2.5rem;
   background-color: var(--white2);
-  color: var(--white5);
+  color: #ffffff95;
   border: none;
   text-align: center;
-  width: 22rem;
+  font-weight: 600;
+  width: 100%;
 }
 .search-bar-btn{
   position: relative;
   background: none;
-  color: var(--white5);
+  color: var(--main-overlay-color);
   margin-left: -1.5em;
   cursor: pointer;
-  top: 0.4em;
+  top: 0.2em;
   opacity: 0;
   pointer-events: none;
   /* text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 */
+}
+.search-bar::placeholder {
+  color: #ffffff72;
+  font-weight: 600;
 }
 
 .search-bar-section input:not(:placeholder-shown) + .search-bar-btn {
@@ -864,6 +930,7 @@ p.search-desc{
 }
 .section-title{
   text-align: center;
+  font-family: 'proxima-nova', sans-serif;
 }
 h2.section-title{
   text-transform: uppercase;
@@ -981,49 +1048,75 @@ flex-flow: row wrap;
   padding: 1rem 1rem;
 }
 .blog-col-item .text-col{
-  width:100%;
-  padding:0;
-  height: 330px;
+  max-width:100%;
+  padding:2rem;
+  height: fit-content;
+  
 }
 
 .blog-col-item .text-col h3{
 font-size: 12pt;
+text-decoration: none;
 }
 .blog-col-item .text-col h4{
+  text-decoration: none;
   font-size: 10pt;
   }
 .blog-col-item .text-col p{
-  font-size: 10pt;
+  text-decoration: none;
   margin-top:0;
   }
   .blog-col-item .text-col .post-content a{
    color: #523080;
     }
+
 .blog-col-item .img-col{
   width: 100%;
-  height: 200px;
+  height: 250px;
+  border-radius:10px 10px 0 0;
+  background-size: cover;
+  background-position: center;
+
 }
+
+
 .img-col{
   width: 30%;
   background-repeat: no-repeat;
+  background-size: cover;
+  box-shadow: 1px 0px 1px #88888857;
+}
+.default-img.img-col{
+  background-image: url(assets/default.jpg);
+  background-color: var(--main-color);
+  background-blend-mode: multiply;
   background-size: cover;
 }
 .default-image{
   background-image: url(../img/govlab-card.001.png);
   background-size: cover;
-  width:
 }
 .text-col{
   display:flex;
   flex-direction: column;
-  width:70%;
+  align-items: flex-start;
+  justify-content: space-between;
   padding: 2rem 4rem;
-  background-color: var(--grey03);
-  justify-content: space-around;
+  border-radius:0 0 10px 10px;
+  box-shadow: 1px 5px 8px #88888857;
+  gap:0.5rem;
+  text-decoration: none;
+}
+.blog-col-item.all-posts .text-col{
+  border-radius:10px 10px;
 }
 .text-col.full-width{
   width:100%;
   padding: 1rem 4rem;
+}
+.blog-col-item.all-posts .post-title{
+  height:80px;
+  text-decoration: none;
 }
 .blog-col-pad{
   padding: 0 4rem;
@@ -1074,35 +1167,41 @@ flex-flow: column wrap;
 a.post-title{
 text-decoration: none;
 color: var(--grey8);
-
 margin:0;
 }
 .blog-col-item a.post-title{
   text-decoration: none;
   color: var(--grey8);
-
-  margin:2rem 2rem 0rem 2rem;
   }
 .blog-col-item .post-date{
-  margin: 0 2rem;
+  text-decoration: none;
+  margin: 0;
 }
 .blog-col-item .post-author{
-  margin: 0 2rem;
+  margin: 0;
 }
 .blog-col-item .post-content{
-  margin: 0 2rem;
+  text-decoration: none;
+  margin: 0;
   max-height:100px;
+  height:120px;
   overflow: hidden;
   white-space: wrap;
-  max-width:350px;
   text-overflow: ellipsis;
+  font-family: 'proxima-nova', sans-serif;
+  color: var(--grey8);
+}
+.blog-col-item a{
+  text-decoration: none;
 }
 
 .blog-col-item .more-button {
-  margin: 0 2rem 2rem 2rem;
+  margin: 10px 0;
 }
-a.post-title h3{
+a.post-title h2{
   margin:0;
+  font-size: 1.3rem;
+  font-weight: 400;
 }
 .blog-col-item .post-author p{
   color: #000000;
@@ -1111,11 +1210,14 @@ a.post-title h3{
 .post-date{
   display:flex;
   flex-direction: row;
+  height:30px;
+  justify-content: center;
+  align-items: center;
 }
 .post-date h4{
   text-decoration: none;
 color: var(--grey5);
-font-weight:400;
+font-weight:700;
 margin:0;
 }
 p.material-icons{
@@ -1128,10 +1230,48 @@ p.material-icons{
 .more-button{
   width:200px;
   background-color: var(--grey2);
+  display:flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  
+  font-family: 'proxima-nova', sans-serif;
+}
+.blog-col-item a:hover .more-button.main-color{
+  background-color: var(--main-overlay-color);
+  transition: all 1s ease; 
+  color: #ffffff;
+}
+.blog-col-item a:hover .main-color a{
+  transition: all 1s ease; 
+  color: #ffffff;
 }
 .more-button.main-color{
-  width:200px;
-  background-color: var(--main-color);
+  width: fit-content;
+  background-color: var(--main-color40);
+
+}
+.text-col:hover {
+  background-color: var(--grey05);
+  transition: all 1s ease; 
+  cursor: pointer;
+}
+.text-col:hover .more-button.main-color{
+  background-color: var(--main-overlay-color);
+  transition: all 1s ease; 
+  color: #ffffff;
+}
+.text-col:hover .main-color a{
+  transition: all 1s ease; 
+  color: #ffffff;
+}
+.blog-col-item a:hover .text-col{
+  background-color: var(--grey05);
+  transition: all 1s ease; 
+
+}
+.main-color a{
+  color: var(--main-color);
 }
 .main-color{
   background-color: var(--main-color);
@@ -1272,10 +1412,11 @@ a.b-button{
     width: 200%;
     height: 200%;
     box-sizing: border-box;
-    margin-left: 0;
+    margin-left: 5px;
     margin-top: 2rem;
     border-radius: 55px;
-    background-color: #523080;
+    border: 5px solid #ffffff88;
+    /* background-color: #ffffff; */
     animation: pulse-ring 1.25s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
   }
 
@@ -1289,7 +1430,7 @@ a.b-button{
     margin-left: 2rem;
     width: 100%;
     height: 100%;
-    background-image: url("../img/govlab-logo-wp.png");
+    background-image: url("../img/the-govlab-logo-white-wp.png");
     background-size: 25px 40px;
     background-repeat: no-repeat;
     background-position: center;
