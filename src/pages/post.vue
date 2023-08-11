@@ -154,8 +154,8 @@ const count = ref(0)
       <!-- <p>Published on: {{blogPost.original_date}}</p> -->
       <p class="date-format">{{formatDate(blogPost.publication_date)}}</p>
 
-              <div class="row-wrap center">
-          <div class="row-wrap center authors" v-if="blogPost.authors && blogPost.authors.length>0" v-for="member in blogPost.authors">
+              <div class="row-wrap">
+          <div class="row-wrap authors" v-if="blogPost.authors && blogPost.authors.length>0" v-for="member in blogPost.authors">
             <!-- {{ member.team_id.picture_blog2020 }} -->
             <div v-if="member.team_id.picture" class="author-thumb"
               :style="{ backgroundImage: 'url(' + directus._url+'assets/'+member.team_id.picture+ ')' }"></div>

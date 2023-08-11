@@ -513,8 +513,7 @@ align-items: flex-start;
   flex-direction: row;
 
   max-width: none;
-margin-left: auto;
-margin-right: auto;
+
 display: -webkit-flex;
 display: -ms-flexbox;
 display: flex;
@@ -686,7 +685,6 @@ flex-flow: row wrap;
   margin-right:20px;
   margin-top: 20px;
   height: 10vh;
-  max-width: 30%;
 }
 .author-thumb{
   width:50px;
