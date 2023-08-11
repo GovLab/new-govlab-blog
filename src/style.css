@@ -127,16 +127,24 @@ body {
 
   font-family: 'Merriweather', serif;
 }
+.main-body{
+  z-index:-1;
+}
 /* Style the navigation menu */
 .topnav {
   overflow: hidden;
   background-color: var(--main-color);
   height: 50px;
+  /*Main propeties*/
+  position:sticky;
+  position: -webkit-sticky;
+  z-index: 1000;
+  top:0;
   display: flex;
   flex-direction: row;
   width:100%;
   justify-content: space-between;
-  z-index:-1;
+
 }
 
 /* Hide the links inside the navigation menu (except for logo/home) */
@@ -277,7 +285,7 @@ color: #ffffff;
 .row.top-section{
 
 height: fit-content;
-min-height:50vh;
+min-height:65vh;
 padding: 0 5rem;
 display:flex;
 flex-direction: row;
@@ -503,6 +511,16 @@ align-items: flex-start;
 .row-wrap{
   display:flex;
   flex-direction: row;
+
+  max-width: none;
+margin-left: auto;
+margin-right: auto;
+display: -webkit-flex;
+display: -ms-flexbox;
+display: flex;
+-webkit-flex-flow: row wrap;
+-ms-flex-flow: row wrap;
+flex-flow: row wrap;
 }
 .column-wrap{
   display:flex;
@@ -668,12 +686,15 @@ align-items: flex-start;
   margin-right:20px;
   margin-top: 20px;
   height: 10vh;
+  max-width: 30%;
 }
 .author-thumb{
   width:50px;
   height:50px;
   background-size: contain;
   border-radius:50%;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 .row-wrap.left-pad{
   padding-left:5rem;
@@ -700,12 +721,16 @@ align-items: flex-start;
   align-items: center;
 }
 .featured-image img {
-
-  max-height: 300px;
+  max-width: 90%;
+  max-height: 400px;
   object-fit: contain;
   border-radius: 10px;
 }
-
+.separator{
+  border-bottom: 2px solid var(--accent-color);
+  margin: 0 10rem 2rem 10rem;
+ 
+}
 
 @media screen and (min-width: 320px) and (max-width: 768px){
   .row-wrap{
@@ -808,14 +833,19 @@ text-align: center;
 .hero{
   display:flex;
   flex-direction: column;
-  justify-content: left;
+  justify-content: space-between;
   align-items: center;
   font-family: 'proxima-nova', sans-serif;
+  background-image: url(assets/default.jpg);
   background-color: var(--main-color);
-  /* height: 35vh; */
+  background-blend-mode: multiply;
+  background-size: cover;
+  height: 35vh;
+  z-index: -1;
+ 
 }
 .hero img{
-  height: 45px;
+  height: 60px;
       transform: translate(4px, 39px);
       padding-bottom: 15px;
 }
@@ -828,7 +858,8 @@ text-align: center;
   color: #ffffff;
   width:100%;
   display:flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: flex-end;
   align-items: center;
   background-color: var(--main-overlay-color);
 }

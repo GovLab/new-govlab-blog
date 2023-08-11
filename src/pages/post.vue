@@ -153,6 +153,7 @@ const count = ref(0)
       <h1 v-html="blogPost.title"></h1>
       <!-- <p>Published on: {{blogPost.original_date}}</p> -->
       <p class="date-format">{{formatDate(blogPost.publication_date)}}</p>
+
               <div class="row-wrap center">
           <div class="row-wrap center authors" v-if="blogPost.authors && blogPost.authors.length>0" v-for="member in blogPost.authors">
             <!-- {{ member.team_id.picture_blog2020 }} -->
@@ -171,8 +172,10 @@ const count = ref(0)
     </div>
 
   </div>
+  <div class="separator"></div>
 <div >
   <div >
+
     <div class="row-wrap">
       <div class="col-20" v-if="blogPost.related_projects && blogPost.related_projects.length>0">
         <div class="sidebar column-wrap">

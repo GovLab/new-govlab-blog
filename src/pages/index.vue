@@ -244,7 +244,7 @@ export default {
         </div>
       </div>
     </div>
-    <div id="app" v-cloak>
+    <div id="app" v-cloak class="main-body">
       <div class="hero">
         <img
           style="padding-top: 20px"
