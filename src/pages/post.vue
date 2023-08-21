@@ -203,7 +203,7 @@ const count = ref(0)
 
       </div>
       
-      <div :class="{'col-100':true,'col-80': (blogPost.related_publications && blogPost.related_publications.length >0) || (blogPost.related_projects && blogPost.related_projects.length >0)}">
+      <div :class="{'col-100':(blogPost.related_publications && blogPost.related_publications.length == 0) && (blogPost.related_projects && blogPost.related_projects.length == 0),'col-80': (blogPost.related_publications && blogPost.related_publications.length >0) || (blogPost.related_projects && blogPost.related_projects.length >0)}">
 
       
         <div class="blog-text" v-html="blogPost.content">
