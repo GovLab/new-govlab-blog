@@ -670,7 +670,7 @@ flex-flow: row wrap;
   background-color: #fafafa;
 }
 .blog-text a{
-  color: var(--grey5);
+  color: var(--main-color);
   text-decoration: none;
   border-bottom: 2px solid var(--accent-color);
   font-weight: 500;
