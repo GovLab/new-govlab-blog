@@ -41,10 +41,10 @@ export default {
     fillMeta()
     {
      useHead({
-      title: "THE GOVLAB BLOG",
+      title: "The GovLab Blog",
       meta: [
 
-        { property: 'og:title', content: "THE GOVLAB BLOG" },
+        { property: 'og:title', content: "The GovLab Blog" },
         { property: 'og:description', content: "Deepening Our Understanding of How to Govern More Effectively and Legitimately Through Technology."},
         { property: 'og:image', content: "https://raw.githubusercontent.com/GovLab/new-govlab-blog/master/img/govlab-sm.png"},
         { property: 'og:url', content: "https://blog.thegovlab.org/"},
@@ -54,6 +54,10 @@ export default {
         { property: 'twitter:card', content: "summary_large_image" },
       ],
     })
+    },
+    removeHtml(myHTML){
+      if(myHTML)
+    return myHTML.replace(/<[^>]+>/g, '');
     },
   
     loadBlog() {
@@ -89,7 +93,7 @@ export default {
             ],
             _or: this.searchObj,
           },
-          limit: this.searchactive?-1:25,
+          limit: this.searchactive?-1:12,
           page: this.searchactive?1:this.d9Page, 
           sort: "-publication_date",
           fields: ["*.*,authors.team_id.*"],
@@ -191,11 +195,16 @@ export default {
           </a>
         </div>
       </div>
-      <a class="top_logo" href="index.html"
+      <a class="top_logo" href="#"
         ><img src="/the-govlab-logo-white@4x.png" alt="The GovLab Blog"
       /></a>
       <!-- Navigation links (hidden by default) -->
-      <div class="lang-select"></div>
+      <div class="lang-select">
+                  <div  class="search-bar-section">
+            <input class="search-bar" v-model="searchTerm" @keyup.enter="resetSearch()" type="text" placeholder="SEARCH">
+            <span  type="submit" class="search-bar-btn material-icons" @click="searchTerm='';resetSearch()">close</span>
+          </div>
+      </div>
     </div>
     <div id="myLinks">
       <div class="menu-items">
@@ -235,11 +244,11 @@ export default {
         </div>
       </div>
     </div>
-    <div id="app" v-cloak>
+    <div id="app" v-cloak class="main-body">
       <div class="hero">
         <img
           style="padding-top: 20px"
-          src="../assets/govlab-logo-wp.png"
+          src="../assets/the-govlab-logo-white-wp.png"
         />
         <!-- <img
           style="padding-top: 20px"
@@ -249,32 +258,11 @@ export default {
         <div v-if="loadAPI" class="pulsating-circle"></div>
         <h2>THE GOVLAB BLOG</h2>
       </div>
-      <div class="search-section" >
+      <!-- <div class="search-section" >
       <h3>Explore our knowledge base</h3>
-      <div  class="search-bar-section">
-      <input class="search-bar" v-model="searchTerm" @keyup.enter="resetSearch()" type="text" placeholder="SEARCH HERE">
-      <span  type="submit" class="search-bar-btn material-icons" @click="searchTerm='';resetSearch()">close</span>
-      </div>
-      
-<!-- <form>   
-    <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
-    <div class="relative">
-        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-            </svg>
-        </div>
-        <input type="search" id="default-search" class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Mockups, Logos..." required>
-        <button type="submit" class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
-    </div>
-</form> -->
 
-      <div style="width:200px; position:absolute; margin-left:40%; margin-bottom:5%">
-
-      </div>
-      <!-- <p class="search-desc">The GovLab’s resources includes results from this blog, The Living Library and the Open
-        Governance Research Exchange</p> -->
-    </div>
+  
+    </div> -->
     
 
       
@@ -283,7 +271,7 @@ export default {
           <div v-show="!searchactive">
 
         
-          <h2 class="section-title">FEATURED POSTS</h2>
+          <!-- <h2 class="section-title">FEATURED POSTS</h2> -->
           <div class="blog-col">
             <div 
             v-for="(fpost, index) in fposts" class="blog-col-item"
@@ -292,26 +280,15 @@ export default {
                 <a :href="'./' + fpost.slug">
                   <div
                     class="img-col"
-                    v-if="!fpost.image"
-                    :style="{
-                      backgroundImage: 'url(' + fpost.image_blog2020 + ')',
-                    }"
-                  ></div>
-                  <div
-                    class="img-col"
                     v-if="fpost.image"
                     :style="{
                       backgroundImage: 'url(' + directus._url+'assets/'+ fpost.image.id + ')',
                     }"
                   ></div>
-                  <!-- <div
-                    v-if="post.image == null"
-                    class="img-col default-image"
-                  ></div> -->
-                </a>
+
                 <div class="text-col">
                   <a class="post-title" :href="'./' + fpost.slug">
-                    <h3 v-html="fpost.title"></h3>
+                    <h2 v-html="fpost.title"></h2>
                   </a>
                   <div class="post-author">
                     <!-- <p>By <span v-for="(author,index) in fpost.authors">
@@ -338,12 +315,11 @@ export default {
                       :href="'./' + fpost.slug"
                       target="_blank"
                     >
-                      Continue Reading<i class="material-icons"
-                        >keyboard_arrow_down</i
-                      ></a
+                      Read Full Article</a
                     >
                   </div>
                 </div>
+                </a>
               </div>
             </div>
           </div>
@@ -404,19 +380,29 @@ export default {
               v-for="(post, index2) in listHP"
               v-show="post.status =='published' && post.publication_date <= currentDateTime()"
               
-              class="blog-col-item"
+              class="blog-col-item all-posts"
               
             >
             
-              
+                                <div
+                    class="img-col"
+                    v-if="post.image"
+                    :style="{
+                      backgroundImage: 'url(' + directus._url+'assets/'+ post.image.id + ')',
+                    }"
+                  ></div>
+                                  <div
+                    class="img-col default-img"
+                    v-if="!post.image"
+                  ></div>
                 
                 <div class="text-col">
                   <a class="post-title" :href="'./' + post.slug">
                     <h3 v-html="post.title"></h3>
                   </a>
-                  <div class="post-author" v-show="post.authors && post.authors.length>0">
+                  <!-- <div class="post-author" v-show="post.authors && post.authors.length>0">
                     <p>By <span v-for="(author,index) in post.authors"><span v-if="index != post.authors.length-1 && author.team_id != null && author.team_id != 0">{{author.team_id.name}},&nbsp</span><span v-if="index == post.authors.length-1 && author.team_id != null && author.team_id != 0">{{author.team_id.name}}</span></span></p>
-                  </div>
+                  </div> -->
                   <div class="post-date">
                     <!-- <p class="material-icons">insert_invitation</p> -->
                     <h4>
@@ -430,22 +416,23 @@ export default {
                       ></i>
                     </h4>
                   </div>
-                  <div class="post-content" v-html="post.excerpt"></div>
+                  <div class="post-content">
+                  <p>{{removeHtml(post.excerpt)}}</p>
+                  </div>
                   <div class="more-button main-color">
                     <a
                       class="b-button"
                       :href="'./' + post.slug"
                       target="_blank"
                     >
-                      Continue Reading<i class="material-icons"
-                        >keyboard_arrow_down</i
-                      ></a
+                      Read Full Article</a
                     >
                   </div>
                 </div>
               </div>
           </div>
           <div class="more-results" v-show="filterCount>10 && filterCount>(d9Page*10) && !searchactive">
+             <div v-if="loadAPI" class="pulsating-circle"></div>
             <div class="more-button main-color">
               <a @click="d9Page++; loadBlog()" target="_blank" class="b-button"
                 >SEE MORE RESULTS</a

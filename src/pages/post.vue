@@ -142,19 +142,42 @@ const count = ref(0)
   </div>
   <div id="blogpage" v-cloak>
 
-    <div class="row top-section" style="background-image: url(/default.jpg);">
+    <div class="row top-section">
+        <div v-if="blogPost.image"  class="featured-image">
+          <img :src="directus._url+'assets/'+blogPost.image.filename_disk">
+        </div>
+        <div v-if="!blogPost.image && blogPost.image_blog2020"  class="featured-image">
+          <img :src="blogPost.image_blog2020">
+        </div>
+      <div class="blogpost-details">
       <h1 v-html="blogPost.title"></h1>
-      <h4 v-if="blogPost.subtitle && blogPost.subtitle != 'NULL'" v-html="blogPost.subtitle"></h4>
       <!-- <p>Published on: {{blogPost.original_date}}</p> -->
       <p class="date-format">{{formatDate(blogPost.publication_date)}}</p>
 
+              <div class="row-wrap">
+          <div class="row-wrap authors" v-if="blogPost.authors && blogPost.authors.length>0" v-for="member in blogPost.authors">
+            <!-- {{ member.team_id.picture_blog2020 }} -->
+            <div v-if="member.team_id.picture" class="author-thumb"
+              :style="{ backgroundImage: 'url(' + directus._url+'assets/'+member.team_id.picture+ ')' }"></div>
+              <div v-if="!member.team_id.picture && member.team_id.picture_blog2020" class="author-thumb"
+                :style="{ backgroundImage: 'url('+member.team_id.picture_blog2020+')' }"></div>
+              <div v-if="!member.team_id.picture && !member.team_id.picture_blog2020" class="author-thumb"
+                style="background-image: url('/govlab-logo-wp.png')"></div>
+
+            <a class="author-name" :href="'http://www.thegovlab.org/team.html#' + member.team_id.slug"
+              target="_blank">{{member.team_id.name}}<br><span v-if="member.team_id.title && member.team_id.title!= 'NULL'" class="author-title">{{member.team_id.title}}</span></a>
+          </div>
+        </div>
+      </div>
     </div>
 
   </div>
+  <div class="separator"></div>
 <div >
   <div >
+
     <div class="row-wrap">
-      <div class="col-20" v-if="blogPost.related_publications || blogPost.related_projects">
+      <div class="col-20" v-if="blogPost.related_projects && blogPost.related_projects.length>0">
         <div class="sidebar column-wrap">
           <div v-show="blogPost.related_projects && blogPost.related_projects.length>0">
           <p>RELATED PROJECTS</p>
@@ -181,30 +204,11 @@ const count = ref(0)
       </div>
       
       <div :class="{'col-100':true,'col-80': (blogPost.related_publications && blogPost.related_publications.length >0) || (blogPost.related_projects && blogPost.related_projects.length >0)}">
-        <div class="row-wrap center">
-          <div class="row-wrap center authors" v-if="blogPost.authors && blogPost.authors.length>0" v-for="member in blogPost.authors">
-            <!-- {{ member.team_id.picture_blog2020 }} -->
-            <div v-if="member.team_id.picture" class="author-thumb"
-              :style="{ backgroundImage: 'url(' + directus._url+'assets/'+member.team_id.picture+ ')' }"></div>
-              <div v-if="!member.team_id.picture && member.team_id.picture_blog2020" class="author-thumb"
-                :style="{ backgroundImage: 'url('+member.team_id.picture_blog2020+')' }"></div>
-              <div v-if="!member.team_id.picture && !member.team_id.picture_blog2020" class="author-thumb"
-                style="background-image: url('/govlab-logo-wp.png')"></div>
-
-            <a class="author-name" :href="'http://www.thegovlab.org/team.html#' + member.team_id.slug"
-              target="_blank">{{member.team_id.name}}<br><span v-if="member.team_id.title && member.team_id.title!= 'NULL'" class="author-title">{{member.team_id.title}}</span></a>
-          </div>
-        </div>
 
       
         <div class="blog-text" v-html="blogPost.content">
         </div>
-        <div v-if="blogPost.image"  class="featured-image">
-          <img :src="directus._url+'assets/'+blogPost.image.filename_disk">
-        </div>
-        <div v-if="!blogPost.image && blogPost.image_blog2020"  class="featured-image">
-          <img :src="blogPost.image_blog2020">
-        </div>
+
       </div>
 
     </div> 
