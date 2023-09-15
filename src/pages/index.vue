@@ -15,7 +15,7 @@ export default {
       searchObj:[],
       d9Page:1,
       filterCount:0,
-      directus: new Directus("https://content.thegovlab.com/"),
+      directus: new Directus("https://dev.thegovlab.com/"),
       d9blog: "",
       slug: "",
       searchTerm:"",
@@ -406,9 +406,10 @@ export default {
                   <div class="post-date">
                     <!-- <p class="material-icons">insert_invitation</p> -->
                     <h4>
+                      
                       <i
                         v-if="post.publication_date && post.publication_date!='2020-08-21T11:33:07'"
-                        v-html="dateShow(post.scheduled)"
+                        v-html="dateShow(post.publication_date)"
                       ></i>
                       <i
                         v-if="!post.publication_date || post.publication_date=='2020-08-21T11:33:07'"
@@ -416,8 +417,8 @@ export default {
                       ></i>
                     </h4>
                   </div>
-                  <div class="post-content">
-                  <p>{{removeHtml(post.excerpt)}}</p>
+                  <div class="post-content" >
+                  <p v-html="post.excerpt"></p>
                   </div>
                   <div class="more-button main-color">
                     <a
