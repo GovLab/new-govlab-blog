@@ -178,7 +178,7 @@ export default {
       this.listHP = this.listHP.filter(item => {
     if (seenSlugs.has(item.slug)) {
         // If it's a duplicate, only add if it's an 'rdblog' item and the duplicate wasn't
-        return item.src === 'rdblog' && !this.listHP.find(x => x.slug === item.slug && x.src === 'rdblog');
+        return item.src === 'rdblog' && !this.listHP.find(x => x.slug === item.slug && x.src === 'rdblog' && x.slug == "sam-altman-one-true-leader-and-the-missed-opportunity-for-innovation");
     } else {
         // If it's not a duplicate, add it and mark the slug as seen
         seenSlugs.add(item.slug);
