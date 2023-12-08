@@ -72,7 +72,8 @@ export default {
       if (myHTML) return myHTML.replace(/<[^>]+>/g, "");
     },
     async serachObjectFunc(collection) {
-      let searchTArray = this.searchTerm.split(" ");
+      // let searchTArray = this.searchTerm.split(" ");
+      let searchTArray = [this.searchTerm]
       searchTArray = searchTArray.filter((item) => item); // filter out empty entries
       this.searchObj = [];
 
@@ -188,9 +189,10 @@ export default {
       
 
       this.fposts = this.fposts.concat(
-        tempListHP.filter(
+        this.listHP.filter(
           (a) =>
-            a.featured &&
+            (a.featured || a.src=="rdblog") &&
+            // (a.featured) &&
             (a.publication_date <= this.currentDateTime() ||
               a.date <= this.currentDateTime())
         )
@@ -226,7 +228,6 @@ export default {
         })
         .then((data) => {
           this.listHP = this.listHP.concat(data.data);
-          console.log(this.listHP);
           this.filterCount += data.meta.filter_count;
           this.loadAPI = false;
         });
@@ -361,7 +362,14 @@ export default {
                 v-show="index < 3"
               >
                 <div>
-                  <a :href="'./' + fpost.slug">
+                  
+                  <a
+                  :href="
+                    fpost.src && fpost.src == 'rdblog'
+                      ? 'https://rebootdemocracy.ai/blog/' + fpost.slug
+                      : './' + fpost.slug
+                  "
+                >
                     <div
                       class="img-col"
                       v-if="fpost.image"
@@ -398,12 +406,21 @@ export default {
                       <div class="post-content" v-html="fpost.excerpt"></div>
                       <div class="more-button main-color">
                         <a
-                          class="b-button"
-                          :href="'./' + fpost.slug"
-                          target="_blank"
-                        >
-                          Read Full Article</a
-                        >
+                    v-if="!fpost.src"
+                    class="b-button"
+                    :href="'./' + fpost.slug"
+                    target="_blank"
+                  >
+                    Read Full Article</a
+                  >
+                  <a
+                    v-if="fpost.src == 'rdblog'"
+                    class="b-button"
+                    :href="'https://rebootdemocracy.ai/blog/' + fpost.slug"
+                    target="_blank"
+                  >
+                    Read Full Article on RebootDemocracy.AI</a
+                  >
                       </div>
                     </div>
                   </a>
@@ -490,7 +507,7 @@ export default {
                 <a
                   class="post-title"
                   :href="
-                    post.src == 'rdblog'
+                    post.src && post.src == 'rdblog'
                       ? 'https://rebootdemocracy.ai/blog/' + post.slug
                       : './' + post.slug
                   "
