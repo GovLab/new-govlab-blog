@@ -1236,6 +1236,13 @@ a.post-title h2{
   color: #000000;
   margin:0;
 }
+.rdblog-wordmark
+{
+  font-family: Space Grotesk,sans-serif;
+  background-color: #000000;
+  color: #fff;
+  font-size: .8em;
+}
 .post-date{
   display:flex;
   flex-direction: row;
