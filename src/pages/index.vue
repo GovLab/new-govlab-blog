@@ -384,7 +384,9 @@ export default {
                     ></div>
 
                     <div class="text-col">
-                      <a class="post-title" :href="'./' + fpost.slug">
+                      <a class="post-title" :href=" fpost.src && fpost.src == 'rdblog'
+                      ? 'https://rebootdemocracy.ai/blog/' + fpost.slug
+                      : './' + fpost.slug">
                         <h2 v-html="fpost.title"></h2>
                       </a>
                       <div class="post-author">
