@@ -486,7 +486,7 @@ export default {
               class="blog-col-item"
               
             > -->
-            <div
+            <a
               v-for="(post, index2) in listHP"
               v-show="
                 post.status == 'published' &&
@@ -494,6 +494,11 @@ export default {
                   post.date <= currentDateTime())
               "
               class="blog-col-item all-posts"
+              :href="
+                    post.src && post.src == 'rdblog'
+                      ? 'https://rebootdemocracy.ai/blog/' + post.slug
+                      : './' + post.slug
+                  "
             >
               <div
                 class="img-col"
@@ -561,7 +566,7 @@ export default {
                   >
                 </div>
               </div>
-            </div>
+            </a>
           </div>
           <div
             class="more-results"
