@@ -191,7 +191,7 @@ export default {
       this.fposts = this.fposts.concat(
         this.listHP.filter(
           (a) =>
-            (a.featured || a.src=="rdblog") &&
+            a.featured &&
             // (a.featured) &&
             (a.publication_date <= this.currentDateTime() ||
               a.date <= this.currentDateTime())
