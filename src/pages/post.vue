@@ -16,7 +16,7 @@ export default {
 
     data() {
       return {
-        directus: new Directus("https://content.thegovlab.com/"),
+        directus: new Directus("https://directus.theburnescenter.org/"),
         blogslug: this.$route.params.name,
         blogPost:[]
       }

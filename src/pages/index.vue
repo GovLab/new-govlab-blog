@@ -15,7 +15,7 @@ export default {
       searchObj: [],
       d9Page: 1,
       filterCount: 0,
-      directus: new Directus("https://content.thegovlab.com/"),
+      directus: new Directus("https://directus.theburnescenter.org/"),
       d9blog: "",
       d9RdBlog: "",
       slug: "",
