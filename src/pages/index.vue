@@ -109,6 +109,7 @@ export default {
       // init the API load
       this.loadAPI = true;
       this.filterCount = 0;
+      this.fposts = []; // Reset featured posts array
       this.searchTerm != ""
         ? (this.searchactive = true)
         : (this.searchactive = false);
@@ -126,7 +127,7 @@ export default {
           ],
           _or: this.searchObj,
         },
-        limit: this.searchactive ? -1 : 12,
+        limit: this.searchactive ? -1 : 50,
         page: this.searchactive ? 1 : this.d9Page,
         sort: "-publication_date",
         fields: ["*.*,authors.team_id.*"],
@@ -146,7 +147,7 @@ export default {
           ],
           _or: this.searchObj,
         },
-        limit: this.searchactive ? -1 : 12,
+        limit: this.searchactive ? -1 : 50,
         page: this.searchactive ? 1 : this.d9Page,
         sort: "-date",
         fields: ["*.*,authors.team_id.*"],
@@ -188,15 +189,17 @@ export default {
 
       
 
-      this.fposts = this.fposts.concat(
-        this.listHP.filter(
-          (a) =>
-            a.featured &&
-            // (a.featured) &&
-            (a.publication_date <= this.currentDateTime() ||
-              a.date <= this.currentDateTime())
-        )
-      );
+      // Filter and set featured posts (removed date filtering to test)
+      console.log("Total posts in listHP:", this.listHP.length);
+      console.log("Posts with featured=true:", this.listHP.filter(a => a.featured).length);
+      
+      this.fposts = this.listHP.filter(a => a.featured);
+      
+      console.log("Featured posts after filtering:", this.fposts.length);
+      console.log("Featured posts data:", this.fposts);
+      if (this.fposts.length > 0) {
+        console.log("Currently featured post:", this.fposts[0].title);
+      }
       this.fillMeta();
       this.searchactive ? this.searchArchive() : (this.loadAPI = false);
     },
@@ -233,7 +236,9 @@ export default {
         });
     },
     resetSearch() {
-      (this.listHP = []), (this.d9Page = 1);
+      this.listHP = [];
+      this.fposts = [];
+      this.d9Page = 1;
       this.searchactive = false;
       this.loadBlog();
     },
