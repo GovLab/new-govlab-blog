@@ -1134,9 +1134,14 @@ flex-flow: row wrap;
 }
 .blog-col-item .text-col{
   max-width:100%;
+  /* Fill the card width to match the image above. Unlike width:100%, the
+     fill-available/stretch sizing subtracts the padding instead of adding it,
+     so the box doesn't overflow its column (which caused cards to overlap). */
+  width: -webkit-fill-available;
+  width: -moz-available;
+  width: stretch;
   padding:2rem;
   height: fit-content;
-  
 }
 
 .blog-col-item .text-col h3{

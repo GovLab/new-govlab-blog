@@ -16,8 +16,11 @@ export default {
       d9Page: 1,
       filterCount: 0,
       directus: new Directus("https://directus.theburnescenter.org/"),
+      cms: new Directus("https://cms.thegovlab.com/"),
       d9blog: "",
       d9RdBlog: "",
+      odpl: "",
+      dsblog: "",
       slug: "",
       searchTerm: "",
       searchactive: false,
@@ -33,6 +36,8 @@ export default {
     this.d9blog = this.directus.items("blog");
     this.d9RdBlog = this.directus.items("reboot_democracy_blog");
     this.d9archive = this.directus.items("tg_archive");
+    this.odpl = this.cms.items("odpl_items");
+    this.dsblog = this.cms.items("ds_blogposts");
     this.loadBlog();
     this.fillMeta();
   },
@@ -70,6 +75,66 @@ export default {
     },
     removeHtml(myHTML) {
       if (myHTML) return myHTML.replace(/<[^>]+>/g, "");
+    },
+    // Replicates the slug logic the live ODPL / Data Stewards sites use to
+    // build their article URLs from a title: lowercase, drop apostrophes /
+    // periods / commas, then collapse any other run of non-alphanumerics to a
+    // single hyphen.
+    slugify(s) {
+      return (s || "")
+        .toLowerCase()
+        .replace(/[.'’,]/g, "")
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+    },
+    // Normalizes a post from any source into the shape the template expects:
+    // adds `src`, `normalizedDate`, `_imageUrl`, `_link`, `_linkLabel` and
+    // `_external`. CMS collections (cms.thegovlab.com) also get title/excerpt/
+    // slug mapped from their native field names.
+    normalizeItem(item, src) {
+      const CMS = "https://cms.thegovlab.com/";
+      item.normalizedDate = item.date || item.publication_date;
+      if (src === "odpl") {
+        item.src = "odpl";
+        item.title = item.heading;
+        item.excerpt = item.tagline || "";
+        item.slug =
+          item.custom_url ||
+          this.slugify((item.brow || "") + " " + (item.heading || ""));
+        item._imageUrl = item.cover_image
+          ? CMS + "assets/" + item.cover_image
+          : null;
+        item._link =
+          "https://opendatapolicylab.org/articles/" + item.slug + "/";
+        item._linkLabel = "Read Full Article on Open Data Policy Lab";
+        item._external = true;
+      } else if (src === "datastewards") {
+        item.src = "datastewards";
+        item.title = item.heading;
+        item.excerpt = item.description || "";
+        item.slug = this.slugify(item.heading || "");
+        item._imageUrl = item.image ? CMS + "assets/" + item.image : null;
+        item._link = "https://datastewards.net/news/" + item.slug;
+        item._linkLabel = "Read Full Article on Data Stewards";
+        item._external = true;
+      } else if (src === "rdblog") {
+        item.src = "rdblog";
+        item._imageUrl = item.image
+          ? this.directus._url + "assets/" + item.image.id
+          : null;
+        item._link = "https://rebootdemocracy.ai/blog/" + item.slug;
+        item._linkLabel = "Read Full Article on RebootDemocracy.AI";
+        item._external = true;
+      } else {
+        // The GovLab blog itself — rendered in-app via post.vue.
+        item._imageUrl = item.image
+          ? this.directus._url + "assets/" + item.image.id
+          : null;
+        item._link = "./" + item.slug;
+        item._linkLabel = "Read Full Article";
+        item._external = false;
+      }
+      return item;
     },
     async serachObjectFunc(collection) {
       // let searchTArray = this.searchTerm.split(" ");
@@ -153,26 +218,95 @@ export default {
         fields: ["*.*,authors.team_id.*"],
         meta: "*",
       });
-      this.filterCount =
-        dataTheGovlabBlog.meta.filter_count +
-        dataRebootDemocracyBlog.meta.filter_count;
+      // --- New CMS collections on cms.thegovlab.com: ODPL + Data Stewards ---
+      // These are aggregated into the same "latest posts" feed and link out to
+      // their own live sites (like the Reboot posts link to rebootdemocracy.ai).
+      // Require a non-null date: a handful of these records have date=null,
+      // which can't be sorted or displayed (the template hides them), and
+      // would otherwise occupy page-1 slots.
+      let odplFilter = {
+        _and: [{ status: { _eq: "published" } }, { date: { _nnull: true } }],
+      };
+      let dsFilter = {
+        _and: [{ status: { _eq: "published" } }, { date: { _nnull: true } }],
+      };
+      if (this.searchTerm) {
+        odplFilter._or = [
+          { heading: { _contains: this.searchTerm } },
+          { tagline: { _contains: this.searchTerm } },
+          { brow: { _contains: this.searchTerm } },
+        ];
+        dsFilter._or = [
+          { heading: { _contains: this.searchTerm } },
+          { description: { _contains: this.searchTerm } },
+          { author: { _contains: this.searchTerm } },
+        ];
+      }
 
-      let tempListHP = dataTheGovlabBlog.data.concat(
-        dataRebootDemocracyBlog.data
-      );
-      this.listHP = this.listHP.concat(tempListHP);
-
-      this.listHP = this.listHP.map((item) => {
-        let normalizedDate = item.date || item.publication_date;
-        if (item.date) {
-          item.src = "rdblog";
-        }
-        return { ...item, normalizedDate };
+      var dataOdpl = await this.odpl.readByQuery({
+        filter: odplFilter,
+        limit: this.searchactive ? -1 : 50,
+        page: this.searchactive ? 1 : this.d9Page,
+        sort: "-date",
+        fields: [
+          "id",
+          "status",
+          "heading",
+          "brow",
+          "tagline",
+          "date",
+          "slug",
+          "custom_url",
+          "cover_image",
+        ],
+        meta: "*",
       });
 
-      // Sort the array by the normalized date in descending order
+      var dataDs = await this.dsblog.readByQuery({
+        filter: dsFilter,
+        limit: this.searchactive ? -1 : 50,
+        page: this.searchactive ? 1 : this.d9Page,
+        sort: "-date",
+        fields: [
+          "id",
+          "status",
+          "heading",
+          "description",
+          "author",
+          "date",
+          "slug",
+          "image",
+        ],
+        meta: "*",
+      });
+
+      this.filterCount =
+        dataTheGovlabBlog.meta.filter_count +
+        dataRebootDemocracyBlog.meta.filter_count +
+        dataOdpl.meta.filter_count +
+        dataDs.meta.filter_count;
+
+      let tempListHP = dataTheGovlabBlog.data
+        .map((item) => this.normalizeItem(item, null))
+        .concat(
+          dataRebootDemocracyBlog.data.map((item) =>
+            this.normalizeItem(item, "rdblog")
+          )
+        )
+        .concat(dataOdpl.data.map((item) => this.normalizeItem(item, "odpl")))
+        .concat(
+          dataDs.data.map((item) => this.normalizeItem(item, "datastewards"))
+        );
+      this.listHP = this.listHP.concat(tempListHP);
+
+      // Sort the array by the normalized date in descending order.
+      // Use Date.parse()||0 so posts with a missing/invalid date (e.g. some
+      // Data Stewards records have date=null) yield 0 instead of NaN — a NaN
+      // return from the comparator corrupts the whole sort order.
       this.listHP.sort(
-        (a, b) => new Date(b.normalizedDate) - new Date(a.normalizedDate)
+        (a, b) =>
+          (Date.parse(b.normalizedDate) || 0) -
+          (Date.parse(a.normalizedDate) || 0)
       );
 
       const seenSlugs = new Set();
@@ -368,30 +502,17 @@ export default {
               >
                 <div>
                   
-                  <a
-                  :href="
-                    fpost.src && fpost.src == 'rdblog'
-                      ? 'https://rebootdemocracy.ai/blog/' + fpost.slug
-                      : './' + fpost.slug
-                  "
-                >
+                  <a :href="fpost._link">
                     <div
                       class="img-col"
-                      v-if="fpost.image"
+                      v-if="fpost._imageUrl"
                       :style="{
-                        backgroundImage:
-                          'url(' +
-                          directus._url +
-                          'assets/' +
-                          fpost.image.id +
-                          ')',
+                        backgroundImage: 'url(' + fpost._imageUrl + ')',
                       }"
                     ></div>
 
                     <div class="text-col">
-                      <a class="post-title" :href=" fpost.src && fpost.src == 'rdblog'
-                      ? 'https://rebootdemocracy.ai/blog/' + fpost.slug
-                      : './' + fpost.slug">
+                      <a class="post-title" :href="fpost._link">
                         <h2 v-html="fpost.title"></h2>
                       </a>
                       <div class="post-author">
@@ -413,21 +534,11 @@ export default {
                       <div class="post-content" v-html="fpost.excerpt"></div>
                       <div class="more-button main-color">
                         <a
-                    v-if="!fpost.src"
-                    class="b-button"
-                    :href="'./' + fpost.slug"
-                    target="_blank"
-                  >
-                    Read Full Article</a
-                  >
-                  <a
-                    v-if="fpost.src == 'rdblog'"
-                    class="b-button"
-                    :href="'https://rebootdemocracy.ai/blog/' + fpost.slug"
-                    target="_blank"
-                  >
-                    Read Full Article on RebootDemocracy.AI</a
-                  >
+                          class="b-button"
+                          :href="fpost._link"
+                          :target="fpost._external ? '_blank' : '_self'"
+                          >{{ fpost._linkLabel }}</a
+                        >
                       </div>
                     </div>
                   </a>
@@ -499,31 +610,19 @@ export default {
                   post.date <= currentDateTime())
               "
               class="blog-col-item all-posts"
-              :href="
-                    post.src && post.src == 'rdblog'
-                      ? 'https://rebootdemocracy.ai/blog/' + post.slug
-                      : './' + post.slug
-                  "
+              :href="post._link"
             >
               <div
                 class="img-col"
-                v-if="post.image"
+                v-if="post._imageUrl"
                 :style="{
-                  backgroundImage:
-                    'url(' + directus._url + 'assets/' + post.image.id + ')',
+                  backgroundImage: 'url(' + post._imageUrl + ')',
                 }"
               ></div>
-              <div class="img-col default-img" v-if="!post.image"></div>
+              <div class="img-col default-img" v-if="!post._imageUrl"></div>
 
               <div class="text-col">
-                <a
-                  class="post-title"
-                  :href="
-                    post.src && post.src == 'rdblog'
-                      ? 'https://rebootdemocracy.ai/blog/' + post.slug
-                      : './' + post.slug
-                  "
-                >
+                <a class="post-title" :href="post._link">
                   <h3 v-html="post.title"></h3>
                 </a>
                 <!-- <div class="post-author" v-show="post.authors && post.authors.length>0">
@@ -554,20 +653,10 @@ export default {
                 </div>
                 <div class="more-button main-color">
                   <a
-                    v-if="!post.src"
                     class="b-button"
-                    :href="'./' + post.slug"
-                    target="_blank"
-                  >
-                    Read Full Article</a
-                  >
-                  <a
-                    v-if="post.src == 'rdblog'"
-                    class="b-button"
-                    :href="'https://rebootdemocracy.ai/blog/' + post.slug"
-                    target="_blank"
-                  >
-                    Read Full Article on RebootDemocracy.AI</a
+                    :href="post._link"
+                    :target="post._external ? '_blank' : '_self'"
+                    >{{ post._linkLabel }}</a
                   >
                 </div>
               </div>
