@@ -93,6 +93,9 @@ export default {
     // slug mapped from their native field names.
     normalizeItem(item, src) {
       const CMS = "https://cms.thegovlab.com/";
+      // Serve a downscaled card image (Directus on-the-fly transform) instead
+      // of the full-resolution original — both instances support ?width=.
+      const IMG_W = "?width=800";
       item.normalizedDate = item.date || item.publication_date;
       if (src === "odpl") {
         item.src = "odpl";
@@ -102,7 +105,7 @@ export default {
           item.custom_url ||
           this.slugify((item.brow || "") + " " + (item.heading || ""));
         item._imageUrl = item.cover_image
-          ? CMS + "assets/" + item.cover_image
+          ? CMS + "assets/" + item.cover_image + IMG_W
           : null;
         item._link =
           "https://opendatapolicylab.org/articles/" + item.slug + "/";
@@ -113,14 +116,14 @@ export default {
         item.title = item.heading;
         item.excerpt = item.description || "";
         item.slug = this.slugify(item.heading || "");
-        item._imageUrl = item.image ? CMS + "assets/" + item.image : null;
+        item._imageUrl = item.image ? CMS + "assets/" + item.image + IMG_W : null;
         item._link = "https://datastewards.net/news/" + item.slug;
         item._linkLabel = "Read Full Article on Data Stewards";
         item._external = true;
       } else if (src === "rdblog") {
         item.src = "rdblog";
         item._imageUrl = item.image
-          ? this.directus._url + "assets/" + item.image.id
+          ? this.directus._url + "assets/" + item.image.id + IMG_W
           : null;
         item._link = "https://rebootdemocracy.ai/blog/" + item.slug;
         item._linkLabel = "Read Full Article on RebootDemocracy.AI";
@@ -128,7 +131,7 @@ export default {
       } else {
         // The GovLab blog itself — rendered in-app via post.vue.
         item._imageUrl = item.image
-          ? this.directus._url + "assets/" + item.image.id
+          ? this.directus._url + "assets/" + item.image.id + IMG_W
           : null;
         item._link = "./" + item.slug;
         item._linkLabel = "Read Full Article";
