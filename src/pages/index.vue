@@ -38,8 +38,16 @@ export default {
     this.d9archive = this.directus.items("tg_archive");
     this.odpl = this.cms.items("odpl_items");
     this.dsblog = this.cms.items("ds_blogposts");
-    this.loadBlog();
+    // Deep-linkable search: run whatever ?q=<term> is in the URL, and re-run
+    // it when the user steps Back/Forward through their searches.
+    this._onPopState = () => this.applySearchFromUrl();
+    window.addEventListener("popstate", this._onPopState);
+    this.applySearchFromUrl();
     this.fillMeta();
+  },
+  beforeUnmount() {
+    if (this._onPopState)
+      window.removeEventListener("popstate", this._onPopState);
   },
   methods: {
     fillMeta() {
@@ -372,12 +380,35 @@ export default {
           this.loadAPI = false;
         });
     },
+    // Run/clear a search from the search box: push a history entry so the
+    // browser Back button steps back through previous searches.
     resetSearch() {
+      this.syncSearchUrl(true);
+      this.runSearch();
+    },
+    // Re-read ?q= from the URL and run that search WITHOUT adding history
+    // (used on initial load and on Back/Forward navigation).
+    applySearchFromUrl() {
+      this.searchTerm =
+        new URLSearchParams(window.location.search).get("q") || "";
+      this.runSearch();
+    },
+    // Reset list state and (re)load. loadBlog() derives searchactive from
+    // searchTerm, so this covers both "search" and "clear".
+    runSearch() {
       this.listHP = [];
       this.fposts = [];
       this.d9Page = 1;
       this.searchactive = false;
       this.loadBlog();
+    },
+    // Reflect the current searchTerm in the URL as ?q=. push=true adds a
+    // history entry (a user search); false replaces it.
+    syncSearchUrl(push) {
+      const url = new URL(window.location.href);
+      if (this.searchTerm) url.searchParams.set("q", this.searchTerm);
+      else url.searchParams.delete("q");
+      window.history[push ? "pushState" : "replaceState"]({}, "", url);
     },
     currentDateTime() {
       return dayjs().tz("America/Toronto").format("YYYY-MM-DDTHH:mm:ss");
