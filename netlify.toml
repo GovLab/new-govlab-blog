@@ -2,3 +2,11 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+# DRAFT PREVIEW BRANCH ONLY — this deploy serves unpublished posts at a public
+# URL, so keep it out of search engines. Held back from blog-vite by
+# .github/workflows/update-draft-branch.yml.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"

@@ -53,14 +53,10 @@ export default {
     {
        this.d9blogpost
       .readByQuery({
+        // DRAFT PREVIEW BRANCH ONLY — no status filter, so unpublished posts
+        // render for editors previewing from Directus. This file is deliberately
+        // held back from blog-vite by .github/workflows/update-draft-branch.yml.
         filter: { 
-          _and: [
-            {
-               status: {
-              _eq: "published",
-            },
-            }
-            ],
           slug: { _eq: this.blogslug } 
         },
         fields: ["*.*,authors.team_id.*,related_posts.incoming_blog_id.*,related_projects.projects_id.*,related_publications.pub_id.*,image.*"],
