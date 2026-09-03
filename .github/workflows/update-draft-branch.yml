@@ -1,0 +1,59 @@
+name: Update Draft Branch
+
+# Keeps the `draft` branch — deployed by Netlify as
+# draft--blog-thegovlab.netlify.app and used by the Preview button on the
+# Directus `blog` collection — up to date with production.
+#
+# `draft` differs from blog-vite in exactly two files, listed in DRAFT_ONLY
+# below. Production is merged in, then those files are restored, so the preview
+# site tracks production without losing its draft-specific behaviour.
+
+on:
+  push:
+    branches: [blog-vite]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-draft-branch
+  cancel-in-progress: false
+
+env:
+  DRAFT_ONLY: "src/pages/post.vue netlify.toml"
+
+jobs:
+  update-draft:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: blog-vite
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Merge blog-vite into draft, keeping draft-only files
+        run: |
+          git fetch origin draft
+          git checkout -B draft origin/draft
+          git merge blog-vite --no-commit --no-ff || true
+
+          # Restore the files draft owns, whatever the merge did to them.
+          for f in $DRAFT_ONLY; do
+            git checkout origin/draft -- "$f"
+          done
+
+          git add -A
+          if git diff --cached --quiet; then
+            echo "draft already up to date"
+          else
+            git commit -m "Merge blog-vite into draft (preserving draft-only files)"
+          fi
+
+      - name: Push draft
+        run: git push origin draft
