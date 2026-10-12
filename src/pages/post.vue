@@ -34,14 +34,17 @@ export default {
   {
     fillMeta()
     {
+     // The post's own address, as listed in /sitemap.xml (netlify/functions/site-index.mjs).
+     const url = "https://blog.thegovlab.org/" + encodeURIComponent(String(this.blogPost.slug || this.blogslug).trim());
      useHead({
       title: this.blogPost.title + " | THE GOVLAB BLOG",
+      link: [{ rel: 'canonical', href: url }],
       meta: [
 
         { property: 'og:title', content: this.blogPost.title + " | THE GOVLAB BLOG" },
         { property: 'og:description', content: this.htmlToPlainText(this.blogPost.excerpt)},
         { property: 'og:image', content: !this.blogPost.image ?this.blogPost.image_blog2020: this.directus._url+'assets/'+this.blogPost.image.filename_disk},
-        { property: 'og:url', content: "https://blog.thegovlab.org/" + this.blogPost.slug},
+        { property: 'og:url', content: url},
         { property: 'twitter:title', content: this.blogPost.title + " | THE GOVLAB BLOG"},
         { property: 'twitter:description', content: this.htmlToPlainText(this.blogPost.excerpt)},
         { property: 'twitter:image', content: !this.blogPost.image ?this.blogPost.image_blog2020: this.directus._url+'assets/'+this.blogPost.image.filename_disk},
