@@ -1,8 +1,11 @@
 // site-index — /sitemap.xml, /llms.txt and /llms-full.txt for blog.thegovlab.org.
 //
 // The blog is a single-page app: every path used to answer with index.html, so
-// crawlers found no sitemap and AI assistants no llms.txt. netlify.toml rewrites
-// the three paths here (before the SPA fallback). They are built from the
+// crawlers found no sitemap and AI assistants no llms.txt. `config.path` routes
+// the three paths here: Netlify runs path-routed functions before redirects, so
+// the SPA fallback in netlify.toml never sees them. (A netlify.toml rewrite to
+// /.netlify/functions/site-index?file=… did not work: the query string is not
+// passed on.) They are built from the
 // published posts in Directus — `blog`, plus the 2012–2020 posts in `tg_archive`
 // that the post page falls back to — and kept up to an hour on the CDN, so a new
 // post appears within the hour.
@@ -149,13 +152,15 @@ export function buildLlmsTxt(posts, { full = false } = {}) {
 /* ── handler ────────────────────────────────────────────────── */
 
 const FILES = {
-  sitemap: { type: 'application/xml; charset=utf-8', build: async () => buildSitemapXml(await loadPosts({ withText: false })) },
-  llms: { type: 'text/plain; charset=utf-8', build: async () => buildLlmsTxt(await loadPosts()) },
-  'llms-full': { type: 'text/plain; charset=utf-8', build: async () => buildLlmsTxt(await loadPosts(), { full: true }) },
+  '/sitemap.xml': { type: 'application/xml; charset=utf-8', build: async () => buildSitemapXml(await loadPosts({ withText: false })) },
+  '/llms.txt': { type: 'text/plain; charset=utf-8', build: async () => buildLlmsTxt(await loadPosts()) },
+  '/llms-full.txt': { type: 'text/plain; charset=utf-8', build: async () => buildLlmsTxt(await loadPosts(), { full: true }) },
 };
 
+export const config = { path: Object.keys(FILES) };
+
 export default async (req) => {
-  const file = FILES[new URL(req.url).searchParams.get('file')];
+  const file = FILES[new URL(req.url).pathname];
   if (!file) return new Response('Not found', { status: 404 });
   try {
     return new Response(await file.build(), {
