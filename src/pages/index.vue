@@ -53,6 +53,8 @@ export default {
     fillMeta() {
       useHead({
         title: "The GovLab Blog",
+        // One canonical for the home page, also with ?q= searches.
+        link: [{ rel: "canonical", href: "https://blog.thegovlab.org/" }],
         meta: [
           { property: "og:title", content: "The GovLab Blog" },
           {
