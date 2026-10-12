@@ -157,7 +157,10 @@ const FILES = {
   '/llms-full.txt': { type: 'text/plain; charset=utf-8', build: async () => buildLlmsTxt(await loadPosts(), { full: true }) },
 };
 
-export const config = { path: Object.keys(FILES) };
+// A literal list: Netlify reads `config` at build time without running the
+// module, so a computed value (Object.keys(FILES)) is silently ignored and the
+// function is never routed to these paths. Keep it in step with FILES.
+export const config = { path: ['/sitemap.xml', '/llms.txt', '/llms-full.txt'] };
 
 export default async (req) => {
   const file = FILES[new URL(req.url).pathname];
