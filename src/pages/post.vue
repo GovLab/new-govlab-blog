@@ -6,6 +6,7 @@ import utc from 'dayjs/esm/plugin/utc/index.js'
 import timezone from 'dayjs/esm/plugin/timezone/index.js'
 import localizedFormat from 'dayjs/esm/plugin/localizedFormat/index.js'
 import {useHead } from '@vueuse/head'
+import { jsonLdScript, postJsonLd } from '../structuredData.js'
 
 export default {
   name: "SubMenu",
@@ -36,6 +37,8 @@ export default {
     {
      // The post's own address, as listed in /sitemap.xml (netlify/functions/site-index.mjs).
      const url = "https://blog.thegovlab.org/" + encodeURIComponent(String(this.blogPost.slug || this.blogslug).trim());
+     // The post's picture, else none (og:image used to read "null").
+     const image = this.blogPost.image ? this.directus._url+'assets/'+this.blogPost.image.filename_disk : (this.blogPost.image_blog2020 || '');
      useHead({
       title: this.blogPost.title + " | THE GOVLAB BLOG",
       link: [{ rel: 'canonical', href: url }],
@@ -43,13 +46,15 @@ export default {
 
         { property: 'og:title', content: this.blogPost.title + " | THE GOVLAB BLOG" },
         { property: 'og:description', content: this.htmlToPlainText(this.blogPost.excerpt)},
-        { property: 'og:image', content: !this.blogPost.image ?this.blogPost.image_blog2020: this.directus._url+'assets/'+this.blogPost.image.filename_disk},
+        ...(image ? [{ property: 'og:image', content: image }] : []),
         { property: 'og:url', content: url},
         { property: 'twitter:title', content: this.blogPost.title + " | THE GOVLAB BLOG"},
         { property: 'twitter:description', content: this.htmlToPlainText(this.blogPost.excerpt)},
-        { property: 'twitter:image', content: !this.blogPost.image ?this.blogPost.image_blog2020: this.directus._url+'assets/'+this.blogPost.image.filename_disk},
+        ...(image ? [{ property: 'twitter:image', content: image }] : []),
         { property: 'twitter:card', content: "summary_large_image" },
       ],
+      // The post as structured data (src/structuredData.js).
+      script: jsonLdScript(postJsonLd(this.blogPost, { url, image })),
     })
     },
     loadPost()
